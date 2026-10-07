@@ -1,0 +1,50 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Type scale</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/typo/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Type scale</h1><p class="sub">Build a modular type scale (base × ratio<sup>step</sup>), optionally fluid with <code>clamp()</code>, and copy it as CSS, Tailwind or SCSS. Runs in your browser.</p>
+<section aria-labelledby="h-set"><h2 id="h-set">Settings</h2>
+<div class="ty-set">
+<fieldset><legend>Scale</legend>
+<label for="base">Base size (px)</label><input id="base" type="number" min="8" max="64" step="any" value="16" inputmode="decimal" autocomplete="off" style="width:100%">
+<label for="ratio">Ratio</label><select id="ratio"></select>
+<div id="customRow" hidden><label for="custom">Custom ratio</label><input id="custom" type="number" min="1.01" max="3" step="0.001" value="1.2" inputmode="decimal" autocomplete="off" style="width:100%"></div>
+<div class="row ty-2"><div><label for="up">Steps up</label><input id="up" type="number" min="0" max="12" step="1" value="6" inputmode="numeric" autocomplete="off" style="width:100%"></div><div><label for="down">Steps down</label><input id="down" type="number" min="0" max="6" step="1" value="2" inputmode="numeric" autocomplete="off" style="width:100%"></div></div>
+<label for="root">Root font size (px, for rem)</label><input id="root" type="number" min="1" max="64" step="1" value="16" inputmode="numeric" autocomplete="off" style="width:100%">
+</fieldset>
+<fieldset><legend>Line height</legend>
+<label for="rule">Rule</label><select id="rule"><option value="gap">Size + gap</option><option value="fixed">Fixed ratio</option></select>
+<p id="ruleHelp" class="muted ty-note"></p><label for="lhv" id="lhvl">Gap (px)</label><input id="lhv" type="number" min="0" max="64" step="any" value="8" inputmode="decimal" autocomplete="off" style="width:100%">
+<label for="grid">Snap to a baseline grid (px, 0 = off)</label><input id="grid" type="number" min="0" max="32" step="1" value="0" inputmode="numeric" autocomplete="off" style="width:100%">
+</fieldset>
+<fieldset><legend>Fluid</legend>
+<label class="ck"><input id="fl" type="checkbox"> <span>Scale between two screen sizes with <code>clamp()</code></span></label>
+<div id="flRow" hidden>
+<p class="muted ty-note">The settings on the left are the small screen. Same maths as the Fluid type tool.</p>
+<label for="fbase">Large-screen base size (px)</label><input id="fbase" type="number" min="8" max="64" step="any" value="18" inputmode="decimal" autocomplete="off" style="width:100%">
+<label for="fratio">Large-screen ratio</label><select id="fratio"></select>
+<div class="row ty-2"><div><label for="minvw">Small screen (px)</label><input id="minvw" type="number" min="0" max="3000" step="1" value="360" inputmode="numeric" autocomplete="off" style="width:100%"></div><div><label for="maxvw">Large screen (px)</label><input id="maxvw" type="number" min="0" max="4000" step="1" value="1240" inputmode="numeric" autocomplete="off" style="width:100%"></div></div>
+</div>
+</fieldset>
+</div>
+<p id="err" class="err" role="alert"></p>
+</section>
+<section aria-labelledby="h-spec"><h2 id="h-spec">Specimen</h2>
+<div class="row ty-spec-ctl">
+<fieldset class="ty-fs"><legend>Font</legend><div class="seg" id="fonts"></div></fieldset>
+<div class="ty-grow"><label for="sample">Sample text</label><input id="sample" value="The quick brown fox jumps over the lazy dog" maxlength="200" autocomplete="off"></div>
+</div>
+<div id="spec" class="ty-spec"></div>
+</section>
+<section aria-labelledby="h-tab"><h2 id="h-tab">Values</h2>
+<div class="card ty-tab"><table id="tab"></table></div>
+</section>
+<section aria-labelledby="h-out"><h2 id="h-out">Code</h2>
+<div class="row ty-out-ctl">
+<fieldset class="ty-fs"><legend>Format</legend><div class="seg"><label class="opt"><input type="radio" name="fmt" value="css" checked><span>CSS</span></label><label class="opt"><input type="radio" name="fmt" value="tailwind"><span>Tailwind</span></label><label class="opt"><input type="radio" name="fmt" value="scss"><span>SCSS</span></label></div></fieldset>
+<fieldset class="ty-fs"><legend>Unit</legend><div class="seg"><label class="opt"><input type="radio" name="unit" value="rem" checked><span>rem</span></label><label class="opt"><input type="radio" name="unit" value="px"><span>px</span></label></div></fieldset>
+<div><label for="prefix">Name prefix</label><input id="prefix" value="step" maxlength="30" autocomplete="off" autocapitalize="off" spellcheck="false" style="width:140px"></div>
+</div>
+<label for="out">Output</label><textarea id="out" rows="12" readonly spellcheck="false"></textarea>
+<div class="row"><button id="copy" type="button" class="primary">Copy</button><span id="msg" class="muted" role="status"></span></div>
+</section>
+</main><script type="module" src="/_/typo/app.js"></script></body></html>

@@ -1,0 +1,60 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Blob generator</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/color/style.css"><link rel="stylesheet" href="/_/blob/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Blobs</h1><p class="sub">Random, reproducible SVG blob shapes. Copy the SVG or a CSS clip-path, or download SVG and PNG. Runs in your browser.</p>
+<div class="bl-wrap">
+<section class="bl-stage" aria-labelledby="h-prev">
+<h2 id="h-prev" class="vh">Preview</h2>
+<div id="stage" class="bl-prev" role="img" aria-label="Generated blob preview"></div>
+<div class="row">
+<button id="rnd" type="button" class="primary">Randomize</button>
+<button id="lockShape" type="button" aria-pressed="false">Lock shape</button>
+<button id="lockColor" type="button" aria-pressed="false">Lock colors</button>
+</div>
+<p class="muted bl-hint"><kbd>R</kbd> randomizes (outside text fields). Locked parts stay the same.</p>
+</section>
+<section class="bl-ctl" aria-labelledby="h-ctl">
+<h2 id="h-ctl" class="vh">Settings</h2>
+<fieldset><legend>Shape</legend>
+<label for="n">Points <output id="nv" for="n"></output></label>
+<input id="n" type="range" min="3" max="12" step="1" value="7">
+<label for="r">Randomness <output id="rv" for="r"></output></label>
+<input id="r" type="range" min="0" max="1" step="0.01" value="0.55">
+<label for="size">Size (px)</label>
+<input id="size" type="number" min="50" max="2000" step="10" value="400" inputmode="numeric" autocomplete="off">
+<label for="seed">Seed</label>
+<div class="row"><input id="seed" class="bl-grow" autocomplete="off" spellcheck="false" autocapitalize="off" maxlength="40"><button id="share" type="button">Copy link</button></div>
+</fieldset>
+<fieldset><legend>Fill</legend>
+<div class="row"><label class="bl-in"><input type="radio" name="mode" value="solid" checked> Solid</label><label class="bl-in"><input type="radio" name="mode" value="gradient"> Gradient</label></div>
+<label for="ca">Color</label>
+<div class="row"><span class="pickwrap"><button id="cap" type="button" class="swbtn" aria-label="Pick fill color"></button></span><input id="ca" class="bl-grow" autocomplete="off" spellcheck="false" autocapitalize="off" value="#0b7a35"></div>
+<div id="gradRow" hidden>
+<label for="cb">Second color</label>
+<div class="row"><span class="pickwrap"><button id="cbp" type="button" class="swbtn" aria-label="Pick second color"></button></span><input id="cb" class="bl-grow" autocomplete="off" spellcheck="false" autocapitalize="off" value="#7dff9b"></div>
+<label for="ang">Angle <output id="angv" for="ang"></output></label>
+<input id="ang" type="range" min="0" max="360" step="5" value="45">
+</div>
+</fieldset>
+<fieldset><legend>Outline</legend>
+<label class="bl-in"><input id="so" type="checkbox"> Draw an outline</label>
+<div id="strokeRow" hidden>
+<label for="cs">Outline color</label>
+<div class="row"><span class="pickwrap"><button id="csp" type="button" class="swbtn" aria-label="Pick outline color"></button></span><input id="cs" class="bl-grow" autocomplete="off" spellcheck="false" autocapitalize="off" value="#15281b"></div>
+<label for="sw">Width (px)</label>
+<input id="sw" type="number" min="1" max="40" step="1" value="6" inputmode="numeric" autocomplete="off">
+</div>
+</fieldset>
+</section>
+</div>
+<p id="err" class="err" role="alert"></p>
+<section aria-labelledby="h-out"><h2 id="h-out">Export</h2>
+<div class="row">
+<button id="cpSvg" type="button">Copy SVG</button><button id="cpCss" type="button">Copy CSS clip-path</button>
+<button id="dlSvg" type="button">Download SVG</button><button id="dlPng" type="button">Download PNG</button>
+</div>
+<p id="msg" class="muted" role="status"></p>
+<label for="code">SVG markup</label><textarea id="code" rows="5" readonly spellcheck="false"></textarea>
+<label for="css">CSS (the path is in the shape's own pixel units; scale it with the element's size)</label><textarea id="css" rows="3" readonly spellcheck="false"></textarea>
+</section>
+</main><script type="module" src="/_/blob/app.js"></script></body></html>

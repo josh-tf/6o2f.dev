@@ -1,0 +1,42 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Palette generator</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/color/style.css"><link rel="stylesheet" href="/_/palette/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Palettes</h1><p class="sub">Build colour harmonies from a base colour, or pull the dominant colours out of an image. Runs in your browser; images never leave it.</p>
+<div class="pl-src">
+<section aria-labelledby="h-harm" class="card">
+<h2 id="h-harm">From a base colour</h2>
+<label for="base">Base colour (hex, rgb(), hsl(), oklch() or a name)</label>
+<div class="row"><span class="pickwrap"><button id="basep" type="button" class="swbtn" aria-label="Pick base colour"></button></span><input id="base" class="grow" value="#0b7a35" autocomplete="off" autocapitalize="off" spellcheck="false" aria-describedby="baseErr"></div>
+<p id="baseErr" class="err" role="alert"></p>
+<label for="kind">Harmony</label>
+<select id="kind"></select>
+<fieldset class="pl-fs"><legend>Rotate hues in</legend>
+<div class="seg"><label class="opt"><input type="radio" name="space" value="oklch" checked><span>OKLCH</span></label><label class="opt"><input type="radio" name="space" value="hsl"><span>HSL</span></label></div>
+</fieldset>
+<p class="muted pl-note">OKLCH keeps perceived lightness even across hues; HSL matches the classic colour wheel.</p>
+</section>
+<section aria-labelledby="h-img" class="card" id="imgSec">
+<h2 id="h-img">From an image</h2>
+<label id="drop" for="file">Drop, paste or <u>choose an image</u><input id="file" type="file" accept="image/*"></label>
+<div class="row"><label for="k" class="pl-inl">Colours</label><input id="k" type="number" min="5" max="8" step="1" value="6" inputmode="numeric" autocomplete="off" style="width:110px"><button id="sample" type="button">Use a sample image</button></div>
+<canvas id="thumb" class="pl-thumb" hidden aria-label="Downscaled copy of the image used for extraction"></canvas>
+<p class="muted pl-note">Downscaled to 160 px, then k-means (fixed seed, so the same image always gives the same colours).</p>
+</section>
+</div>
+<p id="msg" class="muted" role="status"></p>
+<section aria-labelledby="h-pal">
+<h2 id="h-pal">Palette <span id="src" class="muted pl-srcname"></span></h2>
+<ul id="pal" class="pl-pal"></ul>
+<p class="muted pl-note">Click a swatch (or focus it and press <kbd>Enter</kbd>) to copy its hex. Contrast is the WCAG 2 ratio against white and black text.</p>
+</section>
+<section aria-labelledby="h-exp">
+<h2 id="h-exp">Export</h2>
+<div class="pl-exp">
+<div><label for="fmt">Format</label><select id="fmt"><option value="css">CSS custom properties</option><option value="tailwind">Tailwind config (v3)</option><option value="tailwind4">Tailwind @theme (v4)</option><option value="scss">SCSS map</option><option value="json">JSON</option></select></div>
+<div><label for="name">Name</label><input id="name" value="brand" maxlength="40" autocomplete="off" autocapitalize="off" spellcheck="false"></div>
+<div class="pl-btm"><button id="copy" type="button" class="primary">Copy</button></div>
+</div>
+<label for="out">Code</label>
+<textarea id="out" rows="9" readonly spellcheck="false"></textarea>
+</section>
+</main><script type="module" src="/_/palette/app.js"></script></body></html>

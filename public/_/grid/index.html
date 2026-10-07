@@ -1,0 +1,45 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CSS grid builder</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/grid/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>CSS grid builder</h1><p class="sub">Define tracks, drag across cells to place items, and copy CSS with named areas. Runs in your browser.</p>
+<div class="row" role="group" aria-label="Presets" id="presets"><span class="muted">Presets:</span></div>
+
+<section aria-labelledby="th"><h2 id="th">Tracks</h2>
+<fieldset class="card"><legend class="vh">Grid tracks and gaps</legend>
+<div class="tracks">
+<div><label for="cols">grid-template-columns</label><input id="cols" type="text" autocomplete="off" spellcheck="false" autocapitalize="off" aria-describedby="cols-err" style="width:100%"><p class="err" id="cols-err" role="alert"></p></div>
+<div><label for="rows">grid-template-rows</label><input id="rows" type="text" autocomplete="off" spellcheck="false" autocapitalize="off" aria-describedby="rows-err" style="width:100%"><p class="err" id="rows-err" role="alert"></p></div>
+<div><label for="autorows">grid-auto-rows (extra rows)</label><input id="autorows" type="text" autocomplete="off" spellcheck="false" autocapitalize="off" aria-describedby="autorows-err" style="width:100%"><p class="err" id="autorows-err" role="alert"></p></div>
+<div class="gaps"><div><label for="rgap">Row gap (px)</label><input id="rgap" type="number" min="0" max="200" step="1" inputmode="numeric" autocomplete="off" style="width:100%"></div>
+<div><label for="cgap">Column gap (px)</label><input id="cgap" type="number" min="0" max="200" step="1" inputmode="numeric" autocomplete="off" style="width:100%"></div></div>
+</div>
+<details class="help"><summary>Track syntax</summary>
+<p>Sizes are separated by spaces: <code>1fr</code> (a share of the free space), <code>200px</code>, <code>25%</code>, <code>auto</code>, <code>minmax(120px, 1fr)</code>, <code>repeat(3, 1fr)</code>. <code>repeat(auto-fit, minmax(160px, 1fr))</code> fits as many columns as the width allows (auto-fill keeps empty columns, auto-fit collapses them).</p></details>
+</fieldset>
+</section>
+
+<section aria-labelledby="pvh"><h2 id="pvh">Preview and placement</h2>
+<div class="row"><label for="pw" class="inline">Preview width</label><input id="pw" type="range" min="280" max="1100" step="10" value="900" aria-describedby="pwo"><output id="pwo" for="pw"></output></div>
+<div class="row mt" id="chips" role="group" aria-label="Items: choose one to place"></div>
+<p class="muted small">Drag across the cells to place <b id="curname"></b>, or use the line numbers below. Lines count from 1 at the left and top edges.</p>
+<div class="pvwrap"><div class="stage" id="stage"><div id="g" class="g"></div><div id="ov" class="ov" aria-hidden="true"></div></div></div>
+<fieldset class="card mt"><legend>Selected item</legend>
+<div class="place">
+<div class="wide"><label for="i-label">Name</label><input id="i-label" type="text" maxlength="30" autocomplete="off" spellcheck="false" style="width:100%"></div>
+<div><label for="cs">Column start</label><input id="cs" type="number" min="1" max="30" step="1" inputmode="numeric" autocomplete="off" style="width:100%"></div>
+<div><label for="ce">Column end</label><input id="ce" type="number" min="2" max="31" step="1" inputmode="numeric" autocomplete="off" style="width:100%"></div>
+<div><label for="rs">Row start</label><input id="rs" type="number" min="1" max="30" step="1" inputmode="numeric" autocomplete="off" style="width:100%"></div>
+<div><label for="re">Row end</label><input id="re" type="number" min="2" max="31" step="1" inputmode="numeric" autocomplete="off" style="width:100%"></div>
+</div>
+<label class="chk"><input id="auto" type="checkbox"> Auto-place (let the grid put it in the next free cell)</label>
+<div class="row mt"><button type="button" id="add">Add item</button><button type="button" id="remove" class="danger">Remove item</button></div>
+</fieldset>
+</section>
+
+<section aria-labelledby="codeh"><div class="row"><h2 id="codeh" class="m0">Code</h2><span class="grow"></span><button type="button" id="cp-css">Copy CSS</button><button type="button" id="cp-html">Copy HTML</button><button type="button" id="reset">Reset</button></div>
+<label class="chk"><input id="use-areas" type="checkbox" checked> Use named areas (grid-template-areas)</label>
+<p id="areasnote" class="muted small"></p>
+<p id="msg" class="muted" role="status"></p>
+<div class="code"><pre><code id="o-css"></code></pre><pre><code id="o-html"></code></pre></div>
+</section>
+</main><script type="module" src="/_/grid/app.js"></script></body></html>

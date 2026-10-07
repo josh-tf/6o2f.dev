@@ -1,0 +1,62 @@
+.cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+@media (max-width: 700px) {
+  .cols {
+    grid-template-columns: 1fr;
+  }
+}
+#cv {
+  max-width: 100%;
+  height: auto;
+  image-rendering: pixelated;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  display: block;
+  margin-bottom: 8px;
+}
+input[type='color'] {
+  width: 56px;
+  height: 36px;
+  padding: 2px;
+}
+input:not([type]),
+input[type='email'],
+input[type='tel'] {
+  width: 100%;
+}
+.chk {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  margin: 0 0 8px;
+}
+.cols > * {
+  min-width: 0;
+}
+fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+legend {
+  color: var(--muted);
+  font-size: 0.85em;
+  padding: 0;
+  margin: 14px 0 0;
+}
+.vh {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+input:not([type]),
+input[type='text'] {
+  width: 100%;
+}

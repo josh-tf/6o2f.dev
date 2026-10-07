@@ -1,0 +1,208 @@
+.vh {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+.grow {
+  flex: 1;
+  min-width: 0;
+}
+.m0 {
+  margin: 0;
+}
+.mt {
+  margin-top: 10px;
+}
+.small {
+  font-size: 0.85em;
+  margin: 8px 0;
+}
+#presets {
+  margin-bottom: 4px;
+}
+#presets button {
+  min-height: 34px;
+}
+fieldset.card {
+  margin: 0;
+  min-width: 0;
+}
+legend {
+  font-weight: 600;
+  padding: 0 4px;
+}
+.tracks {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 0 14px;
+}
+@media (max-width: 640px) {
+  .tracks {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+.tracks > div {
+  min-width: 0;
+}
+.tracks label,
+.place label {
+  font-family: var(--mono);
+}
+.gaps {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.gaps > div {
+  min-width: 0;
+}
+.err {
+  margin: 4px 0 0;
+  font-size: 0.85em;
+}
+.err:empty {
+  display: none;
+}
+input[aria-invalid='true'] {
+  border-color: var(--danger);
+}
+.help {
+  margin-top: 10px;
+}
+summary {
+  cursor: pointer;
+  color: var(--accent);
+  padding: 4px 0;
+}
+.help p {
+  color: var(--muted);
+  font-size: 0.9em;
+  margin: 6px 0 0;
+}
+label.inline {
+  margin: 0;
+}
+#pw {
+  flex: 1;
+  min-width: 120px;
+  max-width: 420px;
+  padding: 0;
+  accent-color: var(--accent);
+}
+#chips button {
+  min-height: 34px;
+  padding: 5px 12px;
+}
+#chips button[aria-pressed='true'] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-fg);
+  font-weight: 700;
+}
+.pvwrap {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 10px;
+  overflow: auto;
+}
+.stage {
+  position: relative;
+  margin: 0 auto;
+  max-width: 100%;
+}
+.g {
+  min-height: 300px;
+  padding: 8px;
+  border: 1px dashed var(--muted);
+  border-radius: 6px;
+}
+.g > div {
+  border: 1px solid var(--accent);
+  background: color-mix(in srgb, var(--accent) 16%, var(--card));
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 0.85em;
+  min-width: 0;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+.g > div.on {
+  background: var(--accent);
+  color: var(--accent-fg);
+  font-weight: 700;
+}
+.ov {
+  position: absolute;
+  inset: 0;
+  padding: 8px;
+  display: grid;
+  touch-action: none;
+  cursor: crosshair;
+  border: 1px solid transparent;
+}
+.ov i {
+  border: 1px dashed color-mix(in srgb, var(--muted) 70%, transparent);
+  border-radius: 4px;
+  min-width: 0;
+  min-height: 0;
+}
+.ov i:hover {
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+}
+.ov i.sel {
+  background: color-mix(in srgb, var(--accent) 35%, transparent);
+  border: 2px solid var(--accent);
+}
+.place {
+  display: grid;
+  grid-template-columns: 2fr repeat(4, minmax(0, 1fr));
+  gap: 0 10px;
+}
+@media (max-width: 640px) {
+  .place {
+    grid-template-columns: 1fr 1fr;
+  }
+  .place .wide {
+    grid-column: 1/-1;
+  }
+}
+.place > div {
+  min-width: 0;
+}
+label.chk {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  color: var(--fg);
+  font-size: 0.9em;
+  margin: 10px 0 0;
+  cursor: pointer;
+}
+label.chk input {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+}
+.code {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 12px;
+  margin-top: 10px;
+}
+@media (max-width: 760px) {
+  .code {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+.code pre {
+  min-height: 120px;
+  max-height: 420px;
+}
+#msg:empty,
+#areasnote:empty {
+  display: none;
+}

@@ -1,0 +1,230 @@
+.vh {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.dr-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  align-items: flex-end;
+  margin-top: 0;
+}
+.dr-fs {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+.dr-fs legend,
+.dr-size label {
+  color: var(--muted);
+  font-size: 0.85em;
+  padding: 0;
+  margin: 0 0 4px;
+}
+.dr-size input {
+  width: 160px;
+  min-height: 36px;
+}
+.seg {
+  display: inline-flex;
+  flex-wrap: wrap;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--card);
+  max-width: 100%;
+}
+.seg .opt {
+  margin: 0;
+  position: relative;
+  font-size: 1em;
+  color: var(--fg);
+}
+.seg .opt input {
+  position: absolute;
+  opacity: 0;
+  inset: 0;
+  margin: 0;
+  cursor: pointer;
+}
+.seg .opt span {
+  display: block;
+  padding: 7px 11px;
+  min-height: 36px;
+  border-right: 1px solid var(--line);
+}
+.seg .opt:last-child span {
+  border-right: 0;
+}
+.seg .opt input:checked + span {
+  background: var(--accent);
+  color: var(--accent-fg);
+}
+.seg .opt input:focus-visible + span {
+  outline: 2px solid var(--accent);
+  outline-offset: -4px;
+}
+.seg kbd {
+  font-size: 0.7em;
+  opacity: 0.75;
+  margin-left: 2px;
+}
+.dr-cols {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+.dr-sw {
+  position: relative;
+  margin: 0;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+}
+.dr-sw input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  margin: 0;
+  cursor: pointer;
+}
+.dr-sw span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  box-shadow: inset 0 0 0 1px #0002;
+}
+.dr-sw input:checked + span {
+  box-shadow:
+    0 0 0 2px var(--card),
+    0 0 0 4px var(--accent);
+}
+.dr-sw input:focus-visible + span {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+.dr-pick {
+  width: 40px;
+  height: 32px;
+}
+.dr-hex {
+  width: 96px;
+  padding: 5px 8px;
+}
+label.ck {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--fg);
+  font-size: 1em;
+  margin: 0;
+  min-height: 36px;
+}
+.dr-paper {
+  margin-top: 16px;
+}
+.dr-bar {
+  margin-bottom: 8px;
+}
+.dr-bar .sp {
+  flex: 1;
+}
+.dr-confirm {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  border: 1px solid var(--danger);
+  border-radius: var(--radius);
+  padding: 8px 12px;
+  margin-bottom: 8px;
+  background: var(--card);
+}
+.dr-confirm p {
+  margin: 0;
+  flex: 1 1 220px;
+}
+.dr-stage {
+  position: relative;
+  width: 100%;
+  height: min(62vh, 560px);
+  min-height: 300px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.dr-stage canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  display: block;
+}
+#paper {
+  cursor: crosshair;
+}
+#over {
+  pointer-events: none;
+}
+.bg-white {
+  background: #fff;
+}
+.bg-dark {
+  background: #16181d;
+}
+.bg-transparent {
+  background-color: var(--card);
+  background-image:
+    linear-gradient(45deg, #8883 25%, transparent 25%, transparent 75%, #8883 75%),
+    linear-gradient(45deg, #8883 25%, transparent 25%, transparent 75%, #8883 75%);
+  background-size: 16px 16px;
+  background-position:
+    0 0,
+    8px 8px;
+}
+.dr-keys th {
+  white-space: nowrap;
+  color: var(--fg);
+  font-weight: 400;
+}
+details summary {
+  cursor: pointer;
+  min-height: 32px;
+}
+kbd {
+  font: inherit;
+  font-size: 0.85em;
+  border: 1px solid var(--line);
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  padding: 0 5px;
+  background: var(--card);
+}
+@media (max-width: 560px) {
+  .dr-stage {
+    height: min(58vh, 520px);
+  }
+  .seg .opt span {
+    padding: 7px 9px;
+  }
+  .seg kbd {
+    display: none;
+  }
+}
+input[type='range'] {
+  accent-color: var(--accent);
+}
+.seg .opt input:checked + span kbd {
+  background: transparent;
+  color: inherit;
+  border-color: currentColor;
+}

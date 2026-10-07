@@ -1,0 +1,22 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>QR code</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/qr/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>QR code</h1><p class="sub">Make a QR code for a link, Wi-Fi network, email or phone number. Runs in your browser.</p>
+<div class="cols">
+<div>
+<label for="kind">Content</label><select id="kind"><option value="text">Text or URL</option><option value="wifi">Wi-Fi</option><option value="email">Email</option><option value="phone">Phone</option></select>
+<fieldset id="f-text"><legend class="vh">Text or URL</legend><label for="text">Text or URL</label><textarea id="text" rows="3" autocomplete="off" autocapitalize="off" spellcheck="false">https://6o2f.dev</textarea></fieldset>
+<fieldset id="f-wifi" hidden><legend class="vh">Wi-Fi network</legend><label for="ssid">Network name (SSID)</label><input id="ssid" value="Home Wi-Fi" autocomplete="off" autocapitalize="off" spellcheck="false"><label for="pass">Password</label><input id="pass" value="correct horse battery" autocomplete="off" autocapitalize="off" spellcheck="false">
+<div class="row"><div><label for="sec">Security</label><select id="sec"><option>WPA</option><option>WEP</option><option value="nopass">None</option></select></div><label class="chk"><input id="hidden" type="checkbox">Hidden network</label></div></fieldset>
+<fieldset id="f-email" hidden><legend class="vh">Email message</legend><label for="to">To</label><input id="to" type="email" value="hello@example.com" autocomplete="off" inputmode="email" spellcheck="false"><label for="subject">Subject</label><input id="subject" autocomplete="off"><label for="body">Body</label><textarea id="body" rows="2" autocomplete="off"></textarea></fieldset>
+<fieldset id="f-phone" hidden><legend class="vh">Phone number</legend><label for="tel">Phone number</label><input id="tel" type="tel" value="+61 400 000 000" autocomplete="off" inputmode="tel"></fieldset>
+<fieldset><legend>Appearance</legend><div class="row"><div><label for="ecc">Error correction</label><select id="ecc"><option value="L">L (7%)</option><option value="M" selected>M (15%)</option><option value="Q">Q (25%)</option><option value="H">H (30%)</option></select></div>
+<div><label for="scale">Module size (px)</label><input id="scale" type="number" min="1" max="50" step="1" inputmode="numeric" autocomplete="off" value="8" style="width:96px"></div>
+<div><label for="quiet">Quiet zone (modules)</label><input id="quiet" type="number" min="0" max="20" step="1" inputmode="numeric" autocomplete="off" value="4" style="width:96px"></div></div>
+<div class="row"><div><label for="fg">Foreground</label><input id="fg" type="color" value="#000000"></div><div><label for="bg">Background</label><input id="bg" type="color" value="#ffffff"></div></div></fieldset>
+</div>
+<div><canvas id="cv" width="1" height="1" role="img" aria-label="QR code"></canvas>
+<p id="info" class="muted" role="status"></p><p id="warn" class="err" role="alert"></p>
+<div class="row"><a id="png" class="btn primary" download="qr.png">Download PNG</a><a id="svg" class="btn" download="qr.svg">Download SVG</a></div></div>
+</div>
+</main><script type="module" src="/_/qr/app.js"></script></body></html>

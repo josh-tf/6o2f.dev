@@ -1,0 +1,48 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sketchpad</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/color/style.css"><link rel="stylesheet" href="/_/draw/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Sketchpad</h1><p class="sub">Sketch with a mouse, finger or pen (pressure works), then download a PNG or copy it. Your drawing is saved in this browser only.</p>
+<section aria-labelledby="h-tools" class="dr-tools">
+<h2 id="h-tools" class="vh">Tools</h2>
+<fieldset class="dr-fs"><legend>Tool</legend><div class="seg" id="toolSeg">
+<label class="opt"><input type="radio" name="tool" value="pen" checked><span>Pen <kbd>P</kbd></span></label>
+<label class="opt"><input type="radio" name="tool" value="eraser"><span>Eraser <kbd>E</kbd></span></label>
+<label class="opt"><input type="radio" name="tool" value="line"><span>Line <kbd>L</kbd></span></label>
+<label class="opt"><input type="radio" name="tool" value="rect"><span>Box <kbd>R</kbd></span></label>
+<label class="opt"><input type="radio" name="tool" value="ellipse"><span>Ellipse <kbd>O</kbd></span></label>
+</div></fieldset>
+<fieldset class="dr-fs"><legend>Colour</legend><div class="dr-cols" id="cols"></div></fieldset>
+<div class="dr-fs dr-size"><label for="size">Size <output id="sizev" for="size"></output></label><input id="size" type="range" min="1" max="64" step="1" value="6"></div>
+<fieldset class="dr-fs"><legend>Background</legend><div class="seg">
+<label class="opt"><input type="radio" name="bg" value="white" checked><span>White</span></label>
+<label class="opt"><input type="radio" name="bg" value="dark"><span>Dark</span></label>
+<label class="opt"><input type="radio" name="bg" value="transparent"><span>None</span></label>
+</div></fieldset>
+<label class="ck"><input type="checkbox" id="pressure" checked> Pen pressure</label>
+</section>
+<section aria-labelledby="h-canvas" class="dr-paper">
+<h2 id="h-canvas" class="vh">Canvas</h2>
+<div class="row dr-bar">
+<button id="undo" type="button" disabled>Undo</button><button id="redo" type="button" disabled>Redo</button>
+<button id="clear" type="button" class="danger">Clear…</button>
+<span class="sp"></span>
+<button id="copy" type="button">Copy image</button><button id="png" type="button" class="primary">Download PNG</button>
+</div>
+<div id="confirm" class="dr-confirm" role="alertdialog" aria-labelledby="cq" hidden><p id="cq">Clear the whole drawing? You can still undo it.</p><button id="yes" type="button" class="danger">Clear drawing</button><button id="no" type="button">Cancel</button></div>
+<div id="stage" class="dr-stage bg-white"><canvas id="paper" role="img" aria-label="Drawing canvas. Draw with a mouse, finger or pen."></canvas><canvas id="over" aria-hidden="true"></canvas></div>
+<p id="msg" class="muted" role="status"></p>
+</section>
+<section aria-labelledby="h-help">
+<h2 id="h-help">Shortcuts</h2>
+<details><summary>Keyboard shortcuts</summary>
+<table class="dr-keys"><caption class="vh">Keyboard shortcuts</caption><tbody>
+<tr><th scope="row"><kbd>P</kbd> <kbd>E</kbd> <kbd>L</kbd> <kbd>R</kbd> <kbd>O</kbd></th><td>Pen, eraser, line, box, ellipse</td></tr>
+<tr><th scope="row"><kbd>[</kbd> <kbd>]</kbd></th><td>Smaller / bigger brush</td></tr>
+<tr><th scope="row"><kbd>Ctrl</kbd>+<kbd>Z</kbd></th><td>Undo</td></tr>
+<tr><th scope="row"><kbd>Ctrl</kbd>+<kbd>Y</kbd> or <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd></th><td>Redo</td></tr>
+<tr><th scope="row"><kbd>Shift</kbd> while dragging</th><td>Straight 45° lines, squares and circles</td></tr>
+</tbody></table>
+<p class="muted">Use <kbd>⌘</kbd> instead of <kbd>Ctrl</kbd> on a Mac. Letter shortcuts are ignored while typing in a field.</p>
+</details>
+</section>
+</main><script type="module" src="/_/draw/app.js"></script></body></html>

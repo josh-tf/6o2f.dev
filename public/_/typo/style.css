@@ -1,0 +1,162 @@
+.vh {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.ty-set {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  align-items: start;
+}
+@media (max-width: 860px) {
+  .ty-set {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+.ty-set fieldset {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 4px 14px 14px;
+  margin: 0;
+  min-width: 0;
+}
+.ty-set legend {
+  color: var(--muted);
+  padding: 0 6px;
+}
+.ty-set select,
+.ty-set .num {
+  width: 100%;
+}
+.ty-2 {
+  flex-wrap: nowrap;
+}
+.ty-2 > div {
+  flex: 1;
+  min-width: 0;
+}
+label.ck {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  color: var(--fg);
+  font-size: 1em;
+  margin: 8px 0;
+  min-height: 32px;
+}
+label.ck input {
+  margin-top: 5px;
+}
+.ty-note {
+  font-size: 0.85em;
+  margin: 4px 0 0;
+}
+.ty-fs {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+.ty-fs legend {
+  color: var(--muted);
+  font-size: 0.85em;
+  padding: 0;
+  margin: 10px 0 4px;
+}
+.seg {
+  display: inline-flex;
+  flex-wrap: wrap;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--card);
+  max-width: 100%;
+}
+.seg .opt {
+  margin: 0;
+  position: relative;
+  font-size: 1em;
+  color: var(--fg);
+}
+.seg .opt input {
+  position: absolute;
+  opacity: 0;
+  inset: 0;
+  margin: 0;
+  cursor: pointer;
+}
+.seg .opt span {
+  display: block;
+  padding: 7px 12px;
+  min-height: 36px;
+  border-right: 1px solid var(--line);
+}
+.seg .opt:last-child span {
+  border-right: 0;
+}
+.seg .opt input:checked + span {
+  background: var(--accent);
+  color: var(--accent-fg);
+}
+.seg .opt input:focus-visible + span {
+  outline: 2px solid var(--accent);
+  outline-offset: -4px;
+}
+.ty-spec-ctl,
+.ty-out-ctl {
+  align-items: flex-end;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.ty-grow {
+  flex: 1;
+  min-width: 200px;
+}
+.ty-grow input {
+  width: 100%;
+}
+.ty-spec {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--card);
+  padding: 4px 16px;
+  overflow: hidden;
+}
+.ty-row {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+.ty-row:last-child {
+  border-bottom: 0;
+}
+.ty-meta {
+  margin: 0 0 4px;
+  color: var(--muted);
+  font-size: 0.8em;
+}
+.ty-meta b {
+  color: var(--accent);
+}
+.ty-txt {
+  margin: 0;
+  color: var(--fg);
+  overflow-wrap: anywhere;
+}
+.ty-tab {
+  padding: 4px 12px;
+}
+.ty-tab td code {
+  font-size: 0.85em;
+  white-space: nowrap;
+}
+.ty-base th,
+.ty-base td {
+  color: var(--accent);
+}
+#out {
+  min-height: 220px;
+}

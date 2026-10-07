@@ -1,0 +1,25 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Icon</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/color/style.css"><link rel="stylesheet" href="/_/icon/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Icon</h1><p class="sub">Make a favicon or app icon from an emoji or two characters. Runs in your browser.</p>
+<div class="cols">
+<div>
+<section class="first"><h2>Design</h2>
+<div class="row"><div><label for="text">Emoji or text (up to 2 characters)</label><input id="text" value="🚀" autocomplete="off" spellcheck="false" style="width:150px"></div>
+<div><label for="shape">Shape</label><select id="shape"><option value="rounded">Rounded</option><option value="square">Square</option><option value="circle">Circle</option></select></div>
+<div><label for="weight">Font weight</label><select id="weight"><option value="400">Regular</option><option value="700" selected>Bold</option><option value="900">Black</option></select></div></div>
+<fieldset><legend>Colors</legend>
+<div class="colors"><div><span class="lbl" aria-hidden="true">Background</span><span id="c-bg"></span></div>
+<label class="chk"><input id="grad" type="checkbox" checked>Gradient</label>
+<div><span class="lbl" aria-hidden="true">Gradient end</span><span id="c-bg2"></span></div>
+<div><span class="lbl" aria-hidden="true">Text</span><span id="c-fg"></span></div></div></fieldset>
+</section>
+<section><h2>Download</h2>
+<div class="row" id="dl"></div>
+<p class="muted">The .ico holds 16, 32 and 48 px PNGs. SVG text depends on the fonts installed on the viewer's device, so an emoji may look different there; use PNG or ICO for a fixed look.</p>
+</section>
+</div>
+<div><section class="first"><h2>Preview</h2><div id="prev" class="row"></div></section>
+<section><h2>HTML tags</h2><pre id="tags" tabindex="0" aria-label="HTML tags for your page head"></pre><div class="row" style="margin-top:8px"><button type="button" class="primary" id="copy">Copy tags</button></div></section></div>
+</div>
+</main><script type="module" src="/_/icon/app.js"></script></body></html>

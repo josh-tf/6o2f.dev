@@ -1,0 +1,136 @@
+.vh {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+.grow {
+  flex: 1;
+  min-width: 0;
+}
+.m0 {
+  margin: 0;
+}
+.mt {
+  margin-top: 10px;
+}
+.small {
+  font-size: 0.85em;
+  margin: 0 0 8px;
+}
+#presets {
+  margin-bottom: 4px;
+}
+#presets button {
+  min-height: 34px;
+}
+.cols {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+@media (max-width: 760px) {
+  .cols {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+fieldset.card {
+  margin: 0;
+  min-width: 0;
+}
+.ctl {
+  margin-bottom: 6px;
+}
+.ctl select,
+#sel,
+#i-alignSelf {
+  width: 100%;
+}
+.ctl label,
+.two label {
+  font-family: var(--mono);
+}
+.hint {
+  color: var(--muted);
+  font-size: 0.8em;
+  margin: 4px 0 0;
+  min-height: 1.2em;
+}
+.two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 10px;
+}
+.two > div {
+  min-width: 0;
+}
+.err:empty {
+  display: none;
+}
+.err {
+  margin: 6px 0 0;
+}
+.pvwrap {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 10px;
+  overflow: auto;
+}
+.pv {
+  height: 280px;
+  border: 1px dashed var(--muted);
+  border-radius: 6px;
+  padding: 8px;
+  overflow: auto;
+}
+.pv .fi {
+  font: inherit;
+  font-size: 0.85em;
+  text-align: left;
+  border: 1px solid var(--accent);
+  background: color-mix(in srgb, var(--accent) 16%, var(--card));
+  color: var(--fg);
+  border-radius: 6px;
+  padding: 8px 12px;
+  min-width: 0;
+  min-height: 0;
+  cursor: pointer;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+.pv .fi b {
+  display: block;
+  font-size: 0.8em;
+  color: var(--muted);
+  font-weight: 400;
+}
+.pv .fi[aria-pressed='true'] {
+  background: var(--accent);
+  color: var(--accent-fg);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 35%, transparent);
+}
+.pv .fi[aria-pressed='true'] b {
+  color: var(--accent-fg);
+}
+.code {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 12px;
+  margin-top: 10px;
+}
+@media (max-width: 760px) {
+  .code {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+.code pre {
+  min-height: 120px;
+  max-height: 360px;
+}
+#msg:empty {
+  display: none;
+}

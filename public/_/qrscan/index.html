@@ -1,0 +1,28 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>QR reader</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/qrscan/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>QR reader</h1><p class="sub">Read a QR code from a picture or your camera. Decoding happens in your browser; images and camera frames never leave it.</p>
+<div class="qs-grid">
+<section aria-labelledby="h-scan">
+<h2 id="h-scan">Scan</h2>
+<label id="drop" for="file">Drop an image, paste one with <kbd>Ctrl</kbd>+<kbd>V</kbd>, or <u>choose a file</u><input id="file" type="file" accept="image/*"></label>
+<div class="row"><button id="cam" type="button" class="primary" aria-pressed="false">Start camera</button><span id="engine" class="muted qs-engine"></span></div>
+<div class="qs-view">
+<video id="video" muted playsinline hidden aria-label="Camera preview"></video>
+<canvas id="shot" aria-label="The image being scanned"></canvas>
+</div>
+<p id="state" class="muted" role="status"></p>
+<p id="err" class="err" role="alert"></p>
+</section>
+<section aria-labelledby="h-res">
+<h2 id="h-res">Result</h2>
+<div id="result" class="card"><p class="muted">Nothing scanned yet.</p></div>
+<div class="row qs-act"><button id="copy" type="button" disabled>Copy text</button><span id="msg" class="muted" role="status"></span></div>
+</section>
+</div>
+<section aria-labelledby="h-hist">
+<div class="row qs-hh"><h2 id="h-hist">History</h2><button id="clear" type="button" disabled>Clear history</button></div>
+<p class="muted qs-note">Kept in this tab only: reloading the page forgets it.</p>
+<ol id="hist" class="qs-hist"></ol>
+</section>
+</main><script type="module" src="/_/qrscan/app.js"></script></body></html>

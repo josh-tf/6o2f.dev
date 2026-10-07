@@ -1,0 +1,20 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fluid type calculator</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/clamp/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Fluid type</h1><p class="sub">A CSS clamp() that scales linearly between two viewport widths. Works for spacing too. Runs in your browser.</p>
+<fieldset class="card form"><legend class="vh">Sizes and viewports</legend>
+<div><label for="min">Min size (px)</label><input id="min" type="number" step="any" min="0" inputmode="decimal" value="16"></div>
+<div><label for="max">Max size (px)</label><input id="max" type="number" step="any" min="0" inputmode="decimal" value="24"></div>
+<div><label for="minvw">Min viewport (px)</label><input id="minvw" type="number" step="any" min="0" inputmode="decimal" value="320"></div>
+<div><label for="maxvw">Max viewport (px)</label><input id="maxvw" type="number" step="any" min="0" inputmode="decimal" value="1440"></div>
+<div><label for="unit">Output unit</label><select id="unit"><option value="rem">rem (16px root)</option><option value="px">px</option></select></div>
+</fieldset>
+<p id="err" class="err" role="alert"></p>
+<div id="out"><div class="row" style="margin-top:14px"><pre id="css" class="grow" tabindex="0" aria-label="Generated CSS"></pre><button type="button" id="copy" class="primary">Copy</button></div>
+<section><h2>Preview</h2>
+<label for="vw">Viewport width: <output id="vwv" for="vw"></output></label>
+<input id="vw" type="range" min="200" max="2000" step="1" value="800" style="width:100%">
+<p class="muted"><output id="size" for="vw min max minvw maxvw"></output></p>
+<div class="card"><div id="prev">The quick brown fox jumps over the lazy dog</div></div></section>
+<section><h2>Size at common widths</h2><div class="tw"><table id="tbl"><caption class="vh">Computed size at common viewport widths</caption><thead><tr><th scope="col">Viewport</th><th scope="col">px</th><th scope="col">rem</th></tr></thead><tbody></tbody></table></div></section></div>
+</main><script type="module" src="/_/clamp/app.js"></script></body></html>

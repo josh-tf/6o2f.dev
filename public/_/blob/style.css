@@ -1,0 +1,115 @@
+.vh {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.bl-wrap {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+@media (max-width: 760px) {
+  .bl-wrap {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+.bl-stage {
+  margin: 0;
+  position: sticky;
+  top: 12px;
+}
+@media (max-width: 760px) {
+  .bl-stage {
+    position: static;
+  }
+}
+.bl-prev {
+  aspect-ratio: 1;
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background-color: var(--card);
+  background-image:
+    linear-gradient(45deg, #8883 25%, transparent 25%, transparent 75%, #8883 75%),
+    linear-gradient(45deg, #8883 25%, transparent 25%, transparent 75%, #8883 75%);
+  background-size: 16px 16px;
+  background-position:
+    0 0,
+    8px 8px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 12px;
+}
+.bl-prev svg {
+  width: 92%;
+  height: 92%;
+  display: block;
+}
+.bl-ctl {
+  margin: 0;
+}
+.bl-ctl fieldset {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  margin: 0 0 12px;
+  padding: 4px 14px 14px;
+  min-width: 0;
+}
+.bl-ctl legend {
+  color: var(--muted);
+  padding: 0 6px;
+}
+.bl-ctl input[type='range'] {
+  width: 100%;
+  min-height: 32px;
+}
+.bl-grow {
+  flex: 1;
+  min-width: 0;
+}
+label.bl-in {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--fg);
+  font-size: 1em;
+  margin: 6px 12px 6px 0;
+  min-height: 32px;
+}
+.bl-hint {
+  margin: 10px 0 0;
+  font-size: 0.85em;
+}
+button[aria-pressed='true'] {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, var(--card));
+}
+kbd {
+  font: inherit;
+  font-size: 0.85em;
+  border: 1px solid var(--line);
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  padding: 0 5px;
+  background: var(--card);
+}
+output {
+  color: var(--fg);
+}
+#code,
+#css {
+  min-height: 60px;
+}
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}
+input[type='range'] {
+  accent-color: var(--accent);
+}

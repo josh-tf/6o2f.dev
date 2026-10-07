@@ -1,0 +1,46 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Flexbox playground</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/flex/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Flexbox playground</h1><p class="sub">Try flex container and item settings on a live preview, then copy the CSS and HTML. Runs in your browser.</p>
+<div class="row" role="group" aria-label="Presets" id="presets"><span class="muted">Presets:</span></div>
+
+<section aria-labelledby="pvh"><h2 id="pvh">Preview</h2>
+<p class="muted small">Click an item (or pick it under <i>Item</i>) to edit it. Items have different amounts of content so alignment is visible.</p>
+<div class="pvwrap"><div id="pv" class="pv"></div></div>
+</section>
+
+<div class="cols">
+<section aria-labelledby="ch"><h2 id="ch">Container</h2>
+<fieldset class="card"><legend class="vh">Container properties</legend>
+<div class="ctl"><label for="c-direction">flex-direction</label><select id="c-direction" data-k="direction" aria-describedby="h-direction"></select><p class="hint" id="h-direction"></p></div>
+<div class="ctl"><label for="c-wrap">flex-wrap</label><select id="c-wrap" data-k="wrap" aria-describedby="h-wrap"></select><p class="hint" id="h-wrap"></p></div>
+<div class="ctl"><label for="c-justify">justify-content</label><select id="c-justify" data-k="justify" aria-describedby="h-justify"></select><p class="hint" id="h-justify"></p></div>
+<div class="ctl"><label for="c-alignItems">align-items</label><select id="c-alignItems" data-k="alignItems" aria-describedby="h-alignItems"></select><p class="hint" id="h-alignItems"></p></div>
+<div class="ctl"><label for="c-alignContent">align-content</label><select id="c-alignContent" data-k="alignContent" aria-describedby="h-alignContent"></select><p class="hint" id="h-alignContent"></p></div>
+<div class="ctl"><label for="c-gap">gap (px)</label><input id="c-gap" data-k="gap" type="number" min="0" max="200" step="1" inputmode="numeric" autocomplete="off" style="width:140px"><p class="hint">Space between items and between wrapped lines.</p></div>
+</fieldset>
+</section>
+
+<section aria-labelledby="ih"><h2 id="ih">Item</h2>
+<fieldset class="card"><legend class="vh">Item properties</legend>
+<div class="row"><div class="grow"><label for="sel">Editing</label><select id="sel"></select></div></div>
+<div class="row mt"><button type="button" id="add">Add item</button><button type="button" id="remove" class="danger">Remove this item</button></div>
+<div class="two">
+<div><label for="i-label">Text</label><input id="i-label" type="text" maxlength="40" autocomplete="off" spellcheck="false" style="width:100%"></div>
+<div><label for="i-order">order</label><input id="i-order" type="number" min="-99" max="99" step="1" inputmode="numeric" autocomplete="off" style="width:100%"></div>
+<div><label for="i-grow">flex-grow</label><input id="i-grow" type="number" min="0" max="99" step="1" inputmode="numeric" autocomplete="off" style="width:100%"></div>
+<div><label for="i-shrink">flex-shrink</label><input id="i-shrink" type="number" min="0" max="99" step="1" inputmode="numeric" autocomplete="off" style="width:100%"></div>
+<div><label for="i-basis">flex-basis</label><input id="i-basis" type="text" autocomplete="off" spellcheck="false" autocapitalize="off" aria-describedby="h-basis basis-err" style="width:100%"></div>
+<div><label for="i-alignSelf">align-self</label><select id="i-alignSelf"></select></div>
+</div>
+<p class="hint" id="h-basis">Basis: <code>auto</code>, <code>content</code>, <code>0</code>, or a size like <code>200px</code>, <code>30%</code>, <code>10rem</code>. Grow shares out spare room; shrink decides who gives way when space runs short.</p>
+<p class="err" id="basis-err" role="alert"></p>
+</fieldset>
+</section>
+</div>
+
+<section aria-labelledby="codeh"><div class="row"><h2 id="codeh" class="m0">Code</h2><span class="grow"></span><button type="button" id="cp-css">Copy CSS</button><button type="button" id="cp-html">Copy HTML</button><button type="button" id="reset">Reset</button></div>
+<p id="msg" class="muted" role="status"></p>
+<div class="code"><pre><code id="o-css"></code></pre><pre><code id="o-html"></code></pre></div>
+</section>
+</main><script type="module" src="/_/flex/app.js"></script></body></html>

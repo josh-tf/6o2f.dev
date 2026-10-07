@@ -1,0 +1,68 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Aspect ratio calculator</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/aspect/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Aspect ratio</h1><p class="sub">Simplify a size to a ratio, resize without distortion, fit or crop to another shape, and work out screen PPI. Runs in your browser.</p>
+<div class="top">
+<div class="card">
+<fieldset><legend>Size</legend>
+<div class="two">
+<div><label for="w">Width</label><input id="w" type="number" min="0.01" max="1000000" step="any" inputmode="decimal" autocomplete="off" value="1920" style="width:100%"></div>
+<div><label for="h">Height</label><input id="h" type="number" min="0.01" max="1000000" step="any" inputmode="decimal" autocomplete="off" value="1080" style="width:100%"></div>
+</div>
+<div class="row mt"><button type="button" id="swap">Swap width and height</button></div>
+</fieldset>
+<fieldset><legend>Presets</legend>
+<div class="presets" id="presets"></div>
+</fieldset>
+<p id="err" class="err" role="alert"></p>
+</div>
+<div>
+<div class="stats" id="res">
+<div class="stat big"><span id="l-r">Ratio</span><output id="o-r" for="w h" aria-labelledby="l-r"></output></div>
+<div class="stat"><span id="l-d">Decimal</span><output id="o-d" for="w h" aria-labelledby="l-d"></output></div>
+<div class="stat"><span id="l-n">Closest common ratio</span><output id="o-n" for="w h" aria-labelledby="l-n"></output></div>
+</div>
+<figure class="pv"><div class="pvbox"><div id="rect" class="rect"><span id="rlabel"></span></div></div><figcaption class="vh">Proportional preview of the current size</figcaption></figure>
+</div>
+</div>
+
+<section aria-labelledby="rzh"><h2 id="rzh">Resize</h2>
+<div class="card">
+<div class="three">
+<div><label for="nw">New width</label><input id="nw" type="number" min="0" step="any" inputmode="decimal" autocomplete="off" value="1280" style="width:100%"></div>
+<div><label for="nh">New height</label><input id="nh" type="number" min="0" step="any" inputmode="decimal" autocomplete="off" style="width:100%"></div>
+<div class="lockc"><label class="chk"><input id="lock" type="checkbox" checked> Keep the ratio</label></div>
+</div>
+<p class="muted small" id="rznote" role="status"></p>
+</div>
+</section>
+
+<section aria-labelledby="fh"><h2 id="fh">Fit and crop to another shape</h2>
+<div class="card">
+<div class="three">
+<div><label for="tw">Target width</label><input id="tw" type="number" min="0.01" step="any" inputmode="decimal" autocomplete="off" value="1080" style="width:100%"></div>
+<div><label for="th">Target height</label><input id="th" type="number" min="0.01" step="any" inputmode="decimal" autocomplete="off" value="1350" style="width:100%"></div>
+<div><label for="tp">Target preset</label><select id="tp"><option value="">Custom</option></select></div>
+</div>
+<div class="fits">
+<div class="fitc"><h3>Scale to fit</h3><div class="mini" id="m-contain"></div><output id="o-contain" for="w h tw th"></output></div>
+<div class="fitc"><h3>Scale to fill</h3><div class="mini" id="m-cover"></div><output id="o-cover" for="w h tw th"></output></div>
+<div class="fitc"><h3>Crop to ratio</h3><div class="mini" id="m-crop"></div><output id="o-crop" for="w h tw th"></output></div>
+</div>
+</div>
+</section>
+
+<section aria-labelledby="ppih"><h2 id="ppih">Pixel density</h2>
+<div class="card">
+<div class="three">
+<div><label for="diag">Screen diagonal (inches)</label><input id="diag" type="number" min="0.1" max="1000" step="0.1" inputmode="decimal" autocomplete="off" value="24" style="width:100%"></div>
+<div class="span2"><p class="lbl">Uses the width and height above as the screen resolution in pixels.</p><output id="o-ppi" for="w h diag" class="ppi"></output></div>
+</div>
+</div>
+</section>
+
+<section aria-labelledby="th2"><h2 id="th2">Common resolutions at this ratio</h2>
+<div class="tablewrap" tabindex="0" role="region" aria-label="Common resolutions"><table id="tbl"><caption class="vh">Common resolutions matching the current ratio</caption>
+<thead><tr><th scope="col">Width</th><th scope="col">Height</th><th scope="col">Name</th><th scope="col"><span class="vh">Action</span></th></tr></thead><tbody></tbody></table></div>
+</section>
+</main><script type="module" src="/_/aspect/app.js"></script></body></html>

@@ -1,0 +1,121 @@
+#stage {
+  height: 220px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: #f2f2f2;
+  transition: background 0.15s;
+}
+#stage.dark {
+  background: #1b1b1f;
+}
+#el {
+  width: 150px;
+  height: 110px;
+  display: grid;
+  place-items: center;
+  background: #fff;
+  color: #222;
+  font-weight: 700;
+  font-size: 1.3rem;
+}
+#stage.dark #el {
+  background: #2a2a30;
+  color: #eee;
+}
+#stage.text #el {
+  background: none;
+  width: auto;
+  height: auto;
+  font-size: 3rem;
+  color: #222;
+}
+#stage.text.dark #el {
+  color: #eee;
+}
+.layer {
+  display: flex;
+  min-width: 0;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--card);
+  padding: 6px 10px 10px;
+  margin-top: 8px;
+}
+.layer label,
+.layer .lbl {
+  display: block;
+  color: var(--muted);
+  margin: 6px 0 2px;
+  font-size: 0.8em;
+}
+.layer legend {
+  color: var(--muted);
+  font-size: 0.85em;
+  padding: 0 4px;
+  margin: 0;
+}
+.cf {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+}
+.cfin {
+  width: 7.5em;
+}
+input[aria-invalid='true'] {
+  border-color: var(--danger);
+}
+.layer .swbtn {
+  width: 38px;
+  height: 36px;
+}
+fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+fieldset > legend {
+  color: var(--muted);
+  font-size: 0.85em;
+  margin: 10px 0 4px;
+  padding: 0;
+}
+
+.opts {
+  margin: 12px 0 6px;
+  align-items: flex-end;
+}
+.opts label {
+  margin-top: 0;
+}
+.vh {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.layer input[type='number'] {
+  width: 108px;
+}
+.layer .chk {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  margin: 0 0 8px;
+}
+#css {
+  white-space: pre-wrap;
+}
+@media (prefers-reduced-motion: reduce) {
+  #stage {
+    transition: none;
+  }
+}

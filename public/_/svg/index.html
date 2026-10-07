@@ -1,0 +1,54 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SVG cleaner</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/svg/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>SVG</h1><p class="sub">Paste an SVG to preview it safely, strip scripts and editor junk, shrink it, and turn it into a data URI or CSS background. Runs in your browser.</p>
+<div class="sv-grid">
+<section aria-labelledby="h-in">
+<h2 id="h-in">Input</h2>
+<label for="src">SVG markup</label>
+<textarea id="src" rows="12" spellcheck="false" autocapitalize="off" autocomplete="off" aria-describedby="err"></textarea>
+<div class="row sv-in"><label for="file" class="sv-file">Open a file<input id="file" type="file" accept=".svg,image/svg+xml"></label><span class="muted">or drop one on the box</span><button id="ex" type="button">Load example</button><button id="clr" type="button">Clear</button></div>
+<p id="err" class="err" role="alert"></p>
+</section>
+<section aria-labelledby="h-prev">
+<h2 id="h-prev">Safe preview</h2>
+<div id="stage" class="sv-stage bg-check"><img id="img" alt="Preview of the cleaned SVG" hidden><p id="empty" class="muted">Paste or drop an SVG to see it here.</p></div>
+<fieldset class="sv-fs"><legend>Preview background</legend>
+<div class="seg"><label class="opt"><input type="radio" name="bg" value="check" checked><span>Checker</span></label><label class="opt"><input type="radio" name="bg" value="light"><span>Light</span></label><label class="opt"><input type="radio" name="bg" value="dark"><span>Dark</span></label></div>
+</fieldset>
+<p class="muted sv-note">Rendered as an image of the sanitised markup: images cannot run scripts or load anything else.</p>
+<div id="removed" role="status" class="sv-removed"></div>
+</section>
+</div>
+<section aria-labelledby="h-opt">
+<h2 id="h-opt">Optimise</h2>
+<div class="sv-opts">
+<fieldset><legend>Remove</legend>
+<label class="ck"><input type="checkbox" id="o-comments" checked> Comments</label>
+<label class="ck"><input type="checkbox" id="o-metadata" checked> &lt;metadata&gt;</label>
+<label class="ck"><input type="checkbox" id="o-editor" checked> Editor namespaces (Inkscape, Illustrator, Sketch…)</label>
+<label class="ck"><input type="checkbox" id="o-defaults" checked> Default attribute values</label>
+<label class="ck"><input type="checkbox" id="o-whitespace" checked> Extra whitespace</label>
+</fieldset>
+<fieldset><legend>Numbers and size</legend>
+<label class="ck"><input type="checkbox" id="o-round" checked> Round numbers</label>
+<label for="dp">Decimal places</label>
+<input id="dp" type="number" min="0" max="8" step="1" value="2" inputmode="numeric" autocomplete="off" style="width:120px">
+<label for="vb">viewBox</label>
+<input id="vb" autocomplete="off" spellcheck="false" autocapitalize="off" placeholder="0 0 24 24">
+<div class="row sv-wh"><div><label for="w">Width</label><input id="w" autocomplete="off" spellcheck="false" autocapitalize="off" placeholder="none"></div><div><label for="h">Height</label><input id="h" autocomplete="off" spellcheck="false" autocapitalize="off" placeholder="none"></div></div>
+<p class="muted sv-note">Leave width and height empty to let the SVG scale to its container.</p>
+</fieldset>
+</div>
+</section>
+<section aria-labelledby="h-out">
+<h2 id="h-out">Output <output id="stats" class="muted sv-stats" for="src"></output></h2>
+<fieldset class="sv-fs"><legend>Format</legend>
+<div class="seg"><label class="opt"><input type="radio" name="fmt" value="svg" checked><span>SVG</span></label><label class="opt"><input type="radio" name="fmt" value="uri"><span>Data URI</span></label><label class="opt"><input type="radio" name="fmt" value="b64"><span>Base64</span></label><label class="opt"><input type="radio" name="fmt" value="css"><span>CSS</span></label></div>
+</fieldset>
+<label for="out">Result</label>
+<textarea id="out" rows="8" readonly spellcheck="false"></textarea>
+<div class="row"><button id="copy" type="button" class="primary">Copy</button><button id="dl" type="button">Download .svg</button></div>
+<p id="msg" class="muted" role="status"></p>
+</section>
+</main><script type="module" src="/_/svg/app.js"></script></body></html>

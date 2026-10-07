@@ -1,0 +1,22 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gradient</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/color/style.css"><link rel="stylesheet" href="/_/gradient/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Gradient</h1><p class="sub">Build a CSS gradient and copy the code. Runs in your browser.</p>
+<div id="preview" role="img" aria-label="Gradient preview"></div>
+<div class="cols">
+<div>
+<section class="first"><h2>Settings</h2>
+<fieldset><legend>Presets</legend><div class="row" id="presets"></div></fieldset>
+<div class="row opts"><div><label for="type">Type</label><select id="type"><option value="linear">Linear</option><option value="radial">Radial</option><option value="conic">Conic</option></select></div>
+<div id="f-angle"><label for="angle">Angle (deg)</label><input id="angle" type="number" min="0" max="360" step="1" inputmode="numeric" style="width:110px"></div>
+<div id="f-shape"><label for="shape">Shape</label><select id="shape"><option value="circle">Circle</option><option value="ellipse">Ellipse</option></select></div>
+<fieldset id="f-pos"><legend>Center X / Y (%)</legend><div class="row"><input id="x" type="number" min="0" max="100" step="1" inputmode="numeric" aria-label="Center X (%)" style="width:100px"><input id="y" type="number" min="0" max="100" step="1" inputmode="numeric" aria-label="Center Y (%)" style="width:100px"></div></fieldset></div>
+</section>
+<section><h2>Color stops</h2>
+<div id="stops"></div>
+<div class="row" style="margin-top:8px"><button type="button" id="add">Add stop</button><button type="button" id="rand">Random</button></div>
+</section>
+</div>
+<section class="first"><h2>CSS</h2><pre id="css" tabindex="0" aria-label="Generated CSS"></pre><div class="row" style="margin-top:8px"><button type="button" class="primary" id="copy">Copy CSS</button></div></section>
+</div>
+</main><script type="module" src="/_/gradient/app.js"></script></body></html>

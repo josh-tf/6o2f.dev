@@ -1,0 +1,16 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Shadow</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/color/style.css"><link rel="stylesheet" href="/_/shadow/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Shadow</h1><p class="sub">Layered box-shadow and text-shadow builder. Runs in your browser.</p>
+<div id="stage" role="img" aria-label="Shadow preview"><div id="el">Shadow</div></div>
+<fieldset class="row opts"><legend class="vh">Preview options</legend>
+<div><label for="mode">Mode</label><select id="mode"><option value="box">box-shadow</option><option value="text">text-shadow</option></select></div>
+<div><label for="bg">Background</label><select id="bg"><option value="light">Light</option><option value="dark">Dark</option></select></div>
+<div id="f-rad"><label for="rad">Corner radius (px)</label><input id="rad" type="number" min="0" max="100" step="1" inputmode="numeric" value="16" style="width:110px"></div></fieldset>
+<fieldset><legend>Presets</legend><div class="row" id="presets"></div></fieldset>
+<section><h2>Layers</h2>
+<div id="layers"></div>
+<p id="empty" class="muted" hidden>No layers: the shadow is <code>none</code>. Add a layer or pick a preset.</p>
+<div class="row" style="margin-top:8px"><button type="button" id="add">Add layer</button></div></section>
+<section><h2>CSS</h2><pre id="css" tabindex="0" aria-label="Generated CSS"></pre><div class="row" style="margin-top:8px"><button type="button" class="primary" id="copy">Copy CSS</button></div></section>
+</main><script type="module" src="/_/shadow/app.js"></script></body></html>

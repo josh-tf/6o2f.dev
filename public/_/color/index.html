@@ -1,0 +1,24 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Color converter</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/color/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Color</h1><p class="sub">Convert between HEX, RGB, HSL and OKLCH, check contrast, build a ramp. Runs in your browser.</p>
+<section class="top" aria-labelledby="ch"><h2 id="ch" class="vh">Convert a color</h2>
+<div><label for="fg">Color (hex, rgb(), hsl(), oklch() or a name)</label>
+<div class="row"><span class="pickwrap"><button id="fgp" type="button" class="swbtn" aria-label="Pick color"></button></span><input id="fg" class="grow" autocomplete="off" autocapitalize="off" spellcheck="false" aria-describedby="err"></div>
+<p id="err" class="err" role="alert"></p>
+<table id="fmt"></table></div>
+<div><p class="lbl">Preview</p><div id="swatch" class="swatch"></div></div>
+</section>
+<section aria-labelledby="wh"><h2 id="wh">Contrast (WCAG 2.x)</h2>
+<div class="top"><div>
+<label for="bg">Background</label>
+<div class="row"><span class="pickwrap"><button id="bgp" type="button" class="swbtn" aria-label="Pick background color"></button></span><input id="bg" class="grow" autocomplete="off" autocapitalize="off" spellcheck="false" value="#ffffff" aria-describedby="bgerr"><button type="button" id="swap">Swap</button></div>
+<p id="bgerr" class="err" role="alert"></p>
+<p><output id="ratio" class="big" for="fg bg"></output></p>
+<table id="ver"></table></div>
+<div id="sample" class="sample" role="group" aria-label="Sample text in the chosen colors"><b>Large text sample 24px</b><span>Normal body text sample, the quick brown fox jumps over the lazy dog.</span></div></div>
+</section>
+<section aria-labelledby="rh"><div class="row"><h2 id="rh" style="margin:0">Shades and tints</h2><span class="grow"></span><button type="button" id="cramp">Copy as CSS variables</button></div>
+<div id="ramp" class="ramp"></div></section>
+<p id="msg" class="muted" role="status"></p>
+</main><script type="module" src="/_/color/app.js"></script></body></html>
