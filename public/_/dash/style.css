@@ -143,15 +143,26 @@ mark {
   padding: 0;
   font: inherit;
 }
-.ft a.src {
+/* The three footer actions (source, lucky, details) are small outlined pills so they read as separate controls. */
+.ft a.src,
+.ft button {
   display: inline-flex;
   align-items: center;
   gap: 5px;
   color: var(--accent);
   text-decoration: none;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 2px 10px;
+  line-height: 1.5;
 }
-.ft a.src:hover {
-  text-decoration: underline;
+.ft a.src:hover,
+.ft button:hover {
+  border-color: var(--accent);
+}
+.ft a.src + button,
+.ft button + button {
+  margin-left: -10px;
 }
 .ft a.src svg {
   width: 1.05em;
