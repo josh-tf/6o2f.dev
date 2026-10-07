@@ -1,5 +1,12 @@
 # 6o2f.dev
 
+<p align="center">
+  <a href="https://6o2f.dev"><img src="public/_/og.png" alt="dev@6o2f: free developer tools, in your browser" width="760"></a>
+</p>
+<p align="center">
+  <a href="https://6o2f.dev"><img alt="Open 6o2f.dev" src="https://img.shields.io/badge/open%20site-6o2f.dev-7dff9b?style=for-the-badge&labelColor=0e1510"></a>
+</p>
+
 A hundred small developer tools, one per subdomain (`json.6o2f.dev`, `cidr.6o2f.dev`, ...), served by a single Cloudflare Worker. Most tools run entirely in the browser; the ones that store data or fetch other sites need a Discord sign-in and an admin's approval.
 
 ## How it fits together
