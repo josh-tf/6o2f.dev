@@ -1,0 +1,39 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bookmarks</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/bookmarks/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Bookmarks</h1><p class="sub">Save links with tags, search them and move them between browsers. Stored only in this browser; export a backup now and then.</p>
+<section aria-labelledby="ah"><h2 id="ah">Add a bookmark</h2>
+<form id="add" class="card" novalidate>
+<div class="fields">
+<div><label for="url">URL</label><input id="url" type="url" inputmode="url" autocomplete="off" autocapitalize="off" spellcheck="false" required aria-describedby="dupe"></div>
+<div><label for="title">Title (optional)</label><input id="title" autocomplete="off" maxlength="300"></div>
+<div><label for="tags">Tags (comma separated)</label><input id="tags" autocomplete="off" autocapitalize="off" list="taglist"></div>
+</div>
+<datalist id="taglist"></datalist>
+<p id="dupe" class="warn" role="status"></p>
+<div class="row"><button type="submit" class="primary">Add bookmark</button><span id="adderr" class="err" role="alert"></span></div>
+</form></section>
+<section aria-labelledby="lh"><h2 id="lh">Saved <output id="counts" class="muted normal"></output></h2>
+<div class="card tools">
+<div class="row filters">
+<div class="grow"><label for="q">Search title, URL or tag</label><input id="q" type="search" autocomplete="off" spellcheck="false"></div>
+<div><label for="tag">Tag</label><select id="tag"></select></div>
+<div><label for="sort">Sort</label><select id="sort"><option value="newest">Newest first</option><option value="oldest">Oldest first</option><option value="title">Title A to Z</option><option value="site">Site</option></select></div>
+</div>
+<div id="chips" class="chips" role="group" aria-label="Filter by tag"></div>
+<p class="muted small">Press <kbd>/</kbd> to jump to search. Links open in a new tab.</p>
+</div>
+<p id="status" class="muted" role="status"></p>
+<ul id="list" class="list"></ul>
+<p id="more" class="muted"></p>
+<p id="empty" class="muted empty" hidden></p>
+</section>
+<section aria-labelledby="ih"><h2 id="ih">Import and export</h2>
+<div class="card">
+<label for="file">Import a browser bookmarks file (.html) or a JSON export</label>
+<input id="file" type="file" accept=".html,.htm,.json,text/html,application/json">
+<p class="muted small">Folders become tags. Duplicates and non-web links (javascript:, file:) are skipped.</p>
+<div class="row"><button type="button" id="exhtml">Export for browsers (.html)</button><button type="button" id="exjson">Export JSON</button></div>
+<details><summary>Where do I get a bookmarks file?</summary><p>Chrome and Edge: Bookmarks manager, the <kbd>⋮</kbd> menu, Export bookmarks. Firefox: Library (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>O</kbd>), Import and Backup, Export Bookmarks to HTML. Safari: File, Export, Bookmarks.</p></details>
+</div></section>
+</main><script type="module" src="/_/bookmarks/app.js"></script></body></html>

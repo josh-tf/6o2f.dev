@@ -1,0 +1,146 @@
+.opts {
+  min-height: 9em;
+}
+fieldset {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  margin: 14px 0 0;
+  padding: 6px 14px 12px;
+}
+legend {
+  color: var(--muted);
+  font-size: 0.85em;
+  padding: 0 6px;
+}
+.check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0 0;
+  color: var(--fg);
+  font-size: 1em;
+}
+.hint {
+  color: var(--muted);
+  font-size: 0.85em;
+  margin: 4px 0 0;
+}
+.polls {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+.poll h3 {
+  font-size: 1rem;
+  margin: 0 0 4px;
+  overflow-wrap: anywhere;
+}
+.meta {
+  color: var(--muted);
+  font-size: 0.85em;
+  margin: 0 0 10px;
+}
+.tag {
+  display: inline-block;
+  border: 1px solid var(--line);
+  border-radius: 99px;
+  padding: 0 8px;
+  font-size: 0.8em;
+  margin-right: 6px;
+}
+.tag.open {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+.bars {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+.bhead {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  overflow-wrap: anywhere;
+}
+.track {
+  height: 10px;
+  border-radius: 99px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  overflow: hidden;
+  margin-top: 3px;
+}
+.track span {
+  display: block;
+  height: 100%;
+  background: var(--muted);
+  border-radius: 99px;
+  transition: width 0.4s;
+}
+.track span.lead {
+  background: var(--accent);
+}
+@media (prefers-reduced-motion: reduce) {
+  .track span {
+    transition: none;
+  }
+}
+.share {
+  display: flex;
+  gap: 8px;
+  margin: 10px 0;
+}
+.share input {
+  flex: 1;
+  min-width: 0;
+}
+.actions {
+  margin-top: 12px;
+}
+.choice {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 0;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--fg);
+  font-size: 1em;
+  cursor: pointer;
+}
+.choice:has(input:checked) {
+  border-color: var(--accent);
+}
+.choices {
+  display: grid;
+  gap: 8px;
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+.choices legend {
+  padding: 0;
+  margin-bottom: 8px;
+  color: var(--fg);
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+@media (max-width: 560px) {
+  .share {
+    flex-wrap: wrap;
+  }
+}
+.vh {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

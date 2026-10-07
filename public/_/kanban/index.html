@@ -1,0 +1,42 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kanban</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/kanban/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Kanban</h1><p class="sub">Boards, columns and cards with labels and due dates. Drag cards, or focus a card's handle and use the arrow keys. Saved in this browser only.</p>
+<div class="card toolbar">
+<div class="row">
+<div><label for="boardsel">Board</label><select id="boardsel"></select></div>
+<div class="row btns"><button type="button" id="newboard">New board</button><button type="button" id="renboard">Rename</button><button type="button" id="delboard" class="danger">Delete board</button></div>
+</div>
+<div class="row filters">
+<div class="grow"><label for="q">Search cards</label><input id="q" type="search" autocomplete="off" spellcheck="false"></div>
+<div><label for="lbl">Label</label><select id="lbl"></select></div>
+<label class="check"><input type="checkbox" id="showarch"> Show archived</label>
+</div>
+</div>
+<section aria-labelledby="bh" class="boardsec">
+<div class="row between"><h2 id="bh"></h2><output id="summary" class="muted small"></output></div>
+<p id="movehelp" class="muted small">Move a card: drag its <span aria-hidden="true">⠿</span> handle, or focus the handle and press <kbd>←</kbd> <kbd>→</kbd> to change column and <kbd>↑</kbd> <kbd>↓</kbd> to reorder. Press <kbd>Enter</kbd> on a card title to edit it.</p>
+<div id="board" class="board"></div>
+</section>
+<section id="archsec" aria-labelledby="arh" hidden><h2 id="arh">Archived cards</h2><ul id="arch" class="arch"></ul><p id="archempty" class="muted">Nothing archived on this board.</p></section>
+<section aria-labelledby="ih"><h2 id="ih">Backup</h2>
+<div class="card"><div class="row"><button type="button" id="export">Export all boards (JSON)</button></div>
+<label for="file">Import boards from a JSON export (adds to your boards)</label><input id="file" type="file" accept=".json,application/json"></div></section>
+<div id="toast" class="toast" role="status" aria-live="polite"><span id="toastmsg"></span><button type="button" id="undo" hidden>Undo</button></div>
+<div id="live" class="vh" aria-live="assertive"></div>
+<dialog id="dlg" aria-labelledby="dlgh"><form id="cardform" method="dialog" novalidate>
+<h2 id="dlgh">Edit card</h2>
+<label for="ctitle">Title</label><input id="ctitle" maxlength="200" required autocomplete="off">
+<label for="cnotes">Notes</label><textarea id="cnotes" rows="5" maxlength="4000" autocomplete="off"></textarea>
+<fieldset class="labels"><legend>Labels</legend><div id="clabels" class="lblgrid"></div></fieldset>
+<div class="row"><div><label for="cdue">Due date</label><input id="cdue" type="date"></div><div><label for="ccol">Column</label><select id="ccol"></select></div></div>
+<p id="cerr" class="err" role="alert"></p>
+<div class="row between dlgacts"><div class="row"><button type="button" id="carch">Archive</button><button type="button" id="cdel" class="danger">Delete</button></div>
+<div class="row"><button type="button" id="ccancel">Cancel</button><button type="submit" class="primary" value="save">Save</button></div></div>
+</form></dialog>
+<dialog id="ndlg" aria-labelledby="ndlgh"><form id="nameform" method="dialog" novalidate>
+<h2 id="ndlgh">Name</h2><label for="nname" id="nlabel">Name</label><input id="nname" maxlength="60" required autocomplete="off">
+<p id="nerr" class="err" role="alert"></p>
+<div class="row dlgacts end"><button type="button" id="ncancel">Cancel</button><button type="submit" class="primary" value="ok">Save</button></div>
+</form></dialog>
+</main><script type="module" src="/_/kanban/app.js"></script></body></html>

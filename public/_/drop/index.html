@@ -1,0 +1,14 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>File drop</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/drop/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>File drop</h1><p class="sub">Up to 100 MB per file. Anyone with the link can download until it expires.</p>
+<form class="card" id="zone"><p style="margin-top:0">Drag files onto this box, or choose them below.</p>
+<div class="row"><div><label for="file">Files</label><input type="file" id="file" multiple></div>
+<div><label for="ttl">Expires after</label><select id="ttl"><option value="1h">1 hour</option><option value="1d" selected>1 day</option><option value="7d">7 days</option><option value="30d">30 days</option></select></div>
+<button type="submit" class="primary" id="go" disabled>Upload</button></div>
+<p style="margin-bottom:0"><progress id="prog" max="100" value="0" hidden aria-label="Upload progress"></progress></p>
+<p id="status" class="muted" role="status"></p><p id="msg" class="err" role="alert"></p></form>
+<section><h2>Your files</h2><div class="card"><table><caption class="vh">Your uploaded files</caption><thead><tr><th scope="col">Name</th><th scope="col">Size</th><th scope="col">Expires</th><th scope="col">Downloads</th><th scope="col"><span class="vh">Actions</span></th></tr></thead><tbody id="list"></tbody></table></div></section>
+<details><summary>Use from the command line</summary>
+<pre>curl -T file.zip -H "Authorization: Bearer $TOKEN" "https://drop.6o2f.dev/api/files?name=file.zip&amp;ttl=1d"</pre></details>
+</main><script type="module" src="/_/drop/app.js"></script></body></html>

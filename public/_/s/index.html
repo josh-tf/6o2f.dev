@@ -1,0 +1,15 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Short links</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/s/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Short links</h1><p class="sub">Shorten a URL on <code>s.6o2f.dev</code>. The short link redirects for anyone.</p>
+<form class="card" id="f">
+<label for="url">Long URL</label><input id="url" name="url" type="url" required maxlength="2048" inputmode="url" autocomplete="off" spellcheck="false" autocapitalize="off" placeholder="https://example.com/a/very/long/path?with=query">
+<div class="row"><div><label for="slug">Custom slug (optional)</label><input id="slug" name="slug" pattern="[A-Za-z0-9_\-]{3,32}" minlength="3" maxlength="32" autocomplete="off" spellcheck="false" autocapitalize="off" placeholder="random" title="3 to 32 letters, digits, _ or -"></div>
+<div><label for="ttl">Expires</label><select id="ttl" name="ttl"><option value="never">Never</option><option value="1d">1 day</option><option value="7d">7 days</option><option value="30d">30 days</option></select></div></div>
+<p><button type="submit" class="primary" id="go">Shorten</button></p>
+<p id="msg" class="err" role="alert"></p>
+<p id="made" class="row" role="status" hidden></p></form>
+<section><h2>Your links</h2><div class="card"><table><caption class="vh">Your short links</caption><thead><tr><th scope="col">Link and destination</th><th scope="col">Expires</th><th scope="col"><span class="vh">Actions</span></th></tr></thead><tbody id="list"></tbody></table><p id="empty" class="muted" hidden>No links yet. Paste a URL above.</p></div></section>
+<details><summary>Use from the command line</summary>
+<pre>curl -H "Authorization: Bearer $T" -d '{"url":"https://example.com","slug":"ex","ttl":"7d"}' https://s.6o2f.dev/api/links</pre></details>
+</main><script type="module" src="/_/s/app.js"></script></body></html>

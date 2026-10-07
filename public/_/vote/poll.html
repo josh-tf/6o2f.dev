@@ -1,0 +1,11 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Poll</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/vote/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"><a class="logo" href="https://6o2f.dev">dev@6o2f<span class="path">:~/polls</span><span class="pr">$</span></a></header><main>
+<h1 id="q">Poll</h1><p id="info" class="sub" role="status">Loading…</p>
+<p id="err" class="err" role="alert"></p>
+<form id="ballot" class="card" hidden novalidate>
+<fieldset id="choices" class="choices"><legend id="legend"></legend></fieldset>
+<div class="row actions"><button class="primary" type="submit">Vote</button></div>
+</form>
+<section id="res" hidden><h2>Results</h2><div class="card"><ul id="bars" class="bars"></ul><p id="total" class="meta" style="margin:12px 0 0"></p></div></section>
+</main><script type="module" src="/_/vote/poll.js"></script></body></html>

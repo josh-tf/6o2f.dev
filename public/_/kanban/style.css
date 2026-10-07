@@ -1,0 +1,342 @@
+.vh {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+.small {
+  font-size: 0.85em;
+}
+.between {
+  justify-content: space-between;
+}
+.end {
+  justify-content: flex-end;
+}
+.grow {
+  flex: 1;
+  min-width: 180px;
+}
+.grow input {
+  width: 100%;
+}
+.toolbar {
+  display: grid;
+  gap: 4px;
+}
+.toolbar .row {
+  align-items: flex-end;
+}
+.toolbar select {
+  min-width: 12em;
+  max-width: 100%;
+}
+.check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--fg);
+  font-size: 1em;
+  margin: 0;
+  min-height: 36px;
+}
+.boardsec h2 {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+#movehelp {
+  margin: 4px 0 12px;
+}
+kbd {
+  font-family: var(--mono);
+  font-size: 0.85em;
+  border: 1px solid var(--line);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  padding: 0 4px;
+  background: var(--card);
+}
+.board {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  overflow-x: auto;
+  padding: 2px 2px 12px;
+  scroll-snap-type: x proximity;
+}
+.col {
+  position: relative;
+  flex: 1 0 216px;
+  max-width: 85vw;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  scroll-snap-align: start;
+}
+.col.over {
+  border-color: var(--accent);
+}
+.colhead {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 2px 4px;
+  padding: 8px 8px 6px 12px;
+  border-bottom: 1px solid var(--line);
+}
+.colhead h3 {
+  flex: 1 1 auto;
+  min-width: 6.5em;
+  margin: 0;
+  font-size: 0.95rem;
+  overflow-wrap: anywhere;
+}
+.colhead output {
+  color: var(--muted);
+  font-size: 0.8em;
+  margin-right: 4px;
+}
+.ib {
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: inline-grid;
+  place-items: center;
+  border-color: transparent;
+  background: transparent;
+  color: var(--muted);
+}
+.ib:hover {
+  color: var(--accent);
+  border-color: var(--line);
+}
+.cards {
+  list-style: none;
+  margin: 0;
+  padding: 8px;
+  display: grid;
+  gap: 8px;
+  min-height: 48px;
+}
+.k {
+  position: relative;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px 36px 8px 10px;
+  display: grid;
+  gap: 4px;
+}
+.k:hover {
+  border-color: color-mix(in srgb, var(--accent) 50%, var(--line));
+}
+.k .open {
+  all: unset;
+  cursor: pointer;
+  font: inherit;
+  color: var(--fg);
+  overflow-wrap: anywhere;
+  line-height: 1.4;
+  border-radius: 4px;
+  padding-block: 3px;
+}
+.k .open:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.k .grip {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 30px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  cursor: grab;
+  touch-action: none;
+  font-size: 1.1em;
+  line-height: 1;
+}
+.k .grip:hover {
+  color: var(--accent);
+}
+.k .meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  font-size: 0.78em;
+  color: var(--muted);
+}
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.75em;
+  border: 1px solid var(--line);
+  border-radius: 99px;
+  padding: 0 7px 0 5px;
+  color: var(--fg);
+  background: var(--card);
+}
+.dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex: none;
+  background: var(--c);
+}
+.due.overdue {
+  color: var(--danger);
+  font-weight: 700;
+}
+.due.today {
+  color: var(--fg);
+  font-weight: 700;
+}
+.k.archived {
+  opacity: 0.7;
+}
+.addcard {
+  padding: 0 8px 8px;
+  display: flex;
+  gap: 6px;
+}
+.addcard input {
+  flex: 1;
+  min-width: 0;
+  width: 0;
+}
+.addcol {
+  flex: 0 0 140px;
+  align-self: stretch;
+  border-style: dashed;
+  min-height: 80px;
+}
+.k.dragging {
+  opacity: 0.35;
+}
+.ghost {
+  position: fixed;
+  z-index: 50;
+  pointer-events: none;
+  box-shadow: 0 14px 30px -10px rgba(0, 0, 0, 0.5);
+  transform: rotate(2deg);
+  width: 256px;
+  opacity: 0.95;
+}
+.ph {
+  border: 2px dashed var(--accent);
+  border-radius: 8px;
+  min-height: 40px;
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+}
+@media (prefers-reduced-motion: reduce) {
+  .ghost {
+    transform: none;
+  }
+}
+.arch {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 6px;
+}
+.arch li {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 6px 6px 6px 12px;
+  background: var(--card);
+}
+.arch li span {
+  overflow-wrap: anywhere;
+  flex: 1;
+  min-width: 10em;
+}
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 8px 8px 8px 14px;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.45);
+  z-index: 40;
+  max-width: calc(100vw - 32px);
+}
+.toast:has(#toastmsg:empty) {
+  display: none;
+}
+dialog {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--card);
+  color: var(--fg);
+  padding: 18px;
+  width: min(520px, calc(100vw - 32px));
+}
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.45);
+}
+dialog h2 {
+  margin: 0 0 4px;
+}
+dialog input:not([type='checkbox']),
+dialog textarea {
+  width: 100%;
+}
+fieldset.labels {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  margin: 12px 0 0;
+  padding: 6px 12px 10px;
+}
+fieldset.labels legend {
+  color: var(--muted);
+  font-size: 0.85em;
+  padding: 0 6px;
+}
+.lblgrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 4px 10px;
+}
+.lblgrid label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 4px 0;
+  color: var(--fg);
+  font-size: 1em;
+  min-height: 32px;
+}
+.dlgacts {
+  margin-top: 14px;
+}
+input[type='date']:focus,
+input[type='date']:focus-within {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}

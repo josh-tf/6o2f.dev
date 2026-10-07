@@ -1,0 +1,33 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI helper</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/ai/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>AI helper</h1><p class="sub">Rewrite, fix grammar, summarise, translate or explain code with Cloudflare Workers AI. Your text is processed, not stored. <span id="usage" class="usage" role="status"></span></p>
+<form id="f" class="card" novalidate>
+<fieldset class="modes"><legend>What should it do?</legend>
+<label class="mode"><input type="radio" name="mode" value="rewrite" checked> Rewrite</label>
+<label class="mode"><input type="radio" name="mode" value="grammar"> Fix grammar</label>
+<label class="mode"><input type="radio" name="mode" value="summarise"> Summarise</label>
+<label class="mode"><input type="radio" name="mode" value="translate"> Translate</label>
+<label class="mode"><input type="radio" name="mode" value="explain"> Explain code</label>
+</fieldset>
+<div class="opts">
+<div data-for="rewrite"><label for="tone">Tone</label><select id="tone"><option value="professional">Professional</option><option value="friendly">Friendly</option><option value="concise">Concise</option><option value="formal">Formal</option></select></div>
+<div data-for="summarise" hidden><label for="length">Length</label><select id="length"><option value="short">Short (1 to 3 sentences)</option><option value="medium">Medium (paragraph + bullets)</option></select></div>
+<div data-for="translate" hidden><label for="lang">Translate into (source language is detected)</label><select id="lang"></select></div>
+</div>
+<label for="text" id="textlabel">Text</label>
+<textarea id="text" rows="10" maxlength="8000" autocomplete="off" aria-describedby="count">hey team, so basically the deploy yesterday didnt go great, we had like 20 mins of downtime because someone forgot to run the migrations before pushing. its fixed now but we need to be more carefull going forward, i think we should add a check to the pipeline so this cant happen again. lmk what u think</textarea>
+<div class="row between"><span id="count" class="muted small"></span><span class="muted small"><kbd>Ctrl</kbd> + <kbd>Enter</kbd> to run</span></div>
+<div class="row actions"><button type="submit" class="primary" id="run">Run</button><button type="button" id="stop" hidden>Stop</button><button type="button" id="clear">Clear text</button></div>
+<p id="err" class="err" role="alert"></p>
+</form>
+<section aria-labelledby="oh"><div class="row between"><h2 id="oh">Output</h2><div class="row"><button type="button" id="use" disabled>Use as input</button><button type="button" id="copy" disabled>Copy</button></div></div>
+<output id="out" class="card out" for="text" aria-labelledby="oh"><span class="muted">The result appears here. Pick a mode, edit the text above and press Run.</span></output>
+<p id="st" class="muted small" role="status"></p>
+</section>
+<section aria-labelledby="ph"><h2 id="ph">Privacy and limits</h2>
+<details class="card"><summary>Details</summary>
+<p>Requests go to a small, fast open model (Llama 3.1 8B) on Cloudflare Workers AI. We do not keep your text; we only count requests. Up to 8,000 characters in, about 750 words out, and 100 requests per person per day (resets at 00:00 UTC).</p>
+<p>AI output can be wrong or miss nuance. Check facts, names, numbers and code before you use them. Translation is strongest for English, Spanish, French, German, Italian, Portuguese, Hindi and Thai.</p>
+</details></section>
+</main><script type="module" src="/_/ai/app.js"></script></body></html>

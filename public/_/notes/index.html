@@ -1,0 +1,23 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Notes</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/notes/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Notes</h1><p class="sub">A private scratchpad. Notes live only in this browser (localStorage): nothing is sent anywhere, it works offline, and clearing site data erases them. Use Export to keep a copy.</p>
+<p id="warn" class="err" role="alert" hidden>Browser storage is unavailable, so notes will be lost when you close this tab. Use Export.</p>
+<div class="ws">
+  <aside class="card">
+    <div class="row"><label for="q" class="sr">Search notes</label><input id="q" type="search" placeholder="Search notes" autocomplete="off" spellcheck="false"><button type="button" id="add" class="primary">New</button></div>
+    <h2 class="sr">Your notes</h2>
+    <ul id="list" aria-label="Notes"></ul>
+    <p id="none" class="muted" hidden>No matching notes.</p>
+    <div class="row"><button type="button" id="export">Export all</button><button type="button" id="import">Import</button><input id="file" type="file" accept="application/json,.json" hidden aria-label="Import notes file"></div>
+    <p id="msg" class="muted" role="status"></p>
+  </aside>
+  <section class="card" id="ed" aria-label="Editor">
+    <label for="title">Title</label><input id="title" maxlength="200" autocomplete="off" enterkeyhint="next">
+    <label for="body">Note</label><textarea id="body" rows="16" spellcheck="true"></textarea>
+    <div class="row"><span id="count" class="muted"></span><span class="sp"></span><span id="state" class="muted" role="status"></span>
+      <button type="button" id="del" class="danger">Delete</button>
+      <span id="sure" hidden class="row"><span>Delete this note?</span><button type="button" id="yes" class="danger">Yes, delete</button><button type="button" id="no">Cancel</button></span></div>
+  </section>
+</div>
+</main><script type="module" src="/_/notes/app.js"></script></body></html>

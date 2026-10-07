@@ -1,0 +1,31 @@
+.vh {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+.dest {
+  color: var(--muted);
+  word-break: break-all;
+  font-size: 0.9em;
+}
+td.act {
+  text-align: right;
+  white-space: nowrap;
+}
+#f input[type='url'] {
+  width: 100%;
+}
+#made a {
+  word-break: break-all;
+}
+@media (max-width: 480px) {
+  td.act {
+    white-space: normal;
+  }
+  td.act button {
+    margin-block: 2px;
+  }
+}

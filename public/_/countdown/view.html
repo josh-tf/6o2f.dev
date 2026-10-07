@@ -1,0 +1,16 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Countdown</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/countdown/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"><a class="logo" href="https://6o2f.dev">dev@6o2f<span class="path">:~/countdown</span><span class="pr">$</span></a></header><main class="viewer">
+<h1 id="title">Countdown</h1>
+<p id="err" class="err" role="alert"></p>
+<div id="live" hidden>
+<div class="clock" id="clock" role="timer" aria-labelledby="title" aria-describedby="spoken"></div>
+<p id="spoken" class="vh"></p>
+<div id="done" class="done" hidden role="status"><p class="donehead">It's time.</p><p id="message" class="message"></p></div>
+<section aria-labelledby="wh" class="whenbox"><h2 id="wh" class="vh">When</h2>
+<dl class="when-list"><dt>Your time</dt><dd><time id="local"></time></dd><dt id="tzlabel" hidden>Event time</dt><dd id="tzrow" hidden><time id="zoned"></time></dd></dl>
+<div class="row center"><a class="btn" id="ics" download="countdown.ics" href="#">Add to calendar (.ics)</a><button type="button" id="copy">Copy link</button></div>
+<p id="st" class="muted small center-text" role="status"></p>
+</section>
+</div>
+</main><script type="module" src="/_/countdown/view.js"></script></body></html>

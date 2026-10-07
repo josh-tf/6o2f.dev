@@ -1,0 +1,18 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pastebin</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/paste/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Pastebin</h1><p class="sub">Share text with an expiry. Anyone with the link can read it as plain text.</p>
+<form class="card" id="new">
+<label for="text">Text</label><textarea id="text" rows="12" required spellcheck="false" autocomplete="off" autocapitalize="off" placeholder="Paste or type something to share"></textarea>
+<div class="row" style="margin-top:10px"><label for="ttl" style="margin:0">Expires in</label>
+<select id="ttl"><option value="1h">1 hour</option><option value="1d" selected>1 day</option><option value="7d">7 days</option><option value="30d">30 days</option></select>
+<button type="submit" class="primary" id="create">Create paste</button><span id="size" class="muted" aria-live="off"></span></div>
+<p id="msg" class="err" role="alert"></p>
+<p id="made" hidden class="row" role="status"><span>Created:</span> <a id="link"></a><button type="button" id="copy">Copy link</button></p>
+</form>
+<section><h2>My pastes</h2><div class="card"><table><caption class="vh">Your pastes</caption><thead><tr><th scope="col">Link</th><th scope="col">Preview</th><th scope="col">Size</th><th scope="col">Expires</th><th scope="col"><span class="vh">Actions</span></th></tr></thead><tbody id="list"></tbody></table><p id="empty" class="muted" hidden>No pastes yet. Create one above.</p></div></section>
+<details><summary>Use from the command line</summary>
+<p class="muted">Create with a token from the dashboard; reading needs no token.</p>
+<pre>curl -H "Authorization: Bearer $T" --data-binary @file.txt "https://paste.6o2f.dev/?ttl=1d"
+curl https://paste.6o2f.dev/&lt;id&gt;</pre></details>
+</main><script type="module" src="/_/paste/app.js"></script></body></html>

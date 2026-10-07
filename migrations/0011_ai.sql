@@ -1,0 +1,1 @@
+CREATE TABLE ai_usage (user_id TEXT NOT NULL, day TEXT NOT NULL, n INTEGER NOT NULL DEFAULT 0, PRIMARY KEY (user_id, day));

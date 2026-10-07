@@ -1,0 +1,12 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Todo</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/todo/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Todo</h1><p class="sub">A checklist that lives only in this browser (localStorage). Nothing is sent anywhere; clearing site data erases it, so Export now and then.</p>
+<p id="warn" class="err" role="alert" hidden>Browser storage is unavailable; the list will be lost when you close this tab.</p>
+<form id="new" class="row"><label for="text" class="sr">New task</label><input id="text" placeholder="What needs doing? Press Enter to add" maxlength="300" autocomplete="off" enterkeyhint="done" required><button type="submit" class="primary">Add</button></form>
+<div class="row bar2" role="group" aria-label="Filter"><button type="button" data-f="all" aria-pressed="true">All</button><button type="button" data-f="active" aria-pressed="false">Active</button><button type="button" data-f="done" aria-pressed="false">Done</button>
+<span id="count" class="muted" role="status"></span><span class="sp"></span><button type="button" id="clear">Clear completed</button></div>
+<h2 class="sr">Tasks</h2>
+<ul id="list" class="card" aria-label="Tasks"></ul><p id="empty" class="muted" hidden>Nothing here.</p>
+<div class="row"><button type="button" id="export">Export</button><button type="button" id="import">Import</button><input id="file" type="file" accept="application/json,.json" hidden aria-label="Import todo file"><span id="msg" class="muted" role="status"></span></div>
+</main><script type="module" src="/_/todo/app.js"></script></body></html>

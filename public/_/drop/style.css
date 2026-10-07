@@ -1,0 +1,36 @@
+.vh {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+#zone {
+  border: 2px dashed var(--line);
+  padding: 20px 16px;
+  transition: border-color 0.12s;
+}
+#zone.over {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 8%, var(--card));
+}
+#zone .row {
+  align-items: flex-end;
+}
+progress {
+  width: 100%;
+  accent-color: var(--accent);
+}
+td.act {
+  text-align: right;
+  white-space: nowrap;
+}
+td.n a {
+  word-break: break-all;
+}
+@media (prefers-reduced-motion: reduce) {
+  #zone {
+    transition: none;
+  }
+}

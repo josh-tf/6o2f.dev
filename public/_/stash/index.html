@@ -1,0 +1,17 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Stash</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/stash/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Stash</h1><p class="sub">Your private key-value store: up to 500 keys of 64 KB each, readable from scripts.</p>
+<div class="ws">
+  <aside class="card"><form id="addf"><label for="nk">New key <span class="muted">(letters, digits . _ : -)</span></label><div class="row"><input id="nk" placeholder="my-key" maxlength="100" autocomplete="off" autocapitalize="off" spellcheck="false" aria-describedby="kmsg"><button type="submit" id="add">Add</button></div></form>
+    <p id="kmsg" class="err" role="alert"></p>
+    <ul id="keys" aria-label="Keys"></ul><p id="none" class="muted" hidden>No keys yet.</p></aside>
+  <section class="card" id="ed" hidden>
+    <h2 id="kname" class="mono"></h2>
+    <label for="val">Value</label><textarea id="val" rows="10" spellcheck="false" autocomplete="off" aria-describedby="sz"></textarea><p id="sz" class="muted small"></p>
+    <div class="row" style="margin-top:10px"><button type="button" id="save" class="primary">Save</button><button type="button" id="del" class="danger">Delete</button>
+      <span id="sure" hidden class="row"><span>Delete this key?</span><button type="button" id="yes" class="danger">Yes, delete</button><button type="button" id="no">Cancel</button></span><output id="msg" class="muted" role="status"></output><span class="muted small"><kbd>Ctrl</kbd>+<kbd>S</kbd> saves</span></div>
+  </section>
+</div>
+<section><h2>From scripts</h2><pre id="curl" tabindex="0" aria-label="curl examples"></pre></section>
+</main><script type="module" src="/_/stash/app.js"></script></body></html>

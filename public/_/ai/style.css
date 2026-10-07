@@ -1,0 +1,96 @@
+.modes {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.modes legend {
+  color: var(--muted);
+  font-size: 0.85em;
+  margin-bottom: 6px;
+  padding: 0;
+}
+.mode {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--fg);
+  font-size: 1em;
+  cursor: pointer;
+  min-height: 36px;
+}
+.mode:has(input:checked) {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.mode:has(input:focus-visible) {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.opts select {
+  min-width: 14em;
+  max-width: 100%;
+}
+.between {
+  justify-content: space-between;
+}
+.small {
+  font-size: 0.85em;
+}
+.actions {
+  margin-top: 10px;
+}
+#text {
+  min-height: 12em;
+  resize: vertical;
+}
+.out {
+  display: block;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  min-height: 8em;
+  font: inherit;
+  line-height: 1.6;
+}
+.out[aria-busy='true']::after {
+  content: '▍';
+  color: var(--accent);
+  animation: bl 1.1s steps(2) infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .out[aria-busy='true']::after {
+    animation: none;
+  }
+}
+.usage {
+  display: inline-block;
+  color: var(--fg);
+}
+kbd {
+  font-family: var(--mono);
+  font-size: 0.85em;
+  border: 1px solid var(--line);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  padding: 0 4px;
+  background: var(--card);
+}
+section h2 {
+  margin: 0;
+}
+section > .between {
+  margin-bottom: 10px;
+}
+details p {
+  margin: 10px 0 0;
+}
+details summary {
+  cursor: pointer;
+  font-weight: 600;
+}

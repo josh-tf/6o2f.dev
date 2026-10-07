@@ -1,0 +1,26 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Polls</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/vote/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Polls</h1><p class="sub">Make a poll, share the link, watch the votes come in. Anyone with the link can vote without signing in; each person gets one vote.</p>
+<section><h2>New poll</h2>
+<form class="card" id="new" novalidate>
+<label for="q">Question</label>
+<input id="q" name="q" class="full" maxlength="200" autocomplete="off" required value="Where should we have the team lunch?">
+<label for="opts">Options (one per line, 2 to 10)</label>
+<textarea id="opts" class="opts" rows="5" autocomplete="off" spellcheck="false" aria-describedby="optcount">Thai
+Pizza
+Sushi
+Burritos</textarea>
+<p id="optcount" class="hint" role="status"></p>
+<fieldset><legend>Settings</legend>
+<label class="check"><input type="checkbox" id="multi"> Allow more than one choice</label>
+<label class="check"><input type="checkbox" id="show" checked> Show results to voters while the poll is open</label>
+<div class="row" style="margin-top:10px"><label for="days" style="margin:0">Closes after (days)</label><input id="days" type="number" min="1" max="30" step="1" value="7" inputmode="numeric" autocomplete="off" style="width:110px"></div>
+</fieldset>
+<div class="row actions"><button class="primary" type="submit">Create poll</button><span id="msg" class="err" role="alert"></span></div>
+</form></section>
+<section><h2>Your polls <span id="count" class="muted" style="font-weight:400"></span></h2>
+<p id="status" class="muted" role="status"></p>
+<ul id="list" class="polls"></ul>
+<p id="empty" class="muted" hidden>No polls yet. Create one above.</p></section>
+</main><script type="module" src="/_/vote/app.js"></script></body></html>

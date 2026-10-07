@@ -1,0 +1,18 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Clipboard</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/clip/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Clipboard</h1><p class="sub">Send text here, pick it up on another device. Private to you; clips expire on their own.</p>
+<form class="card" id="new">
+<label for="text">Text <span class="muted">(max 64 KB)</span></label><textarea id="text" rows="6" required spellcheck="false" autocomplete="off" placeholder="Paste or type something to send"></textarea>
+<div class="row top"><label for="ttl">Expires in</label>
+<select id="ttl"><option value="10m">10 minutes</option><option value="1h" selected>1 hour</option><option value="1d">1 day</option></select>
+<button type="submit" class="primary">Send</button><span class="muted hint"><kbd>Ctrl</kbd>+<kbd>Enter</kbd> to send</span></div>
+<p id="msg" class="err" role="alert"></p>
+</form>
+<section><h2>Recent clips</h2><div class="card"><ul id="list" aria-label="Recent clips"></ul><p id="empty" class="muted" hidden>No clips yet. Send one above and it shows up here on every device.</p></div>
+<p class="muted small" id="note" role="status">Refreshes every 5 seconds.</p></section>
+<section><details class="card"><summary>Use it from a shell</summary>
+<p class="muted">Create a token on the <a href="/" id="dashlink">dashboard</a>, then:</p>
+<pre>echo hi | curl --data-binary @- -H "Authorization: Bearer $T" "https://clip.6o2f.dev/api/clips?ttl=1h"
+curl -H "Authorization: Bearer $T" https://clip.6o2f.dev/api/clips/latest</pre></details></section>
+</main><script type="module" src="/_/clip/app.js"></script></body></html>

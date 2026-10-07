@@ -1,0 +1,73 @@
+[hidden] {
+  display: none !important;
+}
+.sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  margin: 0;
+}
+#new {
+  margin-bottom: 12px;
+}
+#new input {
+  flex: 1;
+  min-width: 0;
+}
+.bar2 {
+  margin-bottom: 12px;
+}
+.sp {
+  flex: 1;
+}
+button[aria-pressed='true'] {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+#list {
+  list-style: none;
+  padding: 4px 12px;
+  margin: 0 0 16px;
+}
+#list li {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--line);
+}
+#list li:last-child {
+  border: 0;
+}
+#list li.over {
+  box-shadow: 0 -2px 0 var(--accent);
+}
+#list li[draggable='true'] {
+  cursor: grab;
+}
+#list .t {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  background: none;
+  border: 0;
+  text-align: left;
+  padding: 4px;
+}
+#list .done .t {
+  text-decoration: line-through;
+  color: var(--muted);
+}
+#list li input[type='text'] {
+  flex: 1;
+  min-width: 0;
+}
+#list li input[type='checkbox'] {
+  width: 18px;
+  height: 18px;
+}
+#list li button.i {
+  padding: 2px 8px;
+}

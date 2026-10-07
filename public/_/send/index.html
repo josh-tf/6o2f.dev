@@ -1,0 +1,31 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Send</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/send/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Send</h1>
+<p class="sub">Send files and text between your devices. Files go directly between devices and are not uploaded to any server. Keep this tab open while transferring.</p>
+<p id="notice" class="err" role="alert"></p>
+<div class="card" id="me"><label for="name">Your device name</label>
+<div class="row"><input id="name" maxlength="32" autocomplete="off" spellcheck="false"><span id="me-dev" class="muted" aria-label="Device type"></span></div></div>
+
+<section aria-labelledby="h-nearby"><h2 id="h-nearby">Nearby</h2>
+<p class="muted">Devices on the same network (same public IP) appear here automatically. Open this page on another device to see it.</p>
+<p id="nearby-status" class="status" role="status"></p><ul id="nearby-peers" class="grid peers"></ul></section>
+
+<section aria-labelledby="h-pair"><h2 id="h-pair">Pair by code</h2>
+<p class="muted">Not on the same network? Create a code and enter it on the other device, or share the link.</p>
+<div id="pair-idle" class="row">
+<button type="button" id="host" class="primary">Create a code</button><span class="muted">or</span>
+<label for="join-code" class="inline">Code</label><input id="join-code" size="8" maxlength="8" placeholder="ABC234" autocapitalize="characters" autocomplete="off" spellcheck="false"><button type="button" id="join">Join</button></div>
+<div id="pair-live" class="card" hidden>
+<div class="row"><output id="code" class="code" aria-label="Pairing code"></output><button type="button" id="copy-code">Copy code</button><button type="button" id="leave" class="danger">Leave</button></div>
+<label for="share">Share link</label><div class="row"><input id="share" readonly size="34"><button type="button" id="copy-link">Copy link</button></div>
+<p id="code-status" class="status" role="status"></p><ul id="code-peers" class="grid peers"></ul></div></section>
+
+<section><div class="row"><h2 style="margin:0">Transfers</h2><span class="sp"></span><button type="button" id="clear">Clear finished</button></div>
+<ul id="xfers" class="xfers" aria-label="Transfers"></ul><p id="xempty" class="muted">Nothing sent or received yet.</p></section>
+
+<input type="file" id="pick" multiple hidden>
+<dialog id="txt" aria-labelledby="txt-label"><form method="dialog"><label for="txt-body" id="txt-label">Text for <b id="txt-peer"></b></label>
+<textarea id="txt-body" rows="6" maxlength="20000" required autocomplete="off"></textarea>
+<div class="row" style="margin-top:10px"><button type="submit" value="send" class="primary">Send</button><button type="submit" value="cancel" formnovalidate>Cancel</button></div></form></dialog>
+</main><script type="module" src="/_/send/app.js"></script></body></html>

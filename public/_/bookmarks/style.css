@@ -1,0 +1,148 @@
+.fields {
+  display: grid;
+  grid-template-columns: 2fr 2fr 1.5fr;
+  gap: 0 12px;
+}
+.fields input {
+  width: 100%;
+}
+@media (max-width: 720px) {
+  .fields {
+    grid-template-columns: 1fr;
+  }
+}
+.warn {
+  min-height: 1.2em;
+  margin: 8px 0;
+  color: var(--fg);
+  font-size: 0.9em;
+}
+.warn:empty {
+  margin: 4px 0;
+}
+.normal {
+  font-weight: 400;
+}
+.small {
+  font-size: 0.85em;
+}
+.grow {
+  flex: 1;
+  min-width: 200px;
+}
+.grow input {
+  width: 100%;
+}
+.filters {
+  align-items: flex-end;
+}
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+.chips button,
+.tag {
+  font-size: 0.85em;
+  padding: 4px 10px;
+  border-radius: 99px;
+  min-height: 32px;
+}
+.chips button[aria-pressed='true'] {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+.bm {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4px 12px;
+  align-items: start;
+}
+.bm a.t {
+  font-weight: 600;
+  overflow-wrap: anywhere;
+  text-decoration: none;
+}
+.bm a.t:hover {
+  text-decoration: underline;
+}
+.bm .u {
+  color: var(--muted);
+  font-size: 0.85em;
+  overflow-wrap: anywhere;
+  margin: 2px 0 0;
+}
+.bm .meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  margin-top: 6px;
+  font-size: 0.85em;
+  color: var(--muted);
+}
+.bm .tag {
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--fg);
+  cursor: pointer;
+}
+.bm .tag:hover {
+  border-color: var(--accent);
+}
+.bm .acts {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.bm .acts button {
+  padding: 5px 10px;
+}
+.bm .confirm {
+  grid-column: 1/-1;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.bm form {
+  grid-column: 1/-1;
+}
+@media (max-width: 560px) {
+  .bm {
+    grid-template-columns: 1fr;
+  }
+  .bm .acts {
+    justify-content: flex-start;
+  }
+}
+details {
+  margin-top: 12px;
+}
+details summary {
+  cursor: pointer;
+}
+kbd {
+  font-family: var(--mono);
+  font-size: 0.85em;
+  border: 1px solid var(--line);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  padding: 0 4px;
+  background: var(--bg);
+}
+.empty {
+  padding: 20px;
+  text-align: center;
+  border: 1px dashed var(--line);
+  border-radius: 8px;
+}

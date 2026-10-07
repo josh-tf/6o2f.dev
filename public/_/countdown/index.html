@@ -1,0 +1,33 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Countdown</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/countdown/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Countdown</h1><p class="sub">Make a countdown to a launch, a trip or a deadline and share the link. Viewers see it in their own time zone and can add it to their calendar; no sign-in needed to view.</p>
+<section aria-labelledby="nh"><h2 id="nh">New countdown</h2>
+<div class="split">
+<form id="f" class="card" novalidate>
+<label for="title">Title</label>
+<input id="title" maxlength="80" autocomplete="off" required value="New Year 2027">
+<fieldset class="when"><legend>When</legend>
+<div class="row"><div class="grow"><label for="at">Date and time</label><input id="at" type="datetime-local" required step="60"></div>
+<div class="grow"><label for="tz">Time zone</label><select id="tz"></select></div></div>
+<p id="tzhint" class="muted small"></p>
+</fieldset>
+<label for="msg">Message shown when it ends (optional)</label>
+<textarea id="msg" rows="3" maxlength="280" autocomplete="off" aria-describedby="msgcount">Happy New Year! Thanks for an amazing 2026.</textarea>
+<p id="msgcount" class="muted small"></p>
+<div class="row actions"><button type="submit" class="primary" id="create">Create countdown</button></div>
+<p id="err" class="err" role="alert"></p>
+</form>
+<div class="card preview" aria-labelledby="pvh"><h3 id="pvh">Preview</h3>
+<p id="pvtitle" class="pvtitle"></p>
+<div class="clock small-clock" id="pv" aria-hidden="true"></div>
+<p id="pvspoken" class="muted small"></p>
+<p id="pvwhen" class="muted small"></p>
+</div>
+</div></section>
+<section aria-labelledby="lh"><h2 id="lh">Your countdowns <span id="count" class="muted normal"></span></h2>
+<p id="status" class="muted" role="status"></p>
+<ul id="list" class="events"></ul>
+<p id="empty" class="muted" hidden>No countdowns yet. Create one above and its share link appears here.</p>
+</section>
+</main><script type="module" src="/_/countdown/app.js"></script></body></html>
