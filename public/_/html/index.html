@@ -1,0 +1,16 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HTML entities</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/html/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>HTML entities</h1><p class="sub">Escape and unescape. Runs in your browser; pasted markup is treated as text and never executed.</p>
+<div class="row opts">
+<fieldset class="row"><legend class="vh">Direction</legend>
+<label class="inl"><input type="radio" name="dir" value="esc" checked> Escape</label>
+<label class="inl"><input type="radio" name="dir" value="unesc"> Unescape</label>
+</fieldset>
+<label class="inl" id="naw"><input type="checkbox" id="na"> Escape all non-ASCII as numeric entities</label>
+</div>
+<label for="in">Input</label>
+<textarea id="in" rows="7" spellcheck="false" autocapitalize="off" autocomplete="off" placeholder="Paste text or HTML here"></textarea>
+<div class="row"><label for="out" class="grow">Output</label><button type="button" id="swap">Use as input</button><button type="button" data-copy="out" class="primary" aria-label="Copy output">Copy</button></div>
+<textarea id="out" rows="7" readonly spellcheck="false" placeholder="The result appears here"></textarea>
+</main><script type="module" src="/_/html/app.js"></script></body></html>

@@ -1,0 +1,25 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>JSONPath tester</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/jsonpath/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>JSONPath</h1><p class="sub">Run JSONPath queries, including filters, against pasted JSON and see each match with its normalized path. Runs in your browser; nothing is sent.</p>
+<div class="cols">
+  <section aria-labelledby="jh"><div class="row head"><h2 id="jh" class="grow"><label for="json">JSON</label></h2><button type="button" id="sample">Bookstore sample</button><button type="button" id="clear">Clear</button></div>
+    <textarea id="json" rows="22" spellcheck="false" autocomplete="off" autocapitalize="off"></textarea>
+    <p id="jsonerr" class="err" role="alert"></p>
+  </section>
+  <section aria-labelledby="qh"><h2 id="qh">Query</h2>
+    <label for="q">JSONPath expression</label>
+    <input id="q" class="wide" autocomplete="off" spellcheck="false" autocapitalize="off" aria-describedby="qerr qhelp">
+    <div class="row ex"><label for="examples" class="inl">Examples</label><select id="examples"></select></div>
+    <p id="qerr" class="err" role="alert"></p>
+    <p id="status" role="status" class="muted"></p>
+    <div class="row"><button type="button" id="copyvals">Copy values</button><button type="button" id="copypaths">Copy paths</button></div>
+    <div class="results"><table><caption class="sr">Matches</caption><thead><tr><th scope="col">#</th><th scope="col">Path</th><th scope="col">Value</th></tr></thead><tbody id="rows"></tbody></table></div>
+    <p id="qhelp" class="muted small"><kbd>$</kbd> root · <kbd>.name</kbd> / <kbd>['name']</kbd> child · <kbd>..</kbd> descendants · <kbd>*</kbd> all · <kbd>[0]</kbd> <kbd>[-1]</kbd> <kbd>[1:5:2]</kbd> <kbd>[0,2]</kbd> · <kbd>[?(@.price &lt; 10 &amp;&amp; @.tags[*] == "x")]</kbd> · <kbd>=~ /re/i</kbd> · <kbd>length() count() match() search()</kbd></p>
+  </section>
+</div>
+<section aria-labelledby="th"><h2 id="th">Tree</h2>
+  <p class="muted small" id="treehelp">Select a key to copy its path.</p>
+  <div id="tree" class="tree card" aria-describedby="treehelp"></div>
+</section>
+</main><script type="module" src="/_/jsonpath/app.js"></script></body></html>

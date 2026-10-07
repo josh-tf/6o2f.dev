@@ -1,0 +1,31 @@
+label.inl {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  color: var(--fg);
+}
+.grow {
+  flex: 1;
+}
+.opts {
+  gap: 6px 18px;
+  margin-bottom: 12px;
+}
+.row {
+  margin-top: 10px;
+}
+.vh {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+fieldset.row {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  gap: 6px 18px;
+}

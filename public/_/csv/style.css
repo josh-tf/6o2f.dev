@@ -1,0 +1,90 @@
+.opts {
+  align-items: flex-end;
+  gap: 20px;
+  margin-bottom: 6px;
+}
+.opts label.chk {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 8px;
+  color: var(--fg);
+}
+.cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.cols .row {
+  min-height: 38px;
+  margin-bottom: 0;
+}
+.cols textarea {
+  resize: vertical;
+  white-space: pre;
+  overflow: auto;
+}
+#status {
+  margin: 10px 0 0;
+  color: var(--muted);
+}
+.scroll {
+  overflow: auto;
+  max-height: 420px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.scroll table {
+  width: max-content;
+  min-width: 100%;
+}
+.scroll th,
+.scroll td {
+  white-space: pre;
+  max-width: 28ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-right: 1px solid var(--line);
+}
+.scroll thead th {
+  position: sticky;
+  top: 0;
+  background: var(--card);
+  color: var(--fg);
+}
+@media (max-width: 700px) {
+  .cols {
+    grid-template-columns: 1fr;
+  }
+}
+fieldset.opts {
+  border: 0;
+  padding: 0;
+  min-width: 0;
+}
+.vh {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.grow {
+  flex: 1;
+}
+.cols .row {
+  gap: 8px;
+  flex-wrap: wrap;
+}
+#file {
+  max-width: 100%;
+  font-size: 0.85em;
+}
+#error {
+  margin: 4px 0 0;
+}
+#error:empty,
+#status:empty {
+  display: none;
+}

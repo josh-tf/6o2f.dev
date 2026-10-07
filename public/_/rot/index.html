@@ -1,0 +1,37 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ciphers</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/rot/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Ciphers</h1><p class="sub">ROT13, ROT47, Caesar, Atbash, Vigenère, rail fence and affine. Case and punctuation are kept. Runs in your browser.</p>
+<section class="card">
+<div class="opts">
+<div><label for="mode">Cipher</label>
+<select id="mode"><option value="rot13">ROT13</option><option value="rot47">ROT47</option><option value="caesar" selected>Caesar</option><option value="atbash">Atbash</option><option value="vigenere">Vigenère</option><option value="rail">Rail fence</option><option value="affine">Affine</option></select></div>
+<fieldset id="dirset"><legend>Direction</legend>
+<label class="inl"><input type="radio" name="dir" value="enc"> Encode</label>
+<label class="inl"><input type="radio" name="dir" value="dec" checked> Decode</label></fieldset>
+<div data-for="caesar"><label for="shift">Shift: <b id="shiftv">3</b></label>
+<input id="shift" type="range" min="1" max="25" step="1" value="3"></div>
+<div data-for="vigenere"><label for="key">Key (letters)</label>
+<input id="key" type="text" value="LEMON" autocomplete="off" spellcheck="false" autocapitalize="characters"></div>
+<div data-for="rail"><label for="rails">Rails</label>
+<input id="rails" type="number" min="2" max="50" step="1" value="3" inputmode="numeric" autocomplete="off"></div>
+<div data-for="affine"><label for="aa">a (coprime with 26)</label>
+<select id="aa"></select></div>
+<div data-for="affine"><label for="bb">b (0 to 25)</label>
+<input id="bb" type="number" min="0" max="25" step="1" value="8" inputmode="numeric" autocomplete="off"></div>
+</div>
+<label for="in">Text</label>
+<textarea id="in" rows="4" autocomplete="off" spellcheck="false" autocapitalize="off">Dwwdfn dw gdzq! Phhw eb wkh rog eulgjh dw 6.</textarea>
+<div class="row head"><h2 id="rh">Result</h2><span class="sp"></span><button id="copy" type="button">Copy</button></div>
+<output id="out" for="in mode shift key rails aa bb" aria-labelledby="rh"></output>
+<p id="err" class="err" role="alert"></p>
+<p id="msg" class="muted" role="status"></p>
+</section>
+<section id="brute" class="card">
+<h2>Brute force: all 25 shifts</h2>
+<p class="muted">Treats the text above as ciphertext. The row closest to English letter frequencies is marked <b>likely</b>; short texts can fool it.</p>
+<table><caption class="vh">Decryptions of the input for every Caesar shift</caption>
+<thead><tr><th scope="col">Shift</th><th scope="col">Decrypted text</th><th scope="col"><span class="vh">Action</span></th></tr></thead>
+<tbody id="bt"></tbody></table>
+</section>
+</main><script type="module" src="/_/rot/app.js"></script></body></html>

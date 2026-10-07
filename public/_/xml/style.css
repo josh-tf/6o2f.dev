@@ -1,0 +1,96 @@
+.opts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  align-items: flex-end;
+  margin: 0 0 10px;
+  padding: 4px 12px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  min-width: 0;
+}
+.opts legend {
+  color: var(--muted);
+  font-size: 0.85em;
+  padding: 0 4px;
+}
+.opts label {
+  margin-top: 2px;
+}
+.opts label.chk {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 8px;
+  color: var(--fg);
+  font-size: 1em;
+  min-height: 32px;
+}
+.sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+.cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.cols > div {
+  min-width: 0;
+}
+.cols .head {
+  min-height: 38px;
+  flex-wrap: nowrap;
+}
+.grow {
+  flex: 1;
+}
+.cols textarea {
+  resize: vertical;
+  white-space: pre;
+  overflow: auto;
+  tab-size: 4;
+}
+#status,
+#error p {
+  margin: 10px 0 0;
+}
+#error button {
+  padding: 3px 10px;
+}
+#excerpt {
+  margin-top: 8px;
+}
+#warn {
+  margin: 8px 0 0;
+  padding-left: 20px;
+}
+details {
+  margin-top: 20px;
+}
+summary {
+  cursor: pointer;
+  color: var(--muted);
+}
+details ul {
+  padding-left: 20px;
+}
+@media (max-width: 700px) {
+  .cols {
+    grid-template-columns: 1fr;
+  }
+}
+textarea,
+pre,
+code,
+kbd,
+input {
+  font-variant-ligatures: none;
+  font-feature-settings:
+    'liga' 0,
+    'calt' 0;
+}

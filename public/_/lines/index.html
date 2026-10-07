@@ -1,0 +1,23 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Line tools</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/lines/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Lines</h1><p class="sub">Sort, dedupe, filter, number and reshape lines of text with a pipeline of steps. Runs in your browser, fast up to hundreds of thousands of lines.</p>
+<div class="cols">
+<section aria-labelledby="ph"><h2 id="ph">Pipeline</h2>
+<p class="muted small">Steps run top to bottom. Each shows how many lines are left after it.</p>
+<ol id="steps" class="steps"></ol>
+<p id="empty" class="muted" hidden>No steps yet: the output equals the input. Add one below.</p>
+<div class="add"><label for="addop">Add a step</label>
+<div class="row"><select id="addop"></select><button type="button" id="add" class="primary">Add step</button></div></div>
+</section>
+<section aria-labelledby="ioh" class="io"><h2 id="ioh" class="vh">Input and output</h2>
+<div class="row between"><label for="in" class="m0">Input</label><span class="row gap"><input type="file" id="file" accept=".txt,.csv,.log,.md,.json,.tsv,text/*" aria-label="Load a text file"><button type="button" id="clear">Clear</button></span></div>
+<textarea id="in" rows="12" spellcheck="false" autocapitalize="off" autocomplete="off" wrap="off"></textarea>
+<p id="stats" class="muted small" role="status"></p>
+<p id="err" class="err" role="alert"></p>
+<div class="row between"><label for="out" class="m0">Output</label><span class="row gap"><button type="button" id="use">Use as input</button><button type="button" id="copy" class="primary">Copy</button></span></div>
+<textarea id="out" rows="12" readonly spellcheck="false" wrap="off"></textarea>
+</section>
+</div>
+<p id="msg" class="muted" role="status"></p>
+</main><script type="module" src="/_/lines/app.js"></script></body></html>

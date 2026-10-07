@@ -1,0 +1,24 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Base64</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/b64/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Base64</h1><p class="sub">Encode and decode text as UTF-8. Decoding accepts standard or URL-safe input, with or without padding. Runs in your browser; nothing is sent anywhere.</p>
+<section class="card">
+<div class="opts">
+<fieldset><legend>Mode</legend>
+<label class="inl"><input type="radio" name="mode" value="enc" checked> Encode</label>
+<label class="inl"><input type="radio" name="mode" value="dec"> Decode</label></fieldset>
+<fieldset id="encopts"><legend>Encoding options</legend>
+<label class="inl"><input type="checkbox" id="url"> URL-safe (<code>-</code> <code>_</code>)</label>
+<label class="inl"><input type="checkbox" id="pad" checked> Padding (<code>=</code>)</label></fieldset>
+</div>
+<label for="in" id="inl">Text to encode</label>
+<textarea id="in" rows="7" autocomplete="off" spellcheck="false" autocapitalize="off">Hello, 世界 👋
+Base64 keeps UTF-8 text intact.</textarea>
+<div class="row head"><label for="out" id="outl">Base64</label><span class="sp"></span>
+<button id="swap" type="button" title="Use the output as the input and flip the mode">Swap</button>
+<button id="copy" type="button">Copy</button></div>
+<textarea id="out" rows="7" readonly spellcheck="false"></textarea>
+<p id="err" class="err" role="alert"></p>
+<p id="msg" class="muted" role="status"></p>
+</section>
+</main><script type="module" src="/_/b64/app.js"></script></body></html>

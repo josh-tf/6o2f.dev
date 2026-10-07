@@ -1,0 +1,61 @@
+.opts {
+  align-items: flex-end;
+  gap: 20px;
+  margin: 0 0 6px;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+.opts label.chk {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 8px;
+  color: var(--fg);
+}
+.sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+.cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.cols > div {
+  min-width: 0;
+}
+.cols .head {
+  min-height: 38px;
+  margin-bottom: 0;
+  flex-wrap: nowrap;
+}
+.grow {
+  flex: 1;
+}
+.cols textarea {
+  resize: vertical;
+  white-space: pre;
+  overflow: auto;
+}
+#status,
+#error,
+#warn {
+  margin: 10px 0 0;
+}
+#error[hidden],
+#warn[hidden] {
+  display: none;
+}
+#error button {
+  padding: 3px 10px;
+}
+@media (max-width: 700px) {
+  .cols {
+    grid-template-columns: 1fr;
+  }
+}

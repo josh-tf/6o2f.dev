@@ -1,0 +1,43 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Text diff</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/diff/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main class="wide">
+<h1>Text diff</h1><p class="sub">Line and word level comparison. Compares in your browser; nothing is uploaded.</p>
+<div class="two"><div><label for="a">Original</label><textarea id="a" rows="10" autocomplete="off" spellcheck="false" autocapitalize="off">server {
+    listen 80;
+    server_name example.com;
+    root /var/www/html;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    location /api/ {
+        proxy_pass http://127.0.0.1:3000;
+    }
+}</textarea></div>
+<div><label for="b">Changed</label><textarea id="b" rows="10" autocomplete="off" spellcheck="false" autocapitalize="off">server {
+    listen 443 ssl;
+    server_name example.com www.example.com;
+    root /var/www/html;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    location /api/ {
+        proxy_pass http://127.0.0.1:8080;
+        proxy_set_header Host $host;
+    }
+}</textarea></div></div>
+<div class="opts">
+<fieldset><legend>View</legend>
+<label class="inl"><input type="radio" name="view" value="split" checked> Side by side</label>
+<label class="inl"><input type="radio" name="view" value="unified"> Unified</label></fieldset>
+<fieldset><legend>Options</legend>
+<label class="inl"><input type="checkbox" id="ws"> Ignore whitespace</label>
+<label class="inl"><input type="checkbox" id="fold"> Only changes (3 lines of context)</label></fieldset>
+<button type="button" id="swap">Swap sides</button>
+</div>
+<div class="row head"><h2 id="rh">Differences</h2><span class="sp"></span><output id="count" class="mono" for="a b"></output></div>
+<div id="out" class="card" role="region" aria-labelledby="rh" tabindex="0"></div>
+</main><script type="module" src="/_/diff/app.js"></script></body></html>

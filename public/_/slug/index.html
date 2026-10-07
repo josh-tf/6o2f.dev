@@ -1,0 +1,18 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Slug</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/slug/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Slug</h1><p class="sub">Titles to URL-safe slugs. Runs in your browser; nothing is sent.</p>
+<fieldset class="opts card"><legend>Options</legend>
+<div><label for="sep">Separator</label><select id="sep"><option value="-">hyphen -</option><option value="_">underscore _</option><option value=".">dot .</option><option value="">none</option></select></div>
+<div><label for="max">Max length (0 = none)</label><input id="max" type="number" min="0" max="1000" step="1" inputmode="numeric" autocomplete="off" value="0" style="width:9em"></div>
+<label class="inl"><input type="checkbox" id="lower" checked> Lowercase</label>
+<label class="inl"><input type="checkbox" id="acc" checked> Strip accents (ASCII only)</label>
+<label class="inl"><input type="checkbox" id="stop"> Remove stop words</label>
+<label class="inl"><input type="checkbox" id="batch" checked> One slug per line</label>
+</fieldset>
+<label for="in">Input</label>
+<textarea id="in" rows="6" spellcheck="false" autocomplete="off" autocapitalize="off" placeholder="Type a title"></textarea>
+<div class="row"><label for="out" class="grow">Slugs</label><button type="button" data-copy="out" class="primary">Copy</button></div>
+<textarea id="out" rows="6" readonly spellcheck="false" autocomplete="off"></textarea>
+<section aria-labelledby="bh"><h2 id="bh">Before &rarr; after</h2><ul id="ba" class="ba"></ul></section>
+</main><script type="module" src="/_/slug/app.js"></script></body></html>

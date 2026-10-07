@@ -1,0 +1,17 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>YAML</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/yaml/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>YAML</h1><p class="sub">Convert between YAML and JSON as you type. Runs in your browser; nothing is sent.</p>
+<fieldset class="row opts"><legend class="vh">Options</legend>
+  <div><label for="dir">Direction</label><select id="dir"><option value="y2j">YAML to JSON</option><option value="j2y">JSON to YAML</option></select></div>
+  <div><label for="indent">Indent</label><select id="indent"><option value="2">2 spaces</option><option value="4">4 spaces</option></select></div>
+  <label class="chk"><input type="checkbox" id="sort"> Sort keys</label>
+  <button type="button" id="swap" title="Use the output as input and flip direction">Swap</button>
+</fieldset>
+<div class="cols">
+  <div><div class="row"><label for="in" id="inl" class="grow">YAML</label></div><textarea id="in" rows="18" spellcheck="false" autocomplete="off" autocapitalize="off"></textarea></div>
+  <div><div class="row"><label for="out" id="outl" class="grow">JSON</label><button type="button" id="copy" class="primary">Copy</button></div><textarea id="out" rows="18" readonly spellcheck="false" autocomplete="off"></textarea></div>
+</div>
+<p id="status" role="status" class="muted"></p><p id="error" role="alert" class="err"></p>
+<details><summary>Notes</summary><p class="muted">Multiple YAML documents separated by <code>---</code> become a JSON array. Comments and anchors are not kept. Dates like <code>2024-01-31</code> turn into ISO timestamps; quote them to keep them as text.</p></details>
+</main><script src="/_/yaml/vendor/js-yaml.min.js"></script><script type="module" src="/_/yaml/app.js"></script></body></html>

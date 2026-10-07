@@ -1,0 +1,35 @@
+.opts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 4px 16px;
+  align-items: end;
+}
+.opts input:not([type='checkbox']),
+.opts select {
+  width: 100%;
+}
+.chk {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  color: var(--fg);
+  margin: 6px 0;
+}
+#out {
+  white-space: pre-wrap;
+  word-break: break-word;
+  line-height: 1.7;
+  max-height: 60vh;
+}
+.vh {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+fieldset.opts {
+  min-width: 0;
+  margin: 0;
+}

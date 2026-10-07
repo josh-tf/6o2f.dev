@@ -1,0 +1,27 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>JSON to types</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/jsonts/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>JSON to types</h1><p class="sub">Paste sample JSON and get TypeScript, JSON Schema, Python or Go types. Array items are merged, so keys missing from some items become optional. Runs in your browser; nothing is sent.</p>
+<fieldset class="opts"><legend>Options</legend>
+  <div><label for="lang">Output</label><select id="lang"><option value="ts">TypeScript</option><option value="schema">JSON Schema 2020-12</option><option value="python">Python</option><option value="go">Go</option></select></div>
+  <div><label for="root">Root type name</label><input id="root" value="Order" size="12" autocomplete="off" spellcheck="false" autocapitalize="off"></div>
+  <div data-for="ts"><label for="style">Declare as</label><select id="style"><option value="interface">interface</option><option value="type">type alias</option></select></div>
+  <div data-for="python"><label for="py">Python style</label><select id="py"><option value="typeddict">TypedDict</option><option value="dataclass">dataclass</option></select></div>
+  <label class="chk" data-for="ts python"><input type="checkbox" id="readonly"> Read-only</label>
+  <label class="chk"><input type="checkbox" id="dates" checked> Detect ISO dates</label>
+</fieldset>
+<div class="cols">
+  <div><div class="row head"><label for="in" class="grow">Sample JSON</label><button type="button" id="clear">Clear</button></div><textarea id="in" rows="22" spellcheck="false" autocomplete="off" autocapitalize="off"></textarea></div>
+  <div><div class="row head"><label for="out" class="grow" id="outlabel">TypeScript</label><button type="button" id="copy" class="primary">Copy</button></div><textarea id="out" rows="22" readonly spellcheck="false"></textarea></div>
+</div>
+<p id="status" role="status" class="muted"></p>
+<p id="error" role="alert" class="err"></p>
+<details><summary>How types are worked out</summary>
+<ul class="muted">
+<li>Every value found at the same place is merged: all items of an array, and all objects under the same key. A key that isn't in every object is optional (<code>?</code>, <code>NotRequired</code>, a pointer with <code>omitempty</code>, or left out of <code>required</code>).</li>
+<li>Different value types become a union (<code>string | null</code>); Go has no unions, so mixed values become <code>any</code>.</li>
+<li>Object types are named after their key in PascalCase; array items get the singular (<code>categories</code> → <code>Category</code>). Objects with the same structure share one type; a name clash gets the parent's name as a prefix.</li>
+<li>With date detection on, strings that are all ISO 8601 dates are marked (<code>format: date-time</code> in JSON Schema, <code>time.Time</code> in Go, a comment elsewhere).</li>
+<li>Whole numbers are <code>integer</code> / <code>int</code> / <code>int64</code> unless any sample has a fraction. A sample can only show what it contains: check optional fields and unions against your real data.</li>
+</ul></details>
+</main><script type="module" src="/_/jsonts/app.js"></script></body></html>

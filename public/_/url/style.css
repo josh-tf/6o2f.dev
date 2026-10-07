@@ -1,0 +1,71 @@
+section.card {
+  margin-top: 20px;
+}
+label.inl {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  color: var(--fg);
+}
+.grow {
+  flex: 1;
+}
+.opts {
+  margin: 10px 0 14px;
+  gap: 6px 18px;
+}
+.two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0 12px;
+}
+.fields .wide {
+  grid-column: 1/-1;
+}
+.fields input {
+  width: 100%;
+}
+.qh {
+  margin-top: 18px;
+}
+td input {
+  width: 100%;
+}
+td:last-child {
+  width: 1%;
+  white-space: nowrap;
+}
+.row {
+  margin-top: 10px;
+}
+.err:empty {
+  display: none;
+}
+@media (max-width: 560px) {
+  .two {
+    grid-template-columns: 1fr;
+  }
+}
+.vh {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+fieldset.row {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  gap: 6px 18px;
+}
+td.empty {
+  color: var(--muted);
+}

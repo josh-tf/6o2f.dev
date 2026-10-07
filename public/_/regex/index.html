@@ -1,0 +1,27 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Regex tester</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/regex/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Regex tester</h1><p class="sub">JavaScript regular expressions, tested live in your browser. Nothing is sent.</p>
+<label for="pat">Pattern</label>
+<div class="row"><span class="slash">/</span><input id="pat" spellcheck="false" autocomplete="off" autocapitalize="off" aria-describedby="err"><span class="slash">/</span></div>
+<fieldset class="flags"><legend>Flags</legend>
+  <label><input type="checkbox" value="g" checked> g global</label><label><input type="checkbox" value="i" checked> i ignore case</label><label><input type="checkbox" value="m"> m multiline</label>
+  <label><input type="checkbox" value="s"> s dot all</label><label><input type="checkbox" value="u"> u unicode</label><label><input type="checkbox" value="y"> y sticky</label>
+</fieldset>
+<label for="txt">Test text</label><textarea id="txt" rows="7" spellcheck="false" autocapitalize="off" autocomplete="off"></textarea>
+<p id="status" role="status" class="muted"></p><p id="err" class="err" role="alert"></p>
+<section><h2>Matches</h2><pre id="hl" class="hl" aria-live="polite"></pre></section>
+<section><h2>Capture groups</h2><div class="scroll" tabindex="0" role="region" aria-label="Capture groups table"><table id="groups"><caption class="vh" id="gcap"></caption><thead></thead><tbody></tbody></table></div></section>
+<section><h2>Replace</h2><label for="rep">Replacement ($1, $&amp;, $&lt;name&gt; work)</label><input id="rep" style="width:100%" spellcheck="false" autocomplete="off" autocapitalize="off">
+<output id="repout" for="pat txt rep"></output></section>
+<section><details><summary>Cheat sheet</summary><table class="cheat"><caption class="vh">Regular expression syntax</caption>
+<tr><th scope="row"><code>.</code></th><td>any character (not newline unless <code>s</code>)</td><th scope="row"><code>\d \w \s</code></th><td>digit, word char, whitespace (capital = opposite)</td></tr>
+<tr><th scope="row"><code>^ $</code></th><td>start / end of input (line with <code>m</code>)</td><th scope="row"><code>\b</code></th><td>word boundary</td></tr>
+<tr><th scope="row"><code>[abc] [^abc]</code></th><td>one of / none of</td><th scope="row"><code>[a-z]</code></th><td>range</td></tr>
+<tr><th scope="row"><code>* + ?</code></th><td>0+, 1+, 0 or 1 (add <code>?</code> for lazy)</td><th scope="row"><code>{2,4}</code></th><td>between 2 and 4 times</td></tr>
+<tr><th scope="row"><code>(x)</code></th><td>capture group</td><th scope="row"><code>(?:x)</code></th><td>non-capturing group</td></tr>
+<tr><th scope="row"><code>(?&lt;n&gt;x)</code></th><td>named group</td><th scope="row"><code>a|b</code></th><td>a or b</td></tr>
+<tr><th scope="row"><code>(?=x) (?!x)</code></th><td>lookahead, negative</td><th scope="row"><code>(?&lt;=x) (?&lt;!x)</code></th><td>lookbehind, negative</td></tr>
+<tr><th scope="row"><code>\1 \k&lt;n&gt;</code></th><td>backreference</td><th scope="row"><code>\. \\ \/</code></th><td>escape a special character</td></tr>
+</table></details></section>
+</main><script type="module" src="/_/regex/app.js"></script></body></html>

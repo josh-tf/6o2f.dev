@@ -1,0 +1,231 @@
+.vh {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+legend {
+  color: var(--muted);
+  font-size: 0.85em;
+  padding: 0;
+  margin: 10px 0 4px;
+}
+.seg {
+  display: inline-flex;
+  flex-wrap: wrap;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--card);
+}
+.seg .opt {
+  margin: 0;
+  position: relative;
+  font-size: 1em;
+  color: var(--fg);
+}
+.seg .opt input {
+  position: absolute;
+  opacity: 0;
+  inset: 0;
+  margin: 0;
+  cursor: pointer;
+}
+.seg .opt span {
+  display: block;
+  padding: 6px 12px;
+  min-height: 34px;
+  border-right: 1px solid var(--line);
+}
+.seg .opt:last-child span {
+  border-right: 0;
+}
+.seg .opt input:checked + span {
+  background: var(--accent);
+  color: var(--accent-fg);
+}
+.seg .opt input:focus-visible + span {
+  outline: 2px solid var(--accent);
+  outline-offset: -4px;
+}
+.ins,
+.dtools {
+  align-items: flex-end;
+  gap: 12px 20px;
+}
+.small {
+  font-size: 0.85em;
+}
+kbd {
+  font-family: var(--mono);
+  font-size: 0.85em;
+  border: 1px solid var(--line);
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  padding: 0 5px;
+  background: var(--bg);
+}
+label.chk {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  color: var(--fg);
+  font-size: 0.95em;
+  margin: 0;
+  min-height: 32px;
+}
+.fileinfo {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+  overflow-wrap: anywhere;
+}
+textarea#in {
+  min-height: 6em;
+}
+textarea#in.drag,
+.fileinfo.drag {
+  border-color: var(--accent);
+  outline: 2px dashed var(--accent);
+}
+.find {
+  gap: 6px;
+  align-items: flex-end;
+}
+.find input {
+  width: 10em;
+}
+.find button {
+  min-width: 36px;
+  min-height: 36px;
+}
+.dumpcard {
+  padding: 10px 12px;
+  margin-top: 6px;
+}
+.dump {
+  font-family: var(--mono);
+  font-size: 0.9em;
+  line-height: 1.6;
+  white-space: pre;
+  width: max-content;
+  min-width: 100%;
+  cursor: default;
+  user-select: none;
+  border-radius: 4px;
+}
+.dump .r {
+  display: flex;
+  gap: 2ch;
+}
+.dump .o {
+  color: var(--muted);
+}
+.dump .h span,
+.dump .a span {
+  border-radius: 3px;
+  cursor: pointer;
+}
+.dump .h span {
+  padding: 0 0.5ch;
+}
+.dump .h span.g {
+  margin-left: 1ch;
+}
+.dump .z {
+  color: var(--muted);
+}
+.dump .hit {
+  background: color-mix(in srgb, var(--accent) 22%, transparent);
+}
+.dump .sel {
+  background: var(--accent);
+  color: var(--accent-fg);
+}
+.dump .empty {
+  color: var(--muted);
+  white-space: normal;
+}
+.pager {
+  margin-top: 8px;
+  align-items: center;
+}
+.pager .sp {
+  flex: 1;
+}
+#selout {
+  font-family: var(--mono);
+}
+#insp td,
+#conv td {
+  font-family: var(--mono);
+  overflow-wrap: anywhere;
+}
+#insp td.na {
+  color: var(--muted);
+}
+#insp th[scope='row'],
+#conv th[scope='row'] {
+  color: var(--fg);
+  font-weight: 500;
+  white-space: nowrap;
+  vertical-align: top;
+}
+#conv td.v {
+  width: 100%;
+}
+#conv pre {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  overflow: visible;
+}
+#conv .note {
+  display: block;
+  color: var(--muted);
+  font-size: 0.85em;
+  margin-top: 2px;
+}
+#conv button {
+  padding: 4px 10px;
+  min-height: 32px;
+}
+@media (max-width: 560px) {
+  .dump {
+    font-size: 0.78em;
+  }
+  .dump .r {
+    gap: 1.2ch;
+  }
+  #conv tr {
+    display: grid;
+    grid-template-columns: 1fr auto;
+  }
+  #conv td.v {
+    grid-column: 1/-1;
+    grid-row: 2;
+    border: 0;
+  }
+  #conv th[scope='row'] {
+    border: 0;
+  }
+}
+#conv td:last-child {
+  width: 1%;
+  white-space: nowrap;
+}
+#conv button {
+  white-space: nowrap;
+}

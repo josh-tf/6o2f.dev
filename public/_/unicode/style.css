@@ -1,0 +1,74 @@
+.tw {
+  overflow-x: auto;
+}
+td.ch {
+  font-size: 1.2em;
+  white-space: pre;
+  width: 1%;
+}
+td.ch i {
+  font-style: normal;
+  font-size: 0.7em;
+  color: var(--muted);
+  border: 1px dashed var(--line);
+  border-radius: 4px;
+  padding: 0 3px;
+}
+td.m {
+  font-family: var(--mono);
+  font-size: 0.85em;
+  overflow-wrap: anywhere;
+  min-width: 7em;
+}
+tr.hit td {
+  background: color-mix(in srgb, var(--accent) 18%, transparent);
+}
+tr.warn td.fl {
+  color: var(--danger);
+}
+.tag {
+  display: inline-block;
+  border: 1px solid var(--danger);
+  color: var(--danger);
+  border-radius: 6px;
+  padding: 0 6px;
+  margin: 0 4px 2px 0;
+  font-size: 0.85em;
+}
+.acts {
+  margin-top: 8px;
+  gap: 8px 12px;
+}
+fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+legend {
+  float: left;
+  color: var(--muted);
+  margin-right: 4px;
+}
+details {
+  margin-top: 8px;
+}
+summary {
+  cursor: pointer;
+  color: var(--muted);
+}
+details p {
+  margin: 6px 0 0;
+}
+.vh {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+#ferr:empty,
+#fnote:empty {
+  display: none;
+}

@@ -1,0 +1,122 @@
+.slash {
+  color: var(--muted);
+  font-size: 1.2em;
+}
+#pat {
+  flex: 1;
+  min-width: 0;
+}
+fieldset.flags {
+  border: 0;
+  padding: 0;
+  margin: 8px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+}
+fieldset.flags legend {
+  color: var(--muted);
+  font-size: 0.85em;
+  padding: 0 0 4px;
+}
+fieldset.flags label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  color: var(--fg);
+}
+#status {
+  margin: 10px 0 0;
+  min-height: 1.5em;
+}
+#err {
+  margin: 4px 0 0;
+}
+#err:empty {
+  display: none;
+}
+.hl {
+  white-space: pre-wrap;
+  word-break: break-word;
+  min-height: 3em;
+}
+.hl mark {
+  background: color-mix(in srgb, var(--accent) 28%, transparent);
+  color: inherit;
+  border-radius: 3px;
+  outline: 1px solid var(--accent);
+}
+.hl mark.b {
+  outline-style: dashed;
+}
+.scroll {
+  overflow: auto;
+  max-height: 360px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.scroll table {
+  width: max-content;
+  min-width: 100%;
+}
+.scroll td {
+  white-space: pre;
+  max-width: 36ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#repout {
+  display: block;
+  margin-top: 8px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-family: var(--mono);
+  font-size: 0.9em;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px;
+  min-height: 2.6em;
+}
+summary {
+  cursor: pointer;
+}
+.cheat th {
+  white-space: nowrap;
+  color: var(--fg);
+  font-weight: 400;
+  font-size: 1em;
+}
+.scroll thead th {
+  position: sticky;
+  top: 0;
+  background: var(--card);
+}
+.vh {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+@media (max-width: 560px) {
+  .cheat,
+  .cheat tbody,
+  .cheat tr,
+  .cheat td,
+  .cheat th {
+    display: block;
+    width: auto;
+  }
+  .cheat tr {
+    border-bottom: 1px solid var(--line);
+    padding: 6px 0;
+  }
+  .cheat td,
+  .cheat th {
+    border: 0;
+    padding: 1px 0;
+  }
+}

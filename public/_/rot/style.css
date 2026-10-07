@@ -1,0 +1,91 @@
+.opts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 20px;
+  align-items: flex-start;
+}
+.opts > div[hidden],
+.opts > fieldset[hidden] {
+  display: none;
+}
+fieldset {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  margin: 10px 0 0;
+  padding: 0 10px 6px;
+}
+legend {
+  color: var(--muted);
+  font-size: 0.85em;
+  padding: 0 4px;
+}
+label.inl {
+  display: inline-block;
+  margin: 4px 10px 0 0;
+  color: var(--fg);
+}
+input[type='range'] {
+  width: 220px;
+  max-width: 100%;
+  padding: 0;
+  height: 32px;
+  accent-color: var(--accent);
+}
+#key {
+  width: 14em;
+}
+.head {
+  margin: 14px 0 6px;
+}
+.head h2 {
+  margin: 0;
+}
+.head .sp {
+  flex: 1;
+}
+output#out {
+  display: block;
+  white-space: pre-wrap;
+  word-break: break-word;
+  min-height: 3.2em;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px;
+  font-family: var(--mono);
+}
+.vh {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+#brute {
+  margin-top: 20px;
+}
+#bt td:first-child {
+  width: 3.5em;
+}
+#bt td:last-child {
+  width: 1%;
+  text-align: right;
+}
+#bt td:nth-child(2) {
+  word-break: break-word;
+}
+#bt tr.best {
+  background: color-mix(in srgb, var(--accent) 16%, transparent);
+}
+#bt tr.best td:first-child::after {
+  content: ' likely';
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 0.8em;
+  display: block;
+}
+#bt button {
+  padding: 3px 10px;
+  min-height: 32px;
+}

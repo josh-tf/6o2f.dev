@@ -1,0 +1,16 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>JSON</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/json/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>JSON</h1><p class="sub">Format, minify and validate. Runs in your browser; nothing is sent.</p>
+<fieldset class="row opts"><legend class="sr">Options</legend>
+  <div><label for="mode">Action</label><select id="mode"><option value="2">Format, 2 spaces</option><option value="4">Format, 4 spaces</option><option value="tab">Format, tab</option><option value="0">Minify</option></select></div>
+  <label class="chk"><input type="checkbox" id="sort"> Sort keys</label>
+</fieldset>
+<div class="cols">
+  <div><div class="row head"><label for="in" class="grow">Input</label><button type="button" id="clear">Clear</button></div><textarea id="in" rows="18" spellcheck="false" autocomplete="off" autocapitalize="off"></textarea></div>
+  <div><div class="row head"><label for="out" class="grow">Output</label><button type="button" id="swap">Use as input</button><button type="button" id="copy" class="primary">Copy</button></div><textarea id="out" rows="18" readonly spellcheck="false"></textarea></div>
+</div>
+<p id="status" role="status" class="muted"></p>
+<p id="error" role="alert" class="err" hidden><span id="errmsg"></span> <button type="button" id="goto">Go to error</button></p>
+<p id="warn" role="status" class="muted" hidden></p>
+</main><script type="module" src="/_/json/app.js"></script></body></html>

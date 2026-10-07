@@ -1,0 +1,69 @@
+.opts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  align-items: flex-end;
+  margin: 0 0 10px;
+  padding: 4px 12px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  min-width: 0;
+}
+.opts legend {
+  color: var(--muted);
+  font-size: 0.85em;
+  padding: 0 4px;
+}
+.opts label {
+  margin-top: 2px;
+}
+.cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.cols > div {
+  min-width: 0;
+}
+.cols .head {
+  min-height: 38px;
+  flex-wrap: nowrap;
+}
+.grow {
+  flex: 1;
+}
+.cols textarea {
+  resize: vertical;
+  white-space: pre;
+  overflow: auto;
+  tab-size: 4;
+}
+#status,
+#error {
+  margin: 10px 0 0;
+}
+#error button {
+  padding: 3px 10px;
+}
+details {
+  margin-top: 20px;
+}
+summary {
+  cursor: pointer;
+  color: var(--muted);
+}
+@media (max-width: 700px) {
+  .cols {
+    grid-template-columns: 1fr;
+  }
+}
+textarea,
+pre,
+code,
+kbd,
+input {
+  font-variant-ligatures: none;
+  font-feature-settings:
+    'liga' 0,
+    'calt' 0;
+}

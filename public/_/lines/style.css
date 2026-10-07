@@ -1,0 +1,161 @@
+.vh {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+.cols {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
+  gap: 24px;
+  align-items: start;
+}
+.cols section {
+  margin-top: 0;
+}
+@media (max-width: 820px) {
+  .cols {
+    grid-template-columns: 1fr;
+  }
+  .io {
+    order: -1;
+  }
+  .cols section + section {
+    margin-top: 12px;
+  }
+}
+.small {
+  font-size: 0.85em;
+  margin: 0 0 10px;
+}
+.m0 {
+  margin: 0;
+}
+.between {
+  justify-content: space-between;
+  margin: 0 0 6px;
+}
+.gap {
+  gap: 6px;
+}
+.io textarea {
+  white-space: pre;
+  overflow: auto;
+  min-height: 12em;
+}
+.io .between + textarea {
+  margin-bottom: 6px;
+}
+#file {
+  max-width: 100%;
+  font-size: 0.85em;
+}
+.io .between {
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+  counter-reset: st;
+}
+.steps li {
+  counter-increment: st;
+}
+.steps fieldset {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--card);
+  margin: 0;
+  padding: 8px 12px 10px;
+  min-width: 0;
+}
+.steps fieldset.off {
+  opacity: 0.6;
+}
+.steps fieldset.bad {
+  border-color: var(--danger);
+}
+.steps legend {
+  padding: 0;
+}
+.head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.head .name {
+  font-weight: 600;
+  flex: 1;
+  min-width: 8em;
+}
+.head .name::before {
+  content: counter(st) '. ';
+  color: var(--muted);
+  font-weight: 400;
+}
+.head .cnt {
+  color: var(--muted);
+  font-size: 0.85em;
+  white-space: nowrap;
+}
+.head button {
+  padding: 2px 8px;
+  min-width: 32px;
+  min-height: 32px;
+  line-height: 1;
+}
+.fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  align-items: flex-end;
+}
+.fields .f label {
+  margin: 6px 0 2px;
+}
+.fields input[type='text'] {
+  width: 9em;
+}
+.fields .wide input[type='text'] {
+  width: 14em;
+  max-width: 100%;
+}
+.fields input[type='number'] {
+  width: 6em;
+}
+label.chk {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  color: var(--fg);
+  font-size: 0.9em;
+  margin: 6px 0 0;
+  min-height: 32px;
+}
+.add {
+  margin-top: 14px;
+}
+.add select {
+  flex: 1;
+  min-width: 0;
+}
+.steps .msg {
+  color: var(--danger);
+  font-size: 0.85em;
+  margin: 6px 0 0;
+}
+@media (max-width: 560px) {
+  .head .name {
+    flex: 1 1 100%;
+  }
+  .head .cnt {
+    flex: 1;
+  }
+}

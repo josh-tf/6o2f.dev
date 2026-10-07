@@ -1,0 +1,107 @@
+fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+legend {
+  color: var(--muted);
+  font-size: 0.85em;
+  padding: 0;
+  margin: 10px 0 4px;
+}
+.seg {
+  display: inline-flex;
+  flex-wrap: wrap;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--card);
+}
+.seg .opt {
+  margin: 0;
+  position: relative;
+  font-size: 1em;
+  color: var(--fg);
+}
+.seg .opt input {
+  position: absolute;
+  opacity: 0;
+  inset: 0;
+  margin: 0;
+  cursor: pointer;
+}
+.seg .opt span {
+  display: block;
+  padding: 6px 14px;
+  min-height: 34px;
+  border-right: 1px solid var(--line);
+}
+.seg .opt:last-child span {
+  border-right: 0;
+}
+.seg .opt input:checked + span {
+  background: var(--accent);
+  color: var(--accent-fg);
+}
+.seg .opt input:focus-visible + span {
+  outline: 2px solid var(--accent);
+  outline-offset: -4px;
+}
+.cols {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+.cols section {
+  margin-top: 16px;
+}
+@media (max-width: 820px) {
+  .cols {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}
+.between {
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.m0 {
+  margin: 0;
+}
+.small {
+  font-size: 0.85em;
+}
+textarea#in,
+textarea#out {
+  white-space: pre;
+  overflow: auto;
+  line-height: 1.45;
+}
+.checks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 16px;
+  margin-top: 6px;
+}
+label.chk {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  color: var(--fg);
+  font-size: 0.95em;
+  margin: 0;
+  min-height: 32px;
+}
+#root {
+  width: 12em;
+}
+.outhead {
+  margin: 12px 0 6px;
+  align-items: center;
+}
+.outhead #stats {
+  flex: 1;
+  text-align: right;
+}

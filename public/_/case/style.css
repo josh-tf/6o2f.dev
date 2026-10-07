@@ -1,0 +1,41 @@
+.outs {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+  margin-top: 18px;
+}
+.outs .card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  padding: 12px;
+}
+.outs h2 {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+  font-weight: 500;
+}
+.outs .top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.outs .top h2 {
+  flex: 1;
+}
+.outs button {
+  padding: 3px 10px;
+  min-height: 32px;
+}
+.outs pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  min-height: 1.5em;
+  flex: 1;
+}
+.outs pre:empty::before {
+  content: '(empty)';
+  color: var(--muted);
+}

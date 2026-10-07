@@ -1,0 +1,45 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>URL</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/url/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>URL</h1><p class="sub">Encode, decode and take URLs apart. Runs in your browser; nothing is sent.</p>
+
+<section class="card">
+<h2>Encode / decode</h2>
+<label for="txt">Text</label>
+<textarea id="txt" rows="3" spellcheck="false" autocapitalize="off" autocomplete="off"></textarea>
+<div class="row opts">
+<fieldset class="row"><legend class="vh">Encoding mode</legend>
+<label class="inl"><input type="radio" name="mode" value="c" checked> Component (encodeURIComponent)</label>
+<label class="inl"><input type="radio" name="mode" value="f"> Full URL (encodeURI)</label>
+</fieldset>
+<label class="inl"><input type="checkbox" id="plus"> Decode + as space</label>
+</div>
+<div class="two">
+<div><div class="row"><label for="enc" class="grow">Encoded</label><button type="button" data-copy="enc" aria-label="Copy encoded">Copy</button></div><textarea id="enc" rows="3" readonly spellcheck="false"></textarea></div>
+<div><div class="row"><label for="dec" class="grow">Decoded</label><button type="button" data-copy="dec" aria-label="Copy decoded">Copy</button></div><textarea id="dec" rows="3" readonly spellcheck="false"></textarea>
+<p id="decerr" class="err" role="alert"></p></div>
+</div>
+</section>
+
+<section class="card">
+<h2>Parse</h2>
+<label for="url">URL</label>
+<textarea id="url" rows="2" spellcheck="false" autocapitalize="off" autocomplete="off"></textarea>
+<p id="urlerr" class="err" role="alert"></p>
+<div id="parts" hidden>
+<div class="fields">
+<div><label for="f-protocol">Protocol</label><input id="f-protocol" autocomplete="off" spellcheck="false" autocapitalize="off"></div>
+<div><label for="f-host">Host</label><input id="f-host" autocomplete="off" spellcheck="false" autocapitalize="off"></div>
+<div><label for="f-port">Port</label><input id="f-port" inputmode="numeric" pattern="[0-9]*" autocomplete="off"></div>
+<div class="wide"><label for="f-path">Path</label><input id="f-path" autocomplete="off" spellcheck="false" autocapitalize="off"></div>
+<div><label for="f-hash">Hash</label><input id="f-hash" autocomplete="off" spellcheck="false" autocapitalize="off"></div>
+</div>
+<h2 class="qh">Query parameters</h2>
+<table><caption class="vh">Query parameters, decoded; edit to rebuild the URL</caption><thead><tr><th scope="col">Key</th><th scope="col">Value</th><th scope="col"><span class="vh">Actions</span></th></tr></thead><tbody id="rows"></tbody></table>
+<div class="row"><button type="button" id="add">Add parameter</button>
+<label class="inl"><input type="checkbox" id="qplus"> Write spaces as +</label></div>
+<div class="row"><label for="out" class="grow">Rebuilt URL</label><button type="button" data-copy="out" class="primary" aria-label="Copy rebuilt URL">Copy</button></div>
+<textarea id="out" rows="2" readonly spellcheck="false"></textarea>
+</div>
+</section>
+</main><script type="module" src="/_/url/app.js"></script></body></html>

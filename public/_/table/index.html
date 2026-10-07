@@ -1,0 +1,35 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Markdown table maker</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/table/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Table</h1><p class="sub">Paste CSV, TSV, Markdown, an HTML table or JSON; edit it as a grid; copy it as aligned Markdown, HTML, a box-drawn text table or CSV. Runs in your browser.</p>
+<section aria-labelledby="ih"><h2 id="ih">Input</h2>
+<div class="row between"><div><label for="fmt">Format</label><select id="fmt"><option value="auto">Detect automatically</option><option value="csv">CSV (comma)</option><option value="tsv">TSV (tab, from spreadsheets)</option><option value="ssv">Semicolon-separated</option><option value="markdown">Markdown table</option><option value="html">HTML table</option><option value="json">JSON array</option></select></div>
+<button type="button" id="clear">Clear</button></div>
+<label for="in">Paste a table</label>
+<textarea id="in" rows="7" spellcheck="false" autocapitalize="off" autocomplete="off" wrap="off" aria-describedby="perr"></textarea>
+<p id="pstat" class="muted small" role="status"></p>
+<p id="perr" class="err" role="alert"></p>
+</section>
+<section aria-labelledby="gh"><h2 id="gh">Edit</h2>
+<div class="row tools" role="group" aria-label="Rows and columns">
+<button type="button" id="addr">Add row</button><button type="button" id="delr">Delete row</button>
+<button type="button" id="addc">Add column</button><button type="button" id="delc">Delete column</button>
+</div>
+<p class="muted small"><kbd>Tab</kbd> next cell, <kbd>Enter</kbd> cell below (adds a row at the end), <kbd>Shift</kbd>+<kbd>Enter</kbd> new line in a cell. Row and column buttons act on the cell you were last in.</p>
+<div class="card gridwrap"><table id="grid"></table></div>
+<p id="gnote" class="muted small"></p>
+</section>
+<section aria-labelledby="oh"><h2 id="oh">Output</h2>
+<div class="row between oopts">
+<fieldset><legend>Format</legend><div class="seg" id="ofmt">
+<label class="opt"><input type="radio" name="o" value="md" checked><span>Markdown</span></label><label class="opt"><input type="radio" name="o" value="html"><span>HTML</span></label><label class="opt"><input type="radio" name="o" value="ascii"><span>Text box</span></label><label class="opt"><input type="radio" name="o" value="csv"><span>CSV</span></label>
+</div></fieldset>
+<div id="mdopt"><label class="chk"><input type="checkbox" id="compact"> Compact (no padding)</label></div>
+<div id="asopt" hidden><label for="box">Box style</label><select id="box"><option value="unicode">Unicode ┌─┐</option><option value="ascii">ASCII +-+</option></select></div>
+<button type="button" id="copy" class="primary">Copy</button>
+</div>
+<label for="out" class="vh">Generated table</label>
+<textarea id="out" rows="10" readonly spellcheck="false" wrap="off"></textarea>
+</section>
+<p id="msg" class="muted" role="status"></p>
+</main><script type="module" src="/_/table/app.js"></script></body></html>

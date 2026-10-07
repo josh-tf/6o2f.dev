@@ -1,0 +1,28 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>XML tool</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/xml/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>XML</h1><p class="sub">Validate, format and minify XML, or convert between XML and JSON. Runs in your browser; nothing is sent.</p>
+<fieldset class="opts"><legend>Options</legend>
+  <div><label for="mode">Action</label><select id="mode"><option value="format">Format</option><option value="minify">Minify</option><option value="tojson">XML → JSON</option><option value="fromjson">JSON → XML</option></select></div>
+  <div><label for="indent">Indent</label><select id="indent"><option value="2">2 spaces</option><option value="4">4 spaces</option><option value="tab">Tab</option></select></div>
+  <div data-for="tojson"><label for="cdata">CDATA</label><select id="cdata"><option value="text">Merge into text</option><option value="key">Keep as #cdata</option></select></div>
+  <div data-for="fromjson"><label for="root">Wrapper element</label><input id="root" value="root" size="10" autocomplete="off" spellcheck="false" autocapitalize="off" aria-describedby="roothelp"><span id="roothelp" class="sr">Used when the JSON has no single top-level key</span></div>
+  <label class="chk" data-for="format minify tojson"><input type="checkbox" id="comments" checked> Keep comments</label>
+  <label class="chk" data-for="fromjson"><input type="checkbox" id="decl" checked> XML declaration</label>
+</fieldset>
+<div class="cols">
+  <div><div class="row head"><label for="in" class="grow" id="inlabel">XML</label><button type="button" id="sample">Sample</button><button type="button" id="clear">Clear</button></div><textarea id="in" rows="20" spellcheck="false" autocomplete="off" autocapitalize="off"></textarea></div>
+  <div><div class="row head"><label for="out" class="grow" id="outlabel">Output</label><button type="button" id="swap">Use as input</button><button type="button" id="copy" class="primary">Copy</button></div><textarea id="out" rows="20" readonly spellcheck="false"></textarea></div>
+</div>
+<p id="status" role="status" class="muted"></p>
+<div id="error" role="alert" hidden><p class="err"><span id="errmsg"></span> <button type="button" id="goto">Go to error</button></p><pre id="excerpt"></pre></div>
+<ul id="warn" class="muted" aria-label="Conversion warnings" hidden></ul>
+<details><summary>How XML maps to JSON</summary>
+<ul class="muted">
+<li>Attributes become <code>"@name"</code>; text next to attributes or child elements becomes <code>"#text"</code>.</li>
+<li>An element with only text becomes a string; an empty element becomes <code>""</code>.</li>
+<li>Repeated child elements become an array. Names keep their prefix (<code>dc:title</code>), and <code>xmlns</code> attributes stay as <code>"@xmlns:dc"</code>, so namespaces survive the round trip.</li>
+<li>CDATA either merges into the text or stays as <code>"#cdata"</code>; with <em>Keep comments</em> on, comments become <code>"#comment"</code>.</li>
+<li>JSON → XML reverses this. Keys that aren't valid XML names are repaired and listed as warnings.</li>
+</ul></details>
+</main><script type="module" src="/_/xml/app.js"></script></body></html>

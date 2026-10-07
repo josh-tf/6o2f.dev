@@ -1,0 +1,16 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Unicode inspector</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/unicode/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Unicode inspector</h1><p class="sub">One row per character (grapheme). Runs in your browser; nothing is sent.</p>
+<label for="txt">Text</label><textarea id="txt" rows="3" spellcheck="false"></textarea>
+<div class="row acts"><fieldset class="row"><legend>Normalize</legend>
+<button type="button" data-n="NFC">NFC</button><button type="button" data-n="NFD">NFD</button><button type="button" data-n="NFKC">NFKC</button><button type="button" data-n="NFKD">NFKD</button></fieldset>
+<button type="button" id="clean">Strip invisibles</button><button type="button" id="cp">Copy text</button></div>
+<details><summary>What the buttons do</summary><p class="muted">NFC composes (e + &#769; becomes é), NFD decomposes, the K forms also fold compatibility characters (ﬁ becomes fi, ² becomes 2). <b>Strip invisibles</b> removes zero-width, bidi and other format/control characters (keeping joiners inside emoji) and turns unusual spaces into plain spaces; lookalike letters are only flagged.</p></details>
+<p id="sum" class="muted" role="status"></p>
+<label for="find">Find character (U+1F600, hex number, or paste a character)</label>
+<input id="find" autocomplete="off" spellcheck="false" autocapitalize="off" placeholder="U+200B" style="width:100%;max-width:320px">
+<p id="ferr" class="err" role="alert"></p>
+<section id="found" hidden><h2>Lookup</h2><div class="tw" tabindex="0" role="region" aria-label="Lookup table"><table id="ft"></table></div><p id="fnote" class="muted"></p></section>
+<section><h2>Characters</h2><div class="tw" tabindex="0" role="region" aria-label="Characters table"><table id="tbl"></table></div><p id="more" class="muted"></p></section>
+</main><script type="module" src="/_/unicode/app.js"></script></body></html>

@@ -1,0 +1,10 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Markdown editor</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/md/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Markdown</h1><p class="sub">Live preview. Raw HTML is escaped, links are http(s)/mailto only. The draft is kept in this browser.</p>
+<div class="row" style="margin-bottom:12px"><button type="button" id="chtml">Copy as HTML</button><button type="button" id="cmd">Copy as Markdown</button><button type="button" id="clear">Clear</button><button type="button" id="reset">Reset sample</button><span id="msg" class="muted" role="status"></span></div>
+<div class="split">
+<div><label for="src">Markdown</label><textarea id="src" spellcheck="false" autocomplete="off" autocapitalize="off" placeholder="Write Markdown here"></textarea></div>
+<div><p id="plabel" class="lbl">Preview</p><div id="out" class="md card" role="region" aria-labelledby="plabel" tabindex="0"></div></div>
+</div>
+</main><script type="module" src="/_/md/app.js"></script></body></html>

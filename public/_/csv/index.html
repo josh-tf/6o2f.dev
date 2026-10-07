@@ -1,0 +1,19 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CSV</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/csv/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>CSV</h1><p class="sub">Convert between CSV and JSON as you type. Runs in your browser; nothing is sent.</p>
+<fieldset class="row opts"><legend class="vh">Options</legend>
+  <div><label for="dir">Direction</label><select id="dir"><option value="c2j">CSV to JSON</option><option value="j2c">JSON to CSV</option></select></div>
+  <div><label for="delim">Delimiter</label><select id="delim"><option value="auto">Auto-detect</option><option value="comma">Comma</option><option value="semicolon">Semicolon</option><option value="tab">Tab</option><option value="pipe">Pipe</option></select></div>
+  <label class="chk"><input type="checkbox" id="header" checked> Header row</label>
+  <label class="chk" id="typel"><input type="checkbox" id="types"> Numbers and booleans</label>
+</fieldset>
+<div class="cols">
+  <div><div class="row"><label for="in" id="inl" class="grow">CSV</label><label for="file" class="vh">Open a file</label><input type="file" id="file" accept=".csv,.tsv,.txt,.json,text/csv,text/tab-separated-values,application/json,text/plain"></div>
+    <textarea id="in" rows="14" spellcheck="false" autocomplete="off" autocapitalize="off"></textarea></div>
+  <div><div class="row"><label for="out" id="outl" class="grow">JSON</label><button type="button" id="dl">Download</button><button type="button" id="copy" class="primary">Copy</button></div>
+    <textarea id="out" rows="14" readonly spellcheck="false" autocomplete="off"></textarea></div>
+</div>
+<p id="status" role="status" class="muted"></p><p id="error" role="alert" class="err"></p>
+<section aria-labelledby="ph"><h2 id="ph">Preview</h2><div class="scroll" tabindex="0" role="region" aria-label="Preview table (scrolls)"><table id="prev"><caption class="vh">First 50 rows of the data</caption></table></div><p id="more" class="muted"></p></section>
+</main><script type="module" src="/_/csv/app.js"></script></body></html>

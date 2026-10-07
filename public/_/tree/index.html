@@ -1,0 +1,30 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Folder tree generator</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/tree/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Tree</h1><p class="sub">Turn a list of paths, an indented outline or <code>find</code> / <code>ls -R</code> / <code>tar -t</code> output into a folder tree, or a drawn tree back into paths. Runs in your browser.</p>
+<fieldset><legend>Direction</legend><div class="seg">
+<label class="opt"><input type="radio" name="mode" value="make" checked><span>Paths → tree</span></label><label class="opt"><input type="radio" name="mode" value="rev"><span>Tree → paths</span></label>
+</div></fieldset>
+<div class="cols">
+<section aria-labelledby="ih"><h2 id="ih">Input</h2>
+<div class="row between"><div><label for="fmt">Read input as</label><select id="fmt"><option value="auto">Detect automatically</option><option value="paths">Paths (one per line)</option><option value="indent">Indented list</option><option value="lsr">ls -R output</option><option value="tree">Drawn tree</option></select></div><button type="button" id="clear">Clear</button></div>
+<label for="in" id="inlabel">Paths, one per line</label>
+<textarea id="in" rows="14" spellcheck="false" autocapitalize="off" autocomplete="off" wrap="off" aria-describedby="hint err"></textarea>
+<p id="hint" class="muted small">End a name with <code>/</code> to mark a folder. Add a comment after <code>#</code> with a space before it.</p>
+<p id="err" class="err" role="alert"></p>
+</section>
+<section aria-labelledby="oh"><h2 id="oh">Output</h2>
+<fieldset id="mopts"><legend>Tree options</legend>
+<div class="row"><div><label for="style">Style</label><select id="style"><option value="unicode">Unicode ├──</option><option value="ascii">ASCII |--</option><option value="markdown">Markdown list</option></select></div>
+<div><label for="root">Root line <span class="muted">(optional)</span></label><input id="root" autocomplete="off" spellcheck="false" autocapitalize="off" value="my-app/"></div></div>
+<div class="checks"><label class="chk"><input type="checkbox" id="dirs" checked> Folders first</label><label class="chk"><input type="checkbox" id="sort"> Sort A–Z</label><label class="chk"><input type="checkbox" id="slash" checked> Slash after folders</label><label class="chk"><input type="checkbox" id="cmt" checked> Comments column</label></div>
+</fieldset>
+<fieldset id="ropts" hidden><legend>Path options</legend>
+<div class="checks"><label class="chk"><input type="checkbox" id="files"> Files only</label><label class="chk"><input type="checkbox" id="prefix"> Start paths with the root line</label><label class="chk"><input type="checkbox" id="rcmt"> Keep comments</label></div>
+</fieldset>
+<div class="row between outhead"><label for="out" class="m0">Result</label><span id="stats" class="muted small" role="status"></span><button type="button" id="copy" class="primary">Copy</button></div>
+<textarea id="out" rows="14" readonly spellcheck="false" wrap="off"></textarea>
+</section>
+</div>
+<p id="msg" class="muted" role="status"></p>
+</main><script type="module" src="/_/tree/app.js"></script></body></html>

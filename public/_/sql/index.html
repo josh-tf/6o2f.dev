@@ -1,0 +1,20 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SQL formatter</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/sql/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>SQL</h1><p class="sub">Format or minify SQL. String literals and quoted names are never altered. Runs in your browser; nothing is sent.</p>
+<fieldset class="opts"><legend>Options</legend>
+  <div><label for="mode">Action</label><select id="mode"><option value="format">Format</option><option value="minify">Minify</option></select></div>
+  <div><label for="indent">Indent</label><select id="indent"><option value="2">2 spaces</option><option value="4">4 spaces</option><option value="tab">Tab</option></select></div>
+  <div><label for="kcase">Keywords</label><select id="kcase"><option value="upper">UPPER</option><option value="lower">lower</option><option value="preserve">As written</option></select></div>
+  <div><label for="comma">Commas</label><select id="comma"><option value="last">At line end</option><option value="first">At line start</option></select></div>
+  <div><label for="dialect">Dialect</label><select id="dialect"><option value="generic">Generic</option><option value="postgres">PostgreSQL</option><option value="mysql">MySQL</option><option value="sqlite">SQLite</option></select></div>
+</fieldset>
+<div class="cols">
+  <div><div class="row head"><label for="in" class="grow">Input</label><button type="button" id="clear">Clear</button></div><textarea id="in" rows="20" spellcheck="false" autocomplete="off" autocapitalize="off"></textarea></div>
+  <div><div class="row head"><label for="out" class="grow">Output</label><button type="button" id="swap">Use as input</button><button type="button" id="copy" class="primary">Copy</button></div><textarea id="out" rows="20" readonly spellcheck="false"></textarea></div>
+</div>
+<p id="status" role="status" class="muted"></p>
+<p id="error" role="alert" class="err" hidden><span id="errmsg"></span> <button type="button" id="goto">Go to error</button></p>
+<details><summary>What the dialect changes</summary>
+<p class="muted">Only identifier quoting. PostgreSQL and SQLite output <code>"name"</code>, MySQL outputs <code>`name`</code>; Generic keeps quotes as written. MySQL also reads <code>"…"</code> and <code>#</code> as strings and comments and allows backslash escapes; PostgreSQL reads <code>[ ]</code> as array brackets. <code>$$dollar quotes$$</code> and <code>E'…'</code> strings work everywhere. Minify keeps optimiser hints (<code>/*+ … */</code>, <code>/*! … */</code>).</p></details>
+</main><script type="module" src="/_/sql/app.js"></script></body></html>

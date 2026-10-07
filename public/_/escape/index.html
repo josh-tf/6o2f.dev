@@ -1,0 +1,33 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>String escape</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/escape/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Escape</h1><p class="sub">Escape a string for twelve languages at once, or unescape one back to plain text. Runs in your browser.</p>
+<section aria-labelledby="eh"><h2 id="eh">Escape</h2>
+<label for="in">Plain text</label>
+<textarea id="in" rows="5" spellcheck="false" autocapitalize="off" autocomplete="off"></textarea>
+<div class="row opts"><label class="chk"><input type="checkbox" id="ascii"> <span>Escape non-ASCII characters too (<code>\u00E9</code>, <code>\U0001F600</code>…)</span></label><span id="count" class="muted"></span></div>
+<div class="card tbl"><table id="all"><caption class="vh">The text escaped for each language</caption>
+<thead><tr><th scope="col">Target</th><th scope="col">Escaped</th><th scope="col"><span class="vh">Copy</span></th></tr></thead><tbody></tbody></table></div>
+</section>
+<section aria-labelledby="uh"><h2 id="uh">Unescape</h2>
+<div class="row"><div><label for="lang">Language</label><select id="lang"></select></div></div>
+<label for="un">Escaped string <span class="muted">(surrounding quotes are optional)</span></label>
+<textarea id="un" rows="4" spellcheck="false" autocapitalize="off" autocomplete="off" aria-describedby="uerr"></textarea>
+<div class="row between"><label for="uout" class="m0">Result</label><button type="button" id="ucopy">Copy</button></div>
+<pre class="out"><output id="uout" for="un lang"></output></pre>
+<p id="uerr" class="err" role="alert"></p>
+<ul id="uwarn" class="warn" aria-label="Warnings"></ul>
+<details class="help"><summary>What each target escapes</summary>
+<ul class="muted">
+<li><b>JSON</b>: <code>" \ </code> and control characters, plus the line separators U+2028 and U+2029 as <code>\u2028</code> and <code>\u2029</code>, so the result is also valid JavaScript.</li>
+<li><b>JavaScript</b>: both quote kinds, so it works inside <code>'…'</code> or <code>"…"</code>. Unescape understands <code>\x</code>, <code>\u</code>, <code>\u{…}</code>, legacy octal and line continuations.</li>
+<li><b>Python</b>: <code>\x</code>, <code>\u</code>, <code>\U</code>, octal. Unknown escapes such as <code>\d</code> are kept as written, as Python does.</li>
+<li><b>C</b>: control characters become 3-digit octal, because <code>\x</code> would swallow following hex digits. Non-ASCII becomes UTF-8 bytes.</li>
+<li><b>Shell</b>: single quotes are literal; a <code>'</code> becomes <code>'\''</code>. In double quotes <code>\ " $ `</code> are escaped; interactive bash may still expand <code>!</code>.</li>
+<li><b>Regex</b>: every metacharacter plus <code>/</code>; <code>-</code> becomes <code>\x2d</code>. Safe in a literal or a character class, with or without the <code>u</code> flag, and in PCRE, Python and Java.</li>
+<li><b>CSV</b>: quoted only when needed, with inner quotes doubled (RFC 4180).</li>
+<li><b>URL</b>: like <code>encodeURIComponent</code>, plus <code>! ' ( ) *</code> (RFC 3986). Unescape treats <code>+</code> as a space.</li>
+</ul></details>
+</section>
+<p id="msg" class="muted" role="status"></p>
+</main><script type="module" src="/_/escape/app.js"></script></body></html>

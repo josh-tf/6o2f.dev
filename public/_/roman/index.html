@@ -1,0 +1,41 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Roman numerals and number words</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/roman/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Numerals</h1><p class="sub">Roman numerals both ways, and numbers as English words: cardinal, ordinal and cheque wording. Runs in your browser.</p>
+<section aria-labelledby="rh"><h2 id="rh">Roman numerals</h2>
+<div class="card">
+<label for="r">Number (1 to 3999) or Roman numeral</label>
+<input id="r" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-describedby="rerr rnote" value="1994">
+<p class="big"><output id="rout" for="r"></output></p>
+<p id="rerr" class="err" role="alert"></p>
+<ul id="rissues" class="issues" aria-label="Problems with this numeral"></ul>
+<p id="rnote" class="muted small"></p>
+<div class="row"><button type="button" id="rcopy">Copy result</button></div>
+</div>
+<details class="help"><summary>How the rules work</summary>
+<p class="muted">Letters add up (<code>VI</code> = 6) unless a smaller one sits before a larger one, which subtracts (<code>IV</code> = 4). Only <code>I</code>, <code>X</code> and <code>C</code> subtract, and only from the next two letters up: <code>IV IX XL XC CD CM</code>. No letter repeats more than three times, and <code>V</code>, <code>L</code>, <code>D</code> never repeat. Standard numerals end at 3999; beyond that a bar over a letter (vinculum) multiplies it by 1000, so 5000 is V&#x305;.</p></details>
+</section>
+<section aria-labelledby="wh"><h2 id="wh">Number to words</h2>
+<div class="card">
+<div class="opts">
+<div><label for="n">Number (up to 10<sup>15</sup>)</label>
+<input id="n" inputmode="decimal" autocomplete="off" spellcheck="false" value="1234.56" aria-describedby="nerr"></div>
+<div><label for="cur">Cheque currency</label>
+<select id="cur"><option value="dollars">Dollars and cents</option><option value="euros">Euros and cents</option><option value="pounds">Pounds and pence</option></select></div>
+<fieldset><legend>Style</legend><label class="chk"><input type="checkbox" id="brit"> British "and" (one hundred and five)</label></fieldset>
+</div>
+<p id="nerr" class="err" role="alert"></p>
+<table id="words"><caption class="vh">The number written out</caption><tbody></tbody></table>
+</div>
+</section>
+<section aria-labelledby="fh"><h2 id="fh">Words to number</h2>
+<div class="card">
+<label for="w">Number in words</label>
+<input id="w" autocomplete="off" spellcheck="false" value="twenty-one thousand three hundred and fifth" aria-describedby="werr">
+<p class="big"><output id="wout" for="w"></output></p>
+<p id="werr" class="err" role="alert"></p>
+<div class="row"><button type="button" id="wcopy">Copy number</button></div>
+</div>
+</section>
+<p id="msg" class="muted" role="status"></p>
+</main><script type="module" src="/_/roman/app.js"></script></body></html>

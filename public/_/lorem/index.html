@@ -1,0 +1,14 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lorem ipsum generator</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/lorem/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Lorem ipsum</h1><p class="sub">Placeholder text. Same seed, same text. Nothing leaves this page.</p>
+<fieldset class="card opts"><legend class="vh">Options</legend>
+<div><label for="kind">Generate</label><select id="kind"><option value="paragraphs">Paragraphs</option><option value="sentences">Sentences</option><option value="words">Words</option></select></div>
+<div><label for="count">Count</label><input id="count" type="number" min="1" max="1000" step="1" inputmode="numeric" autocomplete="off" value="3"></div>
+<div><label for="seed">Seed (blank = random)</label><input id="seed" type="text" placeholder="e.g. hello" autocomplete="off" spellcheck="false" autocapitalize="off"></div>
+<div class="checks"><label class="chk"><input id="start" type="checkbox" checked> Start with "Lorem ipsum"</label>
+<label class="chk"><input id="html" type="checkbox"> Wrap in &lt;p&gt;</label></div>
+</fieldset>
+<div class="row" style="margin:12px 0"><button type="button" class="primary" id="go">Regenerate</button><button type="button" id="copy">Copy</button><span id="info" class="muted" role="status"></span></div>
+<pre id="out" tabindex="0" aria-label="Generated text"></pre>
+</main><script type="module" src="/_/lorem/app.js"></script></body></html>

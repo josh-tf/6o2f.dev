@@ -1,0 +1,22 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Counter</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/count/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Counter</h1><p class="sub">Live counts as you type. Runs in your browser; nothing is sent.</p>
+<label for="in">Text</label>
+<textarea id="in" rows="9" spellcheck="true" autocomplete="off" placeholder="Type or paste text here"></textarea>
+<div class="row"><button type="button" id="clear">Clear</button><span class="muted" id="hint"></span></div>
+<section aria-labelledby="st"><h2 id="st" class="vh">Statistics</h2><dl id="stats" class="stats"></dl></section>
+<div class="two">
+<section class="card" aria-labelledby="lh">
+<h2 id="lh">Character limit</h2>
+<div class="row"><label for="lim" class="inl">Limit</label><input id="lim" type="number" min="1" max="1000000" step="1" inputmode="numeric" autocomplete="off" value="280" style="width:9em">
+<button type="button" data-lim="280" aria-label="Set limit to 280">280</button><button type="button" data-lim="160" aria-label="Set limit to 160">160</button><button type="button" data-lim="500" aria-label="Set limit to 500">500</button></div>
+<output id="rem" class="rem" role="status" for="in lim"></output>
+<div class="meter" aria-hidden="true"><i id="bar"></i></div>
+</section>
+<section class="card" aria-labelledby="th">
+<div class="row"><h2 class="grow" id="th">Top words</h2><label class="inl"><input type="checkbox" id="stop"> Skip stop words</label></div>
+<ol id="top" class="top" aria-labelledby="th"></ol>
+</section>
+</div>
+</main><script type="module" src="/_/count/app.js"></script></body></html>

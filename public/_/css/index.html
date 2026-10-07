@@ -1,0 +1,32 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CSS beautifier</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/css/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>CSS</h1><p class="sub">Beautify or minify CSS, with sizes before and after gzip. Strings, <code>url()</code>, custom properties and nesting are handled. Runs in your browser; nothing is sent.</p>
+<fieldset class="opts"><legend>Options</legend>
+  <div><label for="mode">Action</label><select id="mode"><option value="beautify">Beautify</option><option value="minify">Minify</option></select></div>
+  <div><label for="indent">Indent</label><select id="indent"><option value="2">2 spaces</option><option value="4">4 spaces</option><option value="tab">Tab</option></select></div>
+  <label class="chk"><input type="checkbox" id="nocomments"> Remove comments</label>
+  <label class="chk"><input type="checkbox" id="lastsemi"> Keep last semicolon</label>
+  <label class="chk"><input type="checkbox" id="sort"> Sort properties</label>
+</fieldset>
+<div class="cols">
+  <div><div class="row head"><label for="in" class="grow">Input</label><button type="button" id="clear">Clear</button></div><textarea id="in" rows="20" spellcheck="false" autocomplete="off" autocapitalize="off"></textarea></div>
+  <div><div class="row head"><label for="out" class="grow">Output</label><button type="button" id="swap">Use as input</button><button type="button" id="copy" class="primary">Copy</button></div><textarea id="out" rows="20" readonly spellcheck="false"></textarea></div>
+</div>
+<section aria-labelledby="sh"><h2 id="sh" class="sr">Size</h2>
+<table class="sizes"><caption class="sr">Sizes before and after</caption>
+<thead><tr><th scope="col">Size</th><th scope="col">Input</th><th scope="col">Output</th><th scope="col">Change</th></tr></thead>
+<tbody><tr><th scope="row">Raw</th><td><output id="rawIn"></output></td><td><output id="rawOut"></output></td><td><output id="rawD"></output></td></tr>
+<tr><th scope="row">gzip</th><td><output id="gzIn"></output></td><td><output id="gzOut"></output></td><td><output id="gzD"></output></td></tr></tbody></table>
+</section>
+<p id="status" role="status" class="muted"></p>
+<div id="error" role="alert" hidden><p class="err"><span id="errmsg"></span> <button type="button" id="goto">Go to error</button></p></div>
+<ul id="warn" class="muted" aria-label="Sorting warnings" hidden></ul>
+<details><summary>What is changed and what isn't</summary>
+<ul class="muted">
+<li>Strings, <code>url()</code> contents and custom property values (<code>--x: …</code>) are copied exactly.</li>
+<li>Minify drops comments except <code>/*! licence */</code> ones, collapses whitespace and removes the last semicolon in each block unless you keep it.</li>
+<li>Sorting reorders runs of declarations alphabetically, vendor-prefixed versions first, custom properties on top. It never moves anything past a comment or nested rule, and warns where a longhand precedes its shorthand, because sorting would change which one wins.</li>
+<li>The gzip figure is measured with your browser's own gzip, so it is close to what a server sends.</li>
+</ul></details>
+</main><script type="module" src="/_/css/app.js"></script></body></html>

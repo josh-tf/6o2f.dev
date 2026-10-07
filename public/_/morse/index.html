@@ -1,0 +1,48 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Morse</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/morse/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Morse</h1><p class="sub">Text to Morse and back, with sound, a flashing light, a WAV download and a tap key. Runs in your browser.</p>
+<section class="card">
+<h2>Translate</h2>
+<div class="two">
+<div><label for="text">Text (prosigns as <code>&lt;AR&gt;</code>, <code>&lt;SOS&gt;</code>)</label>
+<textarea id="text" rows="4" autocomplete="off" spellcheck="false" autocapitalize="off">CQ CQ DE 6O2F K</textarea></div>
+<div><label for="morse">Morse (dots and dashes, space between letters, <code>/</code> between words)</label>
+<textarea id="morse" rows="4" autocomplete="off" spellcheck="false" autocapitalize="off"></textarea></div>
+</div>
+<p id="err" class="err" role="alert"></p>
+<div class="row"><button id="cm" type="button">Copy Morse</button><button id="ct" type="button">Copy text</button><span id="msg" class="muted" role="status"></span></div>
+</section>
+<section class="card">
+<h2>Play</h2>
+<div class="ctl">
+<div><label for="wpm">Speed (WPM)</label><input id="wpm" type="number" min="5" max="40" step="1" value="18" inputmode="numeric" autocomplete="off"></div>
+<div><label for="fw">Character speed (Farnsworth)</label><input id="fw" type="number" min="5" max="40" step="1" value="18" inputmode="numeric" autocomplete="off"></div>
+<div><label for="freq">Pitch (Hz)</label><input id="freq" type="number" min="200" max="1200" step="10" value="600" inputmode="numeric" autocomplete="off"></div>
+<div><label for="vol">Volume</label><input id="vol" type="range" min="0" max="100" step="1" value="50"></div>
+</div>
+<p id="timing" class="muted"></p>
+<div class="row">
+<label class="inl"><input id="snd" type="checkbox" checked> Sound</label>
+<label class="inl"><input id="lite" type="checkbox"> Flashing light</label>
+<button id="play" type="button" class="primary">Play</button>
+<button id="stop" type="button" disabled>Stop</button>
+<button id="dl" type="button">Download WAV</button>
+</div>
+<p id="rm" class="muted" hidden>Your system asks to reduce motion, so the flashing light is turned off.</p>
+<div class="lampbox"><div id="lamp" class="lamp" aria-hidden="true"></div><span id="pstat" role="status" class="muted"></span></div>
+</section>
+<section class="card">
+<h2>Tap key</h2>
+<p class="muted">Press and hold the key below with the mouse, a finger, or <kbd>Space</kbd> / <kbd>Enter</kbd> while it has focus. Short = dot, long = dash, using the speed above.</p>
+<div class="row"><button id="key" type="button" class="key">Tap here</button><button id="tclear" type="button">Clear</button></div>
+<label for="tmorse">Your keying</label>
+<output id="tmorse" class="o mono" for="key"></output>
+<label for="ttext">Decoded</label>
+<output id="ttext" class="o" for="key"></output>
+</section>
+<section class="card">
+<h2>Reference</h2>
+<details><summary>Letters, digits and punctuation</summary><div id="ref" class="ref"></div></details>
+</section>
+</main><script type="module" src="/_/morse/app.js"></script></body></html>

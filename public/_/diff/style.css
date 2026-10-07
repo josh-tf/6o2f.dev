@@ -1,0 +1,132 @@
+main.wide {
+  max-width: 1200px;
+}
+.two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+@media (max-width: 700px) {
+  .two {
+    grid-template-columns: 1fr;
+  }
+}
+.opts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  align-items: flex-end;
+  margin-top: 12px;
+}
+fieldset {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  margin: 0;
+  padding: 0 10px 6px;
+  min-width: 0;
+}
+legend {
+  color: var(--muted);
+  font-size: 0.85em;
+  padding: 0 4px;
+}
+label.inl {
+  display: inline-block;
+  margin: 4px 10px 0 0;
+  color: var(--fg);
+}
+.head {
+  margin: 16px 0 6px;
+}
+.head h2 {
+  margin: 0;
+}
+.head .sp {
+  flex: 1;
+}
+#count .a {
+  color: var(--accent);
+}
+#count .r {
+  color: var(--danger);
+}
+#out {
+  padding: 0;
+  overflow: auto;
+}
+#out p {
+  padding: 12px 16px;
+  margin: 0;
+}
+.d {
+  display: grid;
+  font: 0.85em/1.5 var(--mono);
+}
+.d.split {
+  grid-template-columns: 3em minmax(0, 1fr) 3em minmax(0, 1fr);
+}
+.d.unified {
+  grid-template-columns: 3em 3em 1.5em minmax(0, 1fr);
+}
+.d > * {
+  padding: 0 6px;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+.d .n {
+  color: var(--muted);
+  text-align: right;
+  user-select: none;
+}
+.d .del {
+  background: color-mix(in srgb, var(--danger) 13%, transparent);
+}
+.d .add {
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+}
+.d .del mark {
+  background: color-mix(in srgb, var(--danger) 30%, transparent);
+}
+.d .add mark {
+  background: color-mix(in srgb, var(--accent) 26%, transparent);
+}
+.d mark {
+  color: inherit;
+  border-radius: 2px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.d .none {
+  background: var(--bg);
+}
+.d .skip {
+  grid-column: 1/-1;
+  color: var(--muted);
+  background: var(--bg);
+  text-align: center;
+  font-style: italic;
+  border-block: 1px dashed var(--line);
+}
+.vh {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.d .n.del,
+.d .n.add {
+  color: var(--fg);
+}
+@media (max-width: 560px) {
+  .d.split {
+    grid-template-columns: 2.2em minmax(0, 1fr) 2.2em minmax(0, 1fr);
+  }
+  .d.unified {
+    grid-template-columns: 2.2em 2.2em 1.2em minmax(0, 1fr);
+  }
+  .d > * {
+    padding: 0 3px;
+  }
+}

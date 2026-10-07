@@ -1,0 +1,47 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hex viewer and converter</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/hex/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Hex</h1><p class="sub">Hex dump of text or a file, conversions between text, hex, binary and decimal bytes, byte search and a value inspector. Runs in your browser; files never leave it.</p>
+<section aria-labelledby="ih"><h2 id="ih">Input</h2>
+<div class="row ins">
+<fieldset><legend>Input is</legend><div class="seg">
+<label class="opt"><input type="radio" name="kind" value="text"><span>Text</span></label><label class="opt"><input type="radio" name="kind" value="hex" checked><span>Hex</span></label><label class="opt"><input type="radio" name="kind" value="bin"><span>Binary</span></label><label class="opt"><input type="radio" name="kind" value="dec"><span>Decimal</span></label>
+</div></fieldset>
+<div><label for="enc">Text encoding</label><select id="enc"></select></div>
+<div><label for="file">Or open a file <span class="muted">(first 1 MB)</span></label><input type="file" id="file" accept="*/*"></div>
+</div>
+<div id="fileinfo" class="card fileinfo" hidden><span id="fname"></span><button type="button" id="closefile">Close file</button></div>
+<div id="textwrap"><label for="in" id="inlabel">Hex bytes</label>
+<textarea id="in" rows="5" spellcheck="false" autocapitalize="off" autocomplete="off" aria-describedby="inhint err"></textarea>
+<p id="inhint" class="muted small"></p></div>
+<p id="err" class="err" role="alert"></p>
+<p id="size" class="muted small" role="status"></p>
+</section>
+
+<section aria-labelledby="dh"><h2 id="dh">Dump</h2>
+<div class="row dtools">
+<div><label for="width">Bytes per row</label><select id="width"><option value="8">8</option><option value="16" selected>16</option><option value="32">32</option></select></div>
+<form id="findform" class="row find" role="search" aria-label="Find bytes">
+<div><label for="q">Find</label><input id="q" autocomplete="off" spellcheck="false" autocapitalize="off" enterkeyhint="search"></div>
+<div><label for="qkind">as</label><select id="qkind"><option value="text">Text</option><option value="hex">Hex</option></select></div>
+<button type="button" id="prev" aria-label="Previous match">↑</button><button type="submit" id="next" aria-label="Next match">↓</button>
+</form>
+<form id="goform" class="row find" aria-label="Go to offset"><div><label for="go">Go to offset</label><input id="go" autocomplete="off" spellcheck="false" autocapitalize="off" inputmode="text" placeholder="0x10 or 16"></div><button type="submit">Go</button></form>
+</div>
+<p id="findmsg" class="muted small" role="status"></p>
+<div class="card dumpcard"><div id="dump" class="dump" tabindex="0" role="group" aria-label="Hex dump. Use arrow keys to move the selection, Shift with arrows to extend it." aria-describedby="selout"></div></div>
+<div class="row pager"><button type="button" id="pgprev">Previous page</button><span id="pginfo" class="muted small"></span><button type="button" id="pgnext">Next page</button><span class="sp"></span><button type="button" id="cdump">Copy dump</button></div>
+<p class="muted small">Click a byte to select it, <kbd>Shift</kbd>+click to select a range. In the dump: <kbd>←</kbd> <kbd>→</kbd> <kbd>↑</kbd> <kbd>↓</kbd> move, <kbd>Shift</kbd> extends, <kbd>PgUp</kbd> <kbd>PgDn</kbd> change page.</p>
+</section>
+
+<section aria-labelledby="xh"><h2 id="xh">Inspector</h2>
+<p><output id="selout"></output></p>
+<div class="card"><table id="insp"><caption class="vh">Values at the selected offset</caption><thead><tr><th scope="col">Type</th><th scope="col">Little-endian</th><th scope="col">Big-endian</th></tr></thead><tbody></tbody></table></div>
+</section>
+
+<section aria-labelledby="ch"><h2 id="ch">Convert</h2>
+<div class="row"><label class="chk"><input type="checkbox" id="onlysel"> Only the selected bytes</label></div>
+<div class="card"><table id="conv"><caption class="vh">The bytes in other formats</caption><tbody></tbody></table></div>
+</section>
+<p id="msg" class="muted" role="status"></p>
+</main><script type="module" src="/_/hex/app.js"></script></body></html>
