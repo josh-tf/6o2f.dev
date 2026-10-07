@@ -1,0 +1,100 @@
+.vh {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+.err {
+  min-height: 1.2em;
+  margin: 4px 0 0;
+  font-size: 0.85em;
+}
+fieldset {
+  border: 0;
+  margin: 6px 0 0;
+  padding: 0;
+  min-width: 0;
+}
+legend {
+  color: var(--muted);
+  font-size: 0.85em;
+  padding: 0;
+  margin: 0 0 6px;
+}
+.ex button {
+  min-height: 34px;
+  padding: 5px 10px;
+  font-size: 0.9em;
+}
+.summary {
+  margin: 16px 0 8px;
+}
+.summary output {
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+#res th[scope='row'],
+#ch th[scope='row'] {
+  color: var(--fg);
+  font-size: 1em;
+  white-space: nowrap;
+  width: 1%;
+}
+#res td,
+#ch td {
+  vertical-align: top;
+}
+#res td code,
+#ch td code {
+  overflow-wrap: anywhere;
+}
+td.muted {
+  font-size: 0.88em;
+}
+.notes {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 0;
+  display: grid;
+  gap: 6px;
+}
+.notes li {
+  padding: 6px 10px;
+  border-left: 3px solid var(--accent);
+  color: var(--muted);
+  font-size: 0.9em;
+}
+.acts {
+  margin-top: 12px;
+}
+.acts button {
+  min-height: 36px;
+}
+.help {
+  margin-top: 28px;
+}
+summary {
+  cursor: pointer;
+  color: var(--muted);
+}
+.help p {
+  margin: 8px 0 0;
+}
+@media (max-width: 560px) {
+  .hide-s {
+    display: none;
+  }
+}
+.why-s {
+  display: none;
+}
+@media (max-width: 560px) {
+  .why-s {
+    display: block;
+    font-size: 0.85em;
+    margin-top: 2px;
+  }
+}

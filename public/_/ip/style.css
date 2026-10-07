@@ -1,0 +1,32 @@
+.vh {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+.hero {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+.hero output {
+  font: 700 1.8rem/1.2 var(--mono);
+  word-break: break-all;
+  letter-spacing: -0.02em;
+}
+td.v {
+  overflow-wrap: anywhere;
+}
+td.act {
+  text-align: right;
+  width: 1%;
+  white-space: nowrap;
+}
+th[scope='row'] {
+  font-weight: 500;
+  width: 30%;
+}

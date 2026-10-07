@@ -1,0 +1,129 @@
+.vh {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+.filters {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+.filters .q {
+  flex: 1 1 260px;
+}
+.filters .q input {
+  width: 100%;
+}
+.best {
+  margin: 14px 0;
+}
+.best p {
+  margin: 0 0 6px;
+}
+.best .k {
+  color: var(--muted);
+  font-size: 0.85em;
+  margin: 0;
+}
+.best .big {
+  font-size: 1.25rem;
+  overflow-wrap: anywhere;
+}
+.best .row {
+  margin-top: 10px;
+}
+.hdr {
+  flex: 1 1 260px;
+  min-width: 0;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 7px 10px;
+  overflow-wrap: anywhere;
+}
+.cp {
+  min-height: 36px;
+}
+#tbl td:first-child,
+#sniff code {
+  overflow-wrap: anywhere;
+}
+#tbl td {
+  vertical-align: top;
+}
+#tbl td:nth-child(2) {
+  min-width: 90px;
+}
+#more {
+  font-size: 0.85em;
+  margin: 8px 0 0;
+}
+.drop {
+  border: 2px dashed var(--line);
+  border-radius: var(--radius);
+  padding: 16px;
+  background: var(--card);
+  transition: border-color 0.15s;
+}
+.drop.over {
+  border-color: var(--accent);
+}
+.drop label {
+  margin-top: 0;
+}
+.drop input {
+  width: 100%;
+}
+.drop p {
+  margin: 8px 0 0;
+}
+.small {
+  font-size: 0.85em;
+}
+.err {
+  min-height: 1.2em;
+  margin: 8px 0 0;
+}
+#sniff {
+  margin-top: 6px;
+}
+#sniff caption {
+  text-align: left;
+  color: var(--muted);
+  font-size: 0.85em;
+  padding-bottom: 6px;
+}
+#sniff td {
+  vertical-align: top;
+}
+.fn {
+  overflow-wrap: anywhere;
+}
+.v {
+  font-weight: 700;
+}
+.v.ok {
+  color: var(--accent);
+}
+.v.bad {
+  color: var(--danger);
+}
+.help {
+  margin-top: 28px;
+}
+summary {
+  cursor: pointer;
+  color: var(--muted);
+}
+.help p {
+  margin: 8px 0 0;
+}
+@media (max-width: 560px) {
+  .hide-s {
+    display: none;
+  }
+}

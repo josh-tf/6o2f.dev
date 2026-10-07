@@ -1,0 +1,88 @@
+[hidden] {
+  display: none !important;
+}
+.sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  margin: 0;
+}
+#add input {
+  flex: 1;
+  min-width: 0;
+}
+.chips {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px;
+}
+.chips li {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 2px 2px 2px 10px;
+  background: var(--card);
+  max-width: 100%;
+}
+.chips li span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.chips button {
+  padding: 0 8px;
+  border: 0;
+  background: none;
+}
+.bar2 {
+  margin-bottom: 12px;
+}
+.sp {
+  flex: 1;
+}
+#items {
+  list-style: none;
+  margin: 0;
+  padding: 4px 16px;
+}
+#items li {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+}
+#items li:last-child {
+  border: 0;
+}
+#items a {
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+#items .read a {
+  font-weight: 400;
+  color: var(--muted);
+}
+#items .meta {
+  color: var(--muted);
+  font-size: 0.85em;
+}
+#items p {
+  margin: 2px 0 0;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+#items .read p {
+  display: none;
+}
+#items:empty {
+  display: none;
+}
+#msg:empty,
+#errs:empty {
+  display: none;
+}
+#empty {
+  margin: 8px 0;
+}

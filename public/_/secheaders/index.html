@@ -1,0 +1,28 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Security headers</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/secheaders/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Security headers</h1><p class="sub">Grade a site's HTTP security headers: HTTPS, HSTS, CSP, framing, cookies, CORS and more. Each check explains the problem and shows a fix.</p>
+<form class="card" id="f" novalidate>
+<label for="url">URL or hostname</label>
+<div class="row"><input id="url" class="grow" type="url" inputmode="url" autocomplete="off" autocapitalize="off" spellcheck="false" required value="https://github.com/"><button type="submit" class="primary" id="go">Scan</button></div>
+<p id="msg" class="err" role="alert"></p>
+<p id="busy" class="muted" role="status"></p>
+</form>
+<section id="res" hidden aria-labelledby="rh"><h2 id="rh">Result</h2>
+<div class="card summary">
+<output id="grade" class="badge" for="url" aria-describedby="gsub"></output>
+<div class="grow"><p id="final" class="final"></p><p id="gsub" class="muted"></p>
+<div class="row"><button type="button" id="copy">Copy report as Markdown</button><span id="copied" class="muted" role="status"></span></div></div>
+</div>
+<h3>Checks</h3>
+<div class="card"><table class="checks"><caption class="vh">Security header checks with result and fix</caption>
+<thead><tr><th scope="col">Check</th><th scope="col">Result</th><th scope="col">Details</th></tr></thead><tbody id="checks"></tbody></table></div>
+<details class="card rawbox"><summary>Raw response headers <span id="rawn" class="muted"></span></summary><table class="raw"><caption class="vh">Response headers as received</caption>
+<thead><tr><th scope="col">Header</th><th scope="col">Value</th></tr></thead><tbody id="raw"></tbody></table></details>
+</section>
+<section aria-labelledby="hh"><h2 id="hh">How grading works</h2>
+<details class="card"><summary>Scoring</summary>
+<p>The score starts at 100. Failed checks cost more than warnings; informational checks cost nothing. A page that is not served over HTTPS is always <b>F</b>. <b>A+</b> needs 95 or more with no failed checks; then A from 85, B from 70, C from 55, D from 40.</p>
+<p>We fetch the page with a GET from our server (redirects followed, first 256 KB), and separately request the <code>http://</code> version to see whether it redirects to HTTPS. Headers your server only sends to logged-in users or specific browsers will not be seen.</p>
+</details></section>
+</main><script type="module" src="/_/secheaders/app.js"></script></body></html>

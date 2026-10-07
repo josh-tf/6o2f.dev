@@ -1,0 +1,84 @@
+.vh {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+.small {
+  font-size: 0.85em;
+}
+.acts {
+  margin-bottom: 16px;
+}
+.acts button {
+  min-height: 36px;
+}
+.groups {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
+  gap: 16px;
+}
+.groups section {
+  margin: 0;
+}
+.groups th {
+  color: var(--fg);
+  font-size: 0.9em;
+  font-weight: 500;
+  white-space: nowrap;
+  width: 1%;
+  vertical-align: top;
+  padding-right: 14px;
+}
+.groups td {
+  vertical-align: top;
+}
+.groups tr:last-child th,
+.groups tr:last-child td {
+  border-bottom: 0;
+}
+.val {
+  display: block;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.why {
+  display: block;
+  color: var(--muted);
+  font-size: 0.82em;
+  margin-top: 2px;
+}
+#feat th[scope='row'] {
+  color: var(--fg);
+  font-size: 1em;
+  font-weight: 500;
+}
+#feat td.y {
+  color: var(--accent);
+  font-weight: 600;
+  white-space: nowrap;
+}
+#feat td.n {
+  color: var(--muted);
+  white-space: nowrap;
+}
+td.muted {
+  font-size: 0.88em;
+}
+.help {
+  margin-top: 28px;
+}
+summary {
+  cursor: pointer;
+  color: var(--muted);
+}
+.help p {
+  margin: 8px 0 0;
+}
+@media (max-width: 560px) {
+  .hide-s {
+    display: none;
+  }
+}

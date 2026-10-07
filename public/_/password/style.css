@@ -1,0 +1,70 @@
+.tabs {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+.tabs label,
+.checks label {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  margin: 0;
+  color: var(--fg);
+}
+fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+.sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+.checks {
+  margin: 12px 0;
+  gap: 6px 18px;
+}
+.result {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px;
+  margin: 14px 0;
+  font-size: 1.15em;
+  overflow-wrap: anywhere;
+  min-height: 3em;
+}
+#ent {
+  margin: 12px 0 0;
+}
+#ent b {
+  color: var(--accent);
+}
+#msg {
+  margin-left: 4px;
+}
+#ul {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+}
+#ul li {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--line);
+}
+#ul code {
+  flex: 1;
+  overflow-wrap: anywhere;
+  font-size: 0.95em;
+}
+input[type='range'] {
+  accent-color: var(--accent);
+}

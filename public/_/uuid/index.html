@@ -1,0 +1,18 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>UUID</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/uuid/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>UUID</h1><p class="sub">Generate UUID v4 and v7, ULID or the nil UUID, and inspect any id. Everything runs in your browser.</p>
+<form id="gen" class="card">
+<div class="opts">
+<div><label for="kind">Type</label><select id="kind"><option value="v4">UUID v4 (random)</option><option value="v7">UUID v7 (time-ordered)</option><option value="ulid">ULID</option><option value="nil">NIL (all zero)</option></select></div>
+<div><label for="n">Count (1-1000)</label><input id="n" type="number" min="1" max="1000" step="1" value="5" inputmode="numeric"></div>
+</div>
+<fieldset class="checks"><legend>Format <span class="muted">(UUIDs only; ULIDs are always uppercase)</span></legend><label><input type="checkbox" id="upper"> Uppercase</label><label><input type="checkbox" id="nodash"> No hyphens</label><label><input type="checkbox" id="braces"> Braces</label></fieldset>
+<label for="out">Result</label>
+<textarea id="out" rows="6" readonly spellcheck="false"></textarea>
+<div class="row" style="margin-top:10px"><button type="submit" class="primary" id="go">Generate</button><button type="button" id="copy">Copy all</button><span id="msg" class="muted" role="status"></span></div>
+</form>
+<section class="card"><h2>Parse / validate</h2>
+<label for="in" style="margin-top:0">UUID or ULID</label><input id="in" autocomplete="off" spellcheck="false" autocapitalize="off" style="width:100%">
+<dl id="info" aria-live="polite"></dl></section>
+</main><script type="module" src="/_/uuid/app.js"></script></body></html>

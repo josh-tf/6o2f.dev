@@ -1,0 +1,64 @@
+.head {
+  margin: 0 0 6px;
+}
+.head h2 {
+  margin: 0;
+}
+.head .sp {
+  flex: 1;
+}
+pre {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+#times {
+  margin-top: 8px;
+}
+#times th[scope='row'] {
+  white-space: nowrap;
+}
+#times td {
+  word-break: break-word;
+}
+fieldset {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  margin: 0;
+  padding: 0 12px 10px;
+  min-width: 0;
+}
+legend {
+  color: var(--muted);
+  font-size: 0.85em;
+  padding: 0 4px;
+}
+#sec {
+  width: 100%;
+  max-width: 420px;
+}
+label.inl {
+  display: inline-block;
+  margin: 8px 0 0;
+  color: var(--fg);
+}
+#sig {
+  font-weight: 600;
+}
+#sig.muted {
+  font-weight: 400;
+}
+.ok {
+  color: var(--accent);
+}
+#hint:empty,
+#err:empty {
+  display: none;
+}
+.vh {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

@@ -1,0 +1,52 @@
+.gens {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(205px, 1fr));
+  gap: 12px;
+}
+.gens .wide {
+  grid-column: 1/-1;
+}
+.gens input[type='number'],
+.gens input:not([type]) {
+  width: 100%;
+}
+.gens .row > div {
+  flex: 1;
+  min-width: 6em;
+}
+.out {
+  display: block;
+  font-size: 1.15em;
+  font-weight: 600;
+  min-height: 1.55em;
+  margin: 10px 0 0;
+  overflow-wrap: anywhere;
+}
+.out small {
+  display: block;
+  font-weight: 400;
+  color: var(--muted);
+  font-size: 0.8em;
+}
+.sw {
+  display: inline-block;
+  width: 1.2em;
+  height: 1.2em;
+  vertical-align: -0.2em;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  margin-right: 0.4em;
+}
+.sp {
+  flex: 1;
+}
+#hist {
+  margin: 10px 0 0;
+  padding-left: 1.6em;
+}
+#hist li {
+  overflow-wrap: anywhere;
+}
+#hist b {
+  color: var(--fg);
+}

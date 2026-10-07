@@ -1,0 +1,14 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Webhook inspector</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/hook/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Webhook inspector</h1><p class="sub">Create an endpoint, send it any HTTP request, and inspect the method, headers and body here. The endpoint URL is public; only you can see its requests.</p>
+<div class="card"><form class="row" id="new"><div><label for="name">Name (optional)</label><input id="name" maxlength="60" autocomplete="off" placeholder="e.g. stripe-test"></div><button type="submit" class="primary">New endpoint</button></form>
+<p id="msg" class="err" role="alert"></p>
+<table><caption class="vh">Your endpoints</caption><thead><tr><th scope="col">Endpoint</th><th scope="col">Created</th><th scope="col"><span class="vh">Actions</span></th></tr></thead><tbody id="list"></tbody></table></div>
+<section id="detail" hidden aria-labelledby="title"><div class="row dh"><h2 id="title"></h2>
+<button type="button" id="copy">Copy URL</button><button type="button" id="clear" class="danger">Clear requests</button></div>
+<code id="url" class="url"></code>
+<details><summary>Send a test request</summary><pre id="curl" style="white-space:pre-wrap;word-break:break-all"></pre><p><button type="button" id="copycurl">Copy curl</button></p></details>
+<p class="muted" id="empty" hidden>Waiting for requests. This page checks every few seconds.</p>
+<p id="live" class="muted" role="status"></p><div id="reqs"></div></section>
+</main><script type="module" src="/_/hook/app.js"></script></body></html>

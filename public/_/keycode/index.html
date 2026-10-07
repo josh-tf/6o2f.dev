@@ -1,0 +1,37 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Key codes</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/keycode/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Key codes</h1><p class="sub">Press any key to see its JavaScript <code>event.key</code>, <code>event.code</code>, legacy <code>keyCode</code>, location and modifiers. Runs in your browser.</p>
+<label for="cap">Press a key here</label>
+<input id="cap" class="cap" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="done" aria-describedby="caphint" placeholder="Tap here, press a key">
+<p id="caphint" class="muted small">Every key is captured except <kbd>Tab</kbd>, which still moves focus. Browser shortcuts like <kbd>Ctrl</kbd>+<kbd>W</kbd> can't be blocked by any page.</p>
+
+<section aria-labelledby="lh" class="card result">
+<h2 id="lh" class="vh">Last key</h2>
+<output id="big" class="big" for="cap" aria-live="polite">…</output>
+<p id="sc" class="sc muted"></p>
+<p id="virt" class="note" hidden>This looks like a virtual keyboard or input method: it reports <code>key</code> "Unidentified" and <code>keyCode</code> 229. The typed text arrives in the <code>input</code> event instead: <output id="typed"></output></p>
+<dl id="props" class="props"></dl>
+</section>
+
+<section aria-labelledby="snh" class="card">
+<h2 id="snh">Match it in JavaScript</h2>
+<p class="muted small">Use <code>key</code> for what was typed (layout-aware) and <code>code</code> for the physical key (layout-independent, good for games).</p>
+<div class="snip"><code id="snkey">Press a key first.</code><button type="button" data-copy="snkey">Copy</button></div>
+<div class="snip"><code id="sncode">Press a key first.</code><button type="button" data-copy="sncode">Copy</button></div>
+<span id="msg" class="muted" role="status"></span>
+</section>
+
+<section aria-labelledby="hh">
+<div class="row"><h2 id="hh" class="grow">History</h2><label class="inl"><input type="checkbox" id="ups"> Show key up</label><button type="button" id="clear">Clear</button></div>
+<div class="tw"><table><caption class="vh">Recent key events, newest first</caption>
+<thead><tr><th scope="col">Event</th><th scope="col">key</th><th scope="col">code</th><th scope="col">keyCode</th><th scope="col">Location</th><th scope="col">Modifiers</th></tr></thead>
+<tbody id="hist"><tr><td colspan="6" class="muted">No keys yet.</td></tr></tbody></table></div>
+</section>
+
+<details class="card ref"><summary>Common keys reference</summary>
+<div class="tw"><table><caption class="vh">Common keys with their key, code and legacy keyCode</caption>
+<thead><tr><th scope="col">key</th><th scope="col">code</th><th scope="col">keyCode</th></tr></thead><tbody id="ref"></tbody></table></div>
+<p class="muted small"><code>keyCode</code> and <code>which</code> are deprecated and vary by browser and layout (Firefox reports 59, 61 and 173 for <kbd>;</kbd> <kbd>=</kbd> <kbd>-</kbd>). Prefer <code>key</code> or <code>code</code> in new code.</p>
+</details>
+</main><script type="module" src="/_/keycode/app.js"></script></body></html>

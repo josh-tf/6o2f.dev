@@ -1,0 +1,80 @@
+.row.end {
+  align-items: flex-end;
+}
+fieldset.hf {
+  border: 0;
+  padding: 0;
+  margin: 10px 0 0;
+  min-width: 0;
+}
+fieldset.hf legend {
+  padding: 0;
+  margin-bottom: 4px;
+  color: var(--muted);
+  font-size: 0.85em;
+}
+.grow {
+  flex: 1;
+  min-width: 220px;
+}
+.grow input {
+  width: 100%;
+}
+.hrow {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+.hrow input {
+  flex: 1;
+  min-width: 0;
+}
+h3 {
+  font-size: 0.9rem;
+  margin: 14px 0 6px;
+  color: var(--muted);
+}
+.vh {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+#rb {
+  white-space: pre-wrap;
+  word-break: break-all;
+  max-height: 420px;
+}
+.hist {
+  list-style: none;
+  margin: 0 0 10px;
+  padding: 0;
+}
+.hist li {
+  display: flex;
+  gap: 8px;
+  padding: 4px 0;
+  border-bottom: 1px solid var(--line);
+}
+.hist button {
+  border: 0;
+  padding: 0;
+  background: none;
+  color: var(--accent);
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+th.k {
+  font-size: inherit;
+  font-weight: 400;
+  color: var(--muted);
+  white-space: nowrap;
+  vertical-align: top;
+}
+td.v {
+  word-break: break-all;
+}

@@ -1,0 +1,133 @@
+.cols {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+  gap: 28px;
+  align-items: start;
+}
+@media (max-width: 860px) {
+  .cols {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+section.first {
+  margin-top: 0;
+  min-width: 0;
+}
+.note {
+  color: var(--fg);
+  border-left: 3px solid var(--line);
+  padding: 6px 12px;
+  background: var(--card);
+  margin: 0 0 20px;
+}
+.small {
+  font-size: 0.85em;
+  margin: 6px 0;
+}
+.wide {
+  width: 100%;
+}
+.grow {
+  flex: 1;
+  min-width: 160px;
+}
+.fields {
+  align-items: flex-end;
+}
+.fields > div {
+  min-width: 0;
+}
+fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0 0 12px;
+  min-width: 0;
+}
+fieldset:disabled {
+  opacity: 0.5;
+}
+legend {
+  color: var(--fg);
+  font-weight: 600;
+  padding: 0;
+  margin-bottom: 4px;
+}
+label.chk {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 2px 0;
+  color: var(--fg);
+  font-size: 1em;
+  min-height: 32px;
+  padding-top: 4px;
+  cursor: pointer;
+}
+label.chk input {
+  margin-top: 4px;
+  flex: none;
+}
+.rec {
+  margin: 8px 0 0;
+}
+#rec {
+  font-weight: 700;
+  color: var(--accent);
+}
+#out {
+  resize: vertical;
+  white-space: pre;
+  overflow: auto;
+}
+.acts {
+  margin-top: 8px;
+}
+.tablewrap {
+  overflow-x: auto;
+  position: relative;
+}
+#cmp {
+  font-size: 0.85em;
+  min-width: 760px;
+}
+#cmp th,
+#cmp td {
+  padding: 6px 5px;
+  text-align: center;
+}
+#cmp tbody th {
+  text-align: left;
+  white-space: nowrap;
+  color: var(--fg);
+}
+#cmp thead th {
+  vertical-align: bottom;
+}
+#cmp .g {
+  border-bottom: 0;
+  font-weight: 600;
+  color: var(--fg);
+}
+#cmp .y {
+  color: var(--accent);
+  font-weight: 700;
+}
+#cmp .x {
+  color: var(--danger);
+}
+#cmp tr.sel th {
+  box-shadow: inset 3px 0 0 var(--accent);
+  font-weight: 700;
+}
+#cmp tr.sel th::after {
+  content: ' ◂';
+  color: var(--accent);
+}
+.vh {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

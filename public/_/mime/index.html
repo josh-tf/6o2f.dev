@@ -1,0 +1,32 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MIME types</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/mime/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>MIME types</h1><p class="sub">Extension to Content-Type and back, plus a file checker that reads magic numbers. Runs in your browser; files never leave it.</p>
+
+<section aria-labelledby="lh"><h2 id="lh">Look up</h2>
+<div class="filters">
+<div class="q"><label for="q">Extension, file name or MIME type</label>
+<input id="q" type="search" value="woff2" autocomplete="off" spellcheck="false" autocapitalize="off" aria-describedby="best"></div>
+<div><label for="cat">Category</label><select id="cat"><option value="">All categories</option></select></div>
+</div>
+<div id="best" class="card best" role="status"></div>
+<table id="tbl"><caption class="vh">Matching MIME types</caption>
+<thead><tr><th scope="col">MIME type</th><th scope="col">Extensions</th><th scope="col" class="hide-s">Category</th></tr></thead><tbody id="rows"></tbody></table>
+<p id="more" class="muted"></p>
+</section>
+
+<section aria-labelledby="sh"><h2 id="sh">Check a file</h2>
+<p class="muted">Reads the first 32 KB of each file and compares its signature with its extension, which catches renamed files and disguised executables.</p>
+<div id="drop" class="drop">
+<label for="file">Choose or drop files</label>
+<input id="file" type="file" multiple aria-describedby="drophint">
+<p id="drophint" class="muted small">Any type. Drop several at once to compare them.</p>
+</div>
+<p id="ferr" class="err" role="alert"></p>
+<table id="sniff"><caption id="scap">Example: a file named <code>invoice.pdf</code> that is really a ZIP</caption>
+<thead><tr><th scope="col">File</th><th scope="col">Detected</th><th scope="col">Result</th><th scope="col" class="hide-s">First bytes</th></tr></thead><tbody id="srows"></tbody></table>
+</section>
+<details class="help"><summary>About the data</summary>
+<p class="muted">The table holds about 380 types from the IANA media type registry and the types browsers, nginx and Apache actually send. Where one extension has several types (for example <code>.ts</code> is both MPEG transport stream and TypeScript) the first listed is the common server default. Text types get <code>; charset=utf-8</code> in the copied header. Detection recognises about 70 signatures; text files are checked for valid UTF-8.</p></details>
+<p id="msg" class="muted" role="status"></p>
+</main><script type="module" src="/_/mime/app.js"></script></body></html>

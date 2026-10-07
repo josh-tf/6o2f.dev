@@ -1,0 +1,16 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>This device</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/screen/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>This device</h1><p class="sub">What your browser reports about your screen, preferences, input, locale and hardware, updated live as you resize or rotate. Everything is read locally: nothing is sent anywhere.</p>
+<div class="row acts"><button type="button" id="cpjson">Copy as JSON</button><button type="button" id="cptext">Copy as text</button><span id="live" class="muted small" role="status"></span></div>
+<div id="groups" class="groups"></div>
+<section aria-labelledby="fh"><h2 id="fh">Feature support</h2>
+<p class="muted">Whether each API exists in this browser. Checking does not ask for any permission.</p>
+<p id="fsum" class="muted"></p>
+<table id="feat"><caption class="vh">Browser feature support</caption>
+<thead><tr><th scope="col">Feature</th><th scope="col">Status</th><th scope="col" class="hide-s">What it is for</th></tr></thead><tbody id="frows"></tbody></table>
+</section>
+<details class="help"><summary>Why do some values look wrong?</summary>
+<p class="muted">Screen sizes are in CSS pixels; multiply by the pixel ratio for physical pixels. Browser zoom changes the viewport and the pixel ratio. Some values are rounded or capped on purpose to limit fingerprinting: device memory is rounded and capped, CPU threads may be capped, and connection speed is bucketed. Safari and Firefox do not expose memory or network information at all.</p></details>
+<p id="msg" class="muted" role="status"></p>
+</main><script type="module" src="/_/screen/app.js"></script></body></html>

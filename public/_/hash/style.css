@@ -1,0 +1,51 @@
+.opts {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  margin-top: 6px;
+}
+.opts input {
+  width: 100%;
+}
+table#res {
+  margin-top: 4px;
+}
+caption {
+  text-align: left;
+  padding-bottom: 4px;
+  font-size: 0.85em;
+}
+#res th {
+  width: 6.5em;
+  color: var(--fg);
+  font-weight: 600;
+  font-size: 1em;
+}
+#res td.v {
+  font-family: var(--mono);
+  font-size: 0.85em;
+  word-break: break-all;
+}
+#res td.c {
+  width: 1%;
+  text-align: right;
+}
+#res tr.hit td,
+#res tr.hit th {
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+}
+#drop.over {
+  border-color: var(--accent);
+  border-style: dashed;
+}
+#cmp.ok {
+  color: var(--accent);
+}
+#cmp.bad {
+  color: var(--danger);
+}
+@media (max-width: 560px) {
+  .opts {
+    grid-template-columns: 1fr;
+  }
+}

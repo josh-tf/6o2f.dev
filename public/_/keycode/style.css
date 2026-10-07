@@ -1,0 +1,116 @@
+.vh {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+.small {
+  font-size: 0.85em;
+}
+.cap {
+  width: 100%;
+  padding: 18px 14px;
+  font-size: 1.1rem;
+  text-align: center;
+  caret-color: transparent;
+  border-style: dashed;
+}
+.cap:focus {
+  border-style: solid;
+  border-color: var(--accent);
+}
+.result {
+  margin-top: 14px;
+  text-align: center;
+}
+.big {
+  display: block;
+  font: 800 5rem/1.1 var(--mono);
+  color: var(--accent);
+  letter-spacing: -0.03em;
+  overflow-wrap: anywhere;
+}
+.big.long {
+  font-size: 3rem;
+}
+.sc {
+  margin: 4px 0 0;
+  min-height: 1.4em;
+}
+.note {
+  text-align: left;
+  border-left: 3px solid var(--accent);
+  padding-left: 10px;
+}
+.props {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 8px;
+  margin: 16px 0 0;
+  text-align: left;
+}
+.props div {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column-reverse;
+}
+.props dd {
+  margin: 0;
+  font: 600 1.05rem var(--mono);
+  overflow-wrap: anywhere;
+}
+.props dt {
+  color: var(--muted);
+  font-size: 0.8em;
+}
+.snip {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin: 8px 0;
+}
+.snip code {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px 10px;
+}
+.row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.grow {
+  flex: 1;
+}
+h2.grow {
+  margin: 0;
+}
+label.inl {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  color: var(--fg);
+}
+.tw {
+  overflow-x: auto;
+}
+.ref summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .big {
+    transition: color 0.15s;
+  }
+}

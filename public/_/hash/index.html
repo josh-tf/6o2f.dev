@@ -1,0 +1,22 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hash</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/hash/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Hash</h1><p class="sub">MD5, SHA-1, SHA-2 and HMAC of text or a file. Computed in your browser; nothing is uploaded.</p>
+<div class="card" id="drop">
+<label for="txt" style="margin-top:0">Text (UTF-8)</label>
+<textarea id="txt" rows="4" spellcheck="false">The quick brown fox jumps over the lazy dog</textarea>
+<p id="file" class="muted" hidden></p>
+<div class="row" style="margin-top:10px"><label for="pick" style="margin:0">or a file</label><input id="pick" type="file" aria-describedby="drophint"><button type="button" id="unfile" hidden>Use text instead</button></div>
+<p id="drophint" class="muted" style="margin:6px 0 0;font-size:.85em">Drop a file anywhere on this box. Limit 200 MB: the browser hashes a whole file in one go.</p>
+</div>
+<div class="opts">
+<div><label for="key">HMAC key (optional)</label><input id="key" autocomplete="off" spellcheck="false" autocapitalize="off" placeholder="empty = plain hash"></div>
+<div><label for="fmt">Output</label><select id="fmt"><option value="hex">hex</option><option value="base64">base64</option><option value="base64url">base64url</option></select></div>
+</div>
+<p id="err" class="err" role="alert"></p>
+<section aria-labelledby="h-res"><h2 id="h-res">Digests</h2>
+<table id="res"><caption class="muted" id="cap" aria-live="polite"></caption><tbody></tbody></table></section>
+<section><h2>Verify</h2><label for="exp" style="margin-top:0">Expected hash</label>
+<input id="exp" autocomplete="off" spellcheck="false" autocapitalize="off" placeholder="paste a hex, base64 or base64url hash" style="width:100%">
+<p id="cmp" role="status"></p></section>
+</main><script type="module" src="/_/hash/app.js"></script></body></html>

@@ -1,0 +1,19 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HTTP</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/http/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>HTTP</h1><p class="sub">Send a request from our server and inspect the response. Redirects are followed and shown; bodies are shown as text only.</p>
+<form class="card" id="f">
+<div class="row end"><div><label for="method">Method</label><select id="method"></select></div>
+<div class="grow"><label for="url">URL</label><input id="url" type="url" required autocomplete="url" spellcheck="false" autocapitalize="off" value="https://httpbin.org/anything?hello=world"></div>
+<button type="submit" class="primary" id="send">Send</button></div>
+<fieldset class="hf"><legend>Headers</legend><div id="hdrs"></div><button type="button" id="addh">Add header</button></fieldset>
+<label for="body">Body (text, not sent for GET/HEAD)</label><textarea id="body" rows="4" spellcheck="false"></textarea>
+<p id="msg" class="err" role="alert"></p>
+</form>
+<section id="res" hidden><h2>Response</h2><div class="card">
+<p class="row"><b id="status"></b><span id="meta" class="muted"></span></p>
+<p id="chain" class="muted"></p>
+<h3>Headers</h3><table><caption class="vh">Response headers</caption><tbody id="rh"></tbody></table>
+<h3>Body</h3><pre id="rb"></pre></div></section>
+<section><h2>History</h2><div class="card"><ul id="hist" class="hist"></ul><p id="none" class="muted" hidden>No requests yet.</p><button type="button" id="clear" class="danger">Clear history</button></div></section>
+</main><script type="module" src="/_/http/app.js"></script></body></html>

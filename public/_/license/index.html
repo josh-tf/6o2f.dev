@@ -1,0 +1,49 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Licence picker</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/license/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Licenses</h1><p class="sub">Pick an open-source licence, fill in the year and holder, and copy the LICENSE text or per-file header.</p>
+<p class="note" role="note">Not legal advice. This page explains common licences in plain terms; for anything that matters (a company, a dual licence, mixing licences) ask a lawyer.</p>
+<div class="cols">
+<section class="first" aria-labelledby="qh"><h2 id="qh">Help me choose</h2>
+<form id="quiz" class="card">
+<fieldset><legend>1. What may others do with changed versions of your code?</legend>
+<label class="chk"><input type="radio" name="style" value="permissive" checked>Anything, closed source included (permissive)</label>
+<label class="chk"><input type="radio" name="style" value="weak">Keep my files open, the rest can be anything (weak copyleft)</label>
+<label class="chk"><input type="radio" name="style" value="strong">Release the whole program as open source (strong copyleft)</label>
+<label class="chk"><input type="radio" name="style" value="none">Anything, without even keeping my name (public domain)</label>
+</fieldset>
+<fieldset id="q2"><legend>2. Do you want an explicit patent grant from contributors?</legend>
+<label class="chk"><input type="radio" name="patents" value="yes">Yes</label>
+<label class="chk"><input type="radio" name="patents" value="no" checked>No, keep it short</label>
+</fieldset>
+<fieldset id="q3" disabled><legend>3. Should running it as a network service (SaaS) count as distribution?</legend>
+<label class="chk"><input type="radio" name="network" value="yes">Yes, users of the service get the source</label>
+<label class="chk"><input type="radio" name="network" value="no" checked>No</label>
+</fieldset>
+<p class="rec"><span class="muted">Recommendation:</span> <output id="rec" for="quiz"></output></p>
+<p id="why" class="small"></p>
+<div class="row"><button id="use" type="button" class="primary">Use this licence</button></div>
+</form>
+</section>
+<section class="first" aria-labelledby="lh"><h2 id="lh">Licence text</h2>
+<div class="card">
+<div class="row fields">
+<div class="grow"><label for="lic">Licence</label><select id="lic"></select></div>
+<div><label for="year">Year</label><input id="year" type="text" inputmode="numeric" autocomplete="off" spellcheck="false" maxlength="40" size="10"></div>
+<div class="grow"><label for="holder">Copyright holder</label><input id="holder" type="text" autocomplete="name" spellcheck="false" maxlength="200" class="wide"></div>
+</div>
+<div id="f-project" hidden><label for="project">Program name and one-line description</label><input id="project" type="text" class="wide" autocomplete="off" spellcheck="false" maxlength="200"></div>
+<p id="warn" class="err small" role="alert"></p>
+<p id="how" class="small"></p>
+<label for="out" id="outlabel">LICENSE</label>
+<textarea id="out" rows="18" wrap="off" readonly spellcheck="false" autocomplete="off"></textarea>
+<div class="row acts"><button id="copy" type="button" class="primary">Copy</button><button id="dl" type="button">Download</button></div>
+</div>
+</section>
+</div>
+<section aria-labelledby="ch"><h2 id="ch">Compare</h2>
+<div class="tablewrap" tabindex="0" role="region" aria-label="Comparison table, scrolls sideways"><table id="cmp"></table></div>
+<p class="muted small">Based on choosealicense.com. "Keep licence notice" means copies must include the copyright and licence text. CC0 explicitly grants no patent rights.</p>
+</section>
+<p id="msg" class="muted" role="status"></p>
+</main><script type="module" src="/_/license/app.js"></script></body></html>

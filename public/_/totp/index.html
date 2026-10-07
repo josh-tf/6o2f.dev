@@ -1,0 +1,59 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TOTP code generator</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/totp/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>TOTP</h1><p class="sub">One-time codes from a base32 secret (RFC 6238 and RFC 4226). Runs in your browser.</p>
+<div class="cols">
+<div>
+<section class="first">
+<h2>Secret</h2>
+<label for="secret">Base32 secret</label>
+<input id="secret" class="wide" autocomplete="off" spellcheck="false" autocapitalize="characters" value="JBSWY3DPEHPK3PXP" aria-describedby="secret-help">
+<p id="secret-help" class="muted small">The sample secret is public, so its codes protect nothing. Spaces, hyphens and lowercase are fine.</p>
+<div class="row"><button id="rand" type="button">Generate random secret</button>
+<label class="chk"><input id="remember" type="checkbox">Remember in this browser</label></div>
+<p id="warn" class="warn small" role="note">The secret never leaves this page. By default it is kept in memory only and is gone when you close or reload the tab. If you tick "Remember", it is saved unencrypted in this browser's local storage, so do not tick it on a shared computer.</p>
+<div class="row"><div><label for="label">Account</label><input id="label" autocomplete="off" spellcheck="false" autocapitalize="off" value="alice@example.com"></div>
+<div><label for="issuer">Issuer</label><input id="issuer" autocomplete="off" spellcheck="false" value="Example"></div></div>
+</section>
+<section>
+<h2>Settings</h2>
+<fieldset><legend>Mode</legend><div class="row"><label class="chk"><input type="radio" name="type" value="totp" checked>Time-based (TOTP)</label><label class="chk"><input type="radio" name="type" value="hotp">Counter-based (HOTP)</label></div></fieldset>
+<div class="row">
+<div><label for="alg">Algorithm</label><select id="alg"><option value="SHA-1">SHA-1 (default)</option><option value="SHA-256">SHA-256</option><option value="SHA-512">SHA-512</option></select></div>
+<div><label for="digits">Digits</label><select id="digits"><option value="6">6</option><option value="7">7</option><option value="8">8</option></select></div>
+<div id="f-period"><label for="period">Period (s)</label><input id="period" type="number" min="1" max="3600" step="1" value="30" inputmode="numeric" style="width:110px"></div>
+<div id="f-counter" hidden><label for="counter">Counter</label><input id="counter" type="number" min="0" step="1" value="0" inputmode="numeric" style="width:130px"></div>
+</div>
+</section>
+<section>
+<h2>Load an otpauth:// URI</h2>
+<label for="import">Paste a URI from an authenticator setup</label>
+<div class="row"><input id="import" class="grow" type="text" autocomplete="off" spellcheck="false" autocapitalize="off" placeholder="otpauth://totp/Example:alice@example.com?secret=..."><button id="load" type="button">Load</button></div>
+<p id="import-err" class="err" role="alert"></p>
+</section>
+</div>
+<div>
+<section class="first">
+<h2>Current code</h2>
+<div class="card codecard">
+<div class="ringwrap" id="ringwrap"><svg viewBox="0 0 44 44" width="64" height="64" aria-hidden="true"><circle class="trk" cx="22" cy="22" r="19"/><circle id="ring" class="bar2" cx="22" cy="22" r="19" transform="rotate(-90 22 22)"/></svg><b id="secs" aria-hidden="true"></b></div>
+<div class="codecol"><output id="code" class="code" aria-live="off" for="secret alg digits period counter">------</output>
+<span id="meta" class="muted small" role="status"></span></div>
+<button id="copy" type="button" class="primary">Copy</button>
+</div>
+<p id="err" class="err" role="alert"></p>
+<div id="nextbox"><span class="muted small">Next code</span> <output id="next" class="mono">------</output></div>
+<button id="inc" type="button" hidden>Use this code and advance counter</button>
+</section>
+<section>
+<h2>Provisioning</h2>
+<label for="uri">otpauth URI</label>
+<div class="row"><input id="uri" class="grow" readonly spellcheck="false" autocomplete="off"><button id="copyuri" type="button">Copy</button></div>
+<div class="qrwrap"><canvas id="qr" role="img" aria-label="QR code of the otpauth URI" width="1" height="1"></canvas></div>
+<p class="muted small">Scan the QR code with an authenticator app. It contains the secret, so do not share a screenshot of it.</p>
+</section>
+</div>
+</div>
+<p id="msg" class="muted" role="status"></p>
+<details><summary>About these codes</summary><p class="muted small">A code is HMAC(secret, counter) cut down to 6 to 8 digits. TOTP uses counter = floor(unix time / period), so the code changes every period and your device clock must be accurate. HOTP uses an explicit counter that you advance by hand. Most services use SHA-1, 6 digits, 30 seconds, and many authenticator apps ignore other settings.</p></details>
+</main><script type="module" src="/_/totp/app.js"></script></body></html>

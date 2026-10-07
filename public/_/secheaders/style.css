@@ -1,0 +1,134 @@
+.grow {
+  flex: 1;
+  min-width: 0;
+}
+.vh {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+h3 {
+  font-size: 0.9rem;
+  margin: 18px 0 8px;
+  color: var(--muted);
+}
+.summary {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.summary p {
+  margin: 0 0 8px;
+}
+.final {
+  overflow-wrap: anywhere;
+  font-weight: 600;
+}
+.badge {
+  display: grid;
+  place-items: center;
+  width: 88px;
+  height: 88px;
+  border-radius: 16px;
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  border: 3px solid currentColor;
+  flex: none;
+}
+.g-good {
+  color: var(--accent);
+}
+.g-mid {
+  color: var(--fg);
+}
+.g-bad {
+  color: var(--danger);
+}
+.checks td,
+.checks th {
+  vertical-align: top;
+}
+.checks td:first-child {
+  font-weight: 600;
+  white-space: nowrap;
+}
+.checks .d {
+  overflow-wrap: anywhere;
+}
+.checks pre {
+  margin-top: 6px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.pill {
+  display: inline-block;
+  min-width: 4.2em;
+  text-align: center;
+  border: 1px solid currentColor;
+  border-radius: 99px;
+  padding: 0 8px;
+  font-size: 0.8em;
+  font-weight: 700;
+}
+.s-pass {
+  color: var(--accent);
+}
+.s-warn {
+  color: var(--fg);
+}
+.s-fail {
+  color: var(--danger);
+}
+.s-info {
+  color: var(--muted);
+}
+.raw td {
+  overflow-wrap: anywhere;
+  font-size: 0.9em;
+}
+.raw th[scope='row'] {
+  color: var(--fg);
+  font-weight: 600;
+  white-space: nowrap;
+}
+details summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+@media (max-width: 600px) {
+  .checks thead {
+    display: none;
+  }
+  .checks tr {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 4px 10px;
+    border-bottom: 1px solid var(--line);
+    padding: 8px 0;
+  }
+  .checks td {
+    border: 0;
+    padding: 0;
+  }
+  .checks td.d {
+    grid-column: 1/-1;
+  }
+  .checks td:first-child {
+    white-space: normal;
+  }
+  .raw th[scope='row'] {
+    white-space: normal;
+    word-break: break-all;
+  }
+}
+.rawbox {
+  margin-top: 18px;
+}
+.rawbox summary {
+  margin-bottom: 6px;
+}

@@ -1,0 +1,10 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Uptime</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/uptime/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Uptime</h1><p class="sub">Checks each URL every 5 minutes (HEAD, then GET if refused). Up means a 200-399 response. Keeps 7 days; up to 20 monitors. This page refreshes every minute.</p>
+<form class="card row" id="f"><div><label for="name">Name <span class="muted">(optional)</span></label><input id="name" placeholder="My site" maxlength="60" autocomplete="off"></div>
+<div class="grow"><label for="url">URL</label><input id="url" type="url" required inputmode="url" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="https://example.com/" value="https://example.com/"></div>
+<button type="submit" class="primary">Add monitor</button></form>
+<p id="msg" class="err" role="alert"></p>
+<section><h2>Monitors</h2><div id="list" role="list" aria-label="Monitors"></div><p id="empty" class="muted" hidden>No monitors yet. Add one above; the first check runs within 5 minutes.</p></section>
+</main><script type="module" src="/_/uptime/app.js"></script></body></html>

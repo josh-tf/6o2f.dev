@@ -1,0 +1,22 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>JWT decoder</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/jwt/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>JWT decoder</h1><p class="sub">Decodes in your browser; the token and secret never leave this page. A leading <code>Bearer</code> and line breaks are ignored.</p>
+<label for="tok">Token</label>
+<textarea id="tok" rows="5" autocomplete="off" spellcheck="false" autocapitalize="off" placeholder="eyJhbGciOi…">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2F1dGguZXhhbXBsZS5jb20iLCJzdWIiOiJ1c2VyXzhmM2EyYyIsIm5hbWUiOiJBZGEgTG92ZWxhY2UiLCJyb2xlcyI6WyJhZG1pbiIsImJpbGxpbmciXSwiaWF0IjoxNzkwMDAwMDAwLCJuYmYiOjE3OTAwMDAwMDAsImV4cCI6MTg5MzQ1NjAwMH0.VNGjkCEZspPo5ZKj7LP5LuP1BaWDaHogQSkY34eq2yI</textarea>
+<p id="hint" class="muted">Example token, signed with the secret <code>your-256-bit-secret</code>.</p>
+<p id="err" class="err" role="alert"></p>
+<div id="out" hidden>
+<section><div class="row head"><h2 id="hh">Header</h2><span class="sp"></span><button type="button" data-copy="h" aria-label="Copy header JSON">Copy</button></div><pre id="h" aria-labelledby="hh"></pre></section>
+<section><div class="row head"><h2 id="ph">Payload</h2><span class="sp"></span><button type="button" data-copy="p" aria-label="Copy payload JSON">Copy</button></div><pre id="p" aria-labelledby="ph"></pre>
+<table id="times" hidden><caption class="vh">Time claims in the payload</caption>
+<thead><tr><th scope="col">Claim</th><th scope="col">Date</th><th scope="col">Status</th></tr></thead><tbody id="tt"></tbody></table></section>
+<section><h2>Signature</h2>
+<fieldset id="sigset"><legend>Verify (HS256 / HS384 / HS512)</legend>
+<label for="sec">Secret</label>
+<input id="sec" type="password" autocomplete="off" spellcheck="false" autocapitalize="off">
+<label class="inl"><input type="checkbox" id="secb64"> Secret is Base64-encoded</label>
+</fieldset>
+<p id="sig" class="muted" role="status"></p></section>
+</div>
+</main><script type="module" src="/_/jwt/app.js"></script></body></html>

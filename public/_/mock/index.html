@@ -1,0 +1,34 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mock API</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/mock/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Mock API</h1><p class="sub">Build a URL that answers with a chosen status, delay, body or random failure, for testing timeouts, retries and error handling. The endpoints are public and send CORS headers, so browsers can call them too.</p>
+<form id="f" novalidate>
+<fieldset><legend>Response</legend><div class="grid3">
+<div><label for="status">Status (200 to 599)</label><input id="status" name="status" type="number" min="200" max="599" step="1" value="200" required inputmode="numeric" autocomplete="off"></div>
+<div><label for="delay">Delay in ms (max 10000)</label><input id="delay" name="delay" type="number" min="0" max="10000" step="100" value="300" inputmode="numeric" autocomplete="off"></div>
+<div><label for="type">Body type</label><select id="type" name="type"><option value="">Auto (detect JSON)</option><option value="json">JSON</option><option value="text">Plain text</option></select></div>
+</div>
+<label for="body">Body (optional, max 2 KB; default <code>{"status":…,"ok":…}</code>)</label>
+<input id="body" name="body" type="text" autocomplete="off" spellcheck="false" autocapitalize="off" maxlength="2048">
+</fieldset>
+<fieldset><legend>Random failure</legend><div class="grid3">
+<div><label for="fail">Fail chance (0 to 1)</label><input id="fail" name="fail" type="number" min="0" max="1" step="0.05" value="0.2" inputmode="decimal" autocomplete="off"></div>
+<div><label for="failcode">Fail status</label><input id="failcode" name="failcode" type="number" min="200" max="599" step="1" value="503" inputmode="numeric" autocomplete="off"></div>
+<div><label for="retry">Retry-After seconds (429/503)</label><input id="retry" name="retry" type="number" min="0" max="86400" step="1" value="5" inputmode="numeric" autocomplete="off"></div>
+</div></fieldset>
+<p id="err" class="err" role="alert"></p>
+</form>
+<section><div class="row head"><h2 id="uh">URL</h2><span class="sp"></span><button type="button" id="cu">Copy URL</button></div>
+<output id="url" class="code" for="status delay type body fail failcode retry" aria-labelledby="uh"></output></section>
+<section><div class="row head"><h2 id="ch">curl</h2><span class="sp"></span><button type="button" id="cc">Copy curl</button></div>
+<output id="curl" class="code" for="status delay type body fail failcode retry method" aria-labelledby="ch"></output></section>
+<section><h2>Try it</h2>
+<div class="row"><label for="method" class="vh">Method</label><select id="method"><option>GET</option><option>POST</option><option>PUT</option><option>PATCH</option><option>DELETE</option></select>
+<button type="button" class="primary" id="go">Send request</button><span id="res" class="mono" role="status"></span></div>
+<pre id="out" hidden></pre></section>
+<details><summary>Echo endpoint and parameters</summary>
+<p><code>/echo/&lt;anything&gt;</code> answers any method with JSON describing what it received: method, path, query, headers (minus cookies and authorization) and the first 64 KB of the body.</p>
+<pre id="echo"></pre>
+<p><code>/s/&lt;status&gt;</code> takes <code>delay</code> (ms, max 10000), <code>fail</code> (0 to 1), <code>failcode</code> (default 500), <code>retry</code> (sent as <code>Retry-After</code> on 429 and 503 only), <code>body</code> (max 2048 bytes) and <code>type</code> (<code>json</code> or <code>text</code>). 204, 205 and 304 never have a body.</p>
+</details>
+</main><script type="module" src="/_/mock/app.js"></script></body></html>

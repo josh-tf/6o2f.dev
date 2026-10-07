@@ -1,0 +1,70 @@
+fieldset {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  margin: 0 0 12px;
+  padding: 0 12px 12px;
+  min-width: 0;
+}
+legend {
+  color: var(--muted);
+  font-size: 0.85em;
+  padding: 0 4px;
+}
+.grid3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 0 14px;
+}
+.grid3 input,
+.grid3 select,
+#body {
+  width: 100%;
+}
+
+.head {
+  margin: 0 0 6px;
+}
+.head h2 {
+  margin: 0;
+}
+.head .sp {
+  flex: 1;
+}
+output.code {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.9em;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+#out {
+  margin-top: 10px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-height: 24em;
+}
+#res.err {
+  color: var(--danger);
+}
+#err:empty {
+  display: none;
+}
+details {
+  margin-top: 24px;
+}
+details pre {
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+.vh {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

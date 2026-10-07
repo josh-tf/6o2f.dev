@@ -1,0 +1,60 @@
+.grow {
+  flex: 1;
+  min-width: 220px;
+}
+.grow input {
+  width: 100%;
+}
+.mon {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 4px 14px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.badge {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0 10px;
+  font-size: 0.85em;
+}
+.badge.up {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+.badge.down {
+  color: var(--danger);
+  border-color: var(--danger);
+}
+.mon b {
+  overflow-wrap: anywhere;
+}
+.mon .url {
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+.mon .stats {
+  grid-column: 1/-1;
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  align-items: center;
+  color: var(--muted);
+}
+svg.spark {
+  width: 192px;
+  height: 28px;
+  display: block;
+}
+.spark .up {
+  fill: var(--accent);
+}
+.spark .down {
+  fill: var(--danger);
+}
+.row {
+  align-items: end;
+}
+#msg:empty {
+  display: none;
+}

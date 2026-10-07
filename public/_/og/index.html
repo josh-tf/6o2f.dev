@@ -1,0 +1,11 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Link preview</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/og/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Link preview</h1><p class="sub">See how a link unfurls in chat apps, and which meta tags the page sets.</p>
+<form class="row end" id="f"><div class="grow"><label for="url">Page URL</label><input id="url" type="url" required autocomplete="url" spellcheck="false" autocapitalize="off" value="https://github.com/cloudflare/workers-sdk"></div><div><button type="submit" class="primary" id="go">Fetch</button></form>
+<p id="msg" class="err" role="alert"></p>
+<div id="out" hidden>
+<section><h2>Preview</h2><div id="warn"></div><a id="card" class="lcard" target="_blank" rel="noopener noreferrer"><img id="img" alt=""><div class="lbody"><small id="site"></small><b id="t"></b><span id="d"></span></div></a></section>
+<section><h2>Page</h2><table><caption class="vh">Page metadata</caption><tbody id="page"></tbody></table></section>
+<section><h2>All tags</h2><table><caption class="vh">Every meta tag on the page</caption><tbody id="tags"></tbody></table></section>
+</div></main><script type="module" src="/_/og/app.js"></script></body></html>

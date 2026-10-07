@@ -1,0 +1,91 @@
+.small {
+  font-size: 0.85em;
+  margin: 6px 0;
+}
+.vh {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+.row label.vh {
+  margin: 0;
+}
+.cert {
+  margin: 0 0 18px;
+}
+.cert h3 {
+  font-size: 1rem;
+  margin: 0 0 4px;
+  overflow-wrap: anywhere;
+}
+.cert .kind {
+  color: var(--muted);
+  font-size: 0.85em;
+  margin: 0 0 10px;
+}
+.cert th {
+  width: 1%;
+  white-space: nowrap;
+  vertical-align: top;
+  padding-right: 16px;
+}
+.cert td {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+.cert td code {
+  word-break: break-all;
+}
+.cert td ul {
+  margin: 0;
+  padding-left: 16px;
+}
+@media (max-width: 560px) {
+  .cert table,
+  .cert tbody,
+  .cert tr,
+  .cert th,
+  .cert td {
+    display: block;
+    width: auto;
+  }
+  .cert th {
+    border: 0;
+    padding-bottom: 0;
+  }
+  .cert td {
+    padding-top: 2px;
+  }
+}
+.badge {
+  display: inline-block;
+  padding: 1px 8px;
+  border-radius: 999px;
+  border: 1px solid currentColor;
+  font-size: 0.85em;
+  margin-left: 6px;
+  white-space: nowrap;
+}
+.ok {
+  color: var(--accent);
+}
+.bad {
+  color: var(--danger);
+}
+.chain {
+  margin: 0;
+  padding-left: 22px;
+}
+.chain li {
+  margin: 4px 0;
+  overflow-wrap: anywhere;
+}
+.cp {
+  padding: 2px 8px;
+  font-size: 0.85em;
+  margin-left: 6px;
+  min-height: 32px;
+}

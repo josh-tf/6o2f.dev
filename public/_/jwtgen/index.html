@@ -1,0 +1,64 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>JWT signer</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/jwtgen/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>JWT signer</h1><p class="sub">Build and sign a JSON Web Token with HS256/384/512, RS256 or ES256, then verify it. Runs in your browser; keys and secrets are never sent. To inspect an existing token use the <a href="https://jwt.6o2f.dev">JWT decoder</a>.</p>
+<div class="cols">
+<div>
+<section class="first" aria-labelledby="kh"><h2 id="kh">Algorithm and key</h2>
+<div class="row"><div><label for="alg">Algorithm</label><select id="alg"><option>HS256</option><option>HS384</option><option>HS512</option><option>RS256</option><option>ES256</option></select></div></div>
+<div id="k-hmac">
+<label for="secret">Secret</label>
+<input id="secret" class="wide" type="text" autocomplete="off" spellcheck="false" autocapitalize="off" aria-describedby="secret-help">
+<label class="chk"><input id="b64" type="checkbox">Secret is base64 / base64url encoded</label>
+<p id="secret-help" class="muted small"></p>
+</div>
+<div id="k-pem" hidden>
+<label for="pem">Private key (PKCS#8 PEM)</label>
+<textarea id="pem" rows="6" spellcheck="false" autocomplete="off" autocapitalize="off" placeholder="-----BEGIN PRIVATE KEY-----"></textarea>
+<div class="row"><button id="gen" type="button">Generate throwaway key</button><span id="genst" class="muted small" role="status"></span></div>
+<details id="pubbox" hidden><summary>Public key for verifiers</summary>
+<label for="pub">Public key (SPKI PEM)</label><textarea id="pub" rows="5" readonly spellcheck="false"></textarea>
+<button type="button" data-copy="pub">Copy public key</button></details>
+</div>
+</section>
+<section aria-labelledby="hh"><h2 id="hh">Header</h2>
+<label for="header">Header JSON</label>
+<textarea id="header" rows="4" spellcheck="false" autocomplete="off" autocapitalize="off" aria-describedby="herr"></textarea>
+<p id="herr" class="err small" role="alert"></p>
+</section>
+<section aria-labelledby="ph"><h2 id="ph">Payload</h2>
+<fieldset><legend>Registered claims</legend>
+<div class="claims">
+<div><label for="iss">Issuer (iss)</label><input id="iss" type="text" autocomplete="off" spellcheck="false" autocapitalize="off"></div>
+<div><label for="sub">Subject (sub)</label><input id="sub" type="text" autocomplete="off" spellcheck="false" autocapitalize="off"></div>
+<div><label for="aud">Audience (aud)</label><input id="aud" type="text" autocomplete="off" spellcheck="false" autocapitalize="off" aria-describedby="aud-help"></div>
+</div>
+<p id="aud-help" class="muted small">Separate several audiences with commas. Empty fields remove the claim.</p>
+<div class="row btns" role="group" aria-label="Time and ID claims">
+<button type="button" data-set="iat">iat = now</button><button type="button" data-set="nbf">nbf = now</button>
+<button type="button" data-exp="900">exp +15m</button><button type="button" data-exp="3600">exp +1h</button><button type="button" data-exp="86400">exp +1d</button>
+<button type="button" data-set="jti">jti = random</button><button type="button" data-del="exp nbf iat jti">Clear times and jti</button>
+</div></fieldset>
+<label for="payload">Payload JSON</label>
+<textarea id="payload" rows="10" spellcheck="false" autocomplete="off" autocapitalize="off" aria-describedby="perr times"></textarea>
+<p id="perr" class="err small" role="alert"></p>
+<ul id="times" class="muted small times"></ul>
+</section>
+</div>
+<div>
+<section class="first" aria-labelledby="th"><h2 id="th">Token</h2>
+<div class="card"><output id="token" class="token" for="alg secret pem header payload"></output></div>
+<div class="row acts"><button id="copy" type="button" class="primary">Copy token</button><a id="open" class="btn" href="https://jwt.6o2f.dev" target="_blank" rel="noopener noreferrer">Open the decoder</a></div>
+<p id="verify" class="vline" role="status"></p>
+<p id="err" class="err" role="alert"></p>
+<details><summary>Notes</summary><ul class="muted small">
+<li>HS* secrets should be at least as long as the hash (32, 48 or 64 bytes); shorter ones work but are easier to brute-force.</li>
+<li>Times (iat, exp, nbf) are seconds since 1970 UTC.</li>
+<li>The decoder link does not carry the token: paste it there yourself.</li>
+<li>Generated throwaway keys exist only in this tab.</li>
+</ul></details>
+</section>
+</div>
+</div>
+<p id="msg" class="muted" role="status"></p>
+</main><script type="module" src="/_/jwtgen/app.js"></script></body></html>

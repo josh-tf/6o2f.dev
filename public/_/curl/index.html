@@ -1,0 +1,23 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>cURL converter</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/curl/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>cURL converter</h1><p class="sub">Paste a curl command (for example from your browser's “Copy as cURL”) and get the same request as code. Runs in your browser; nothing is sent.</p>
+<section aria-labelledby="ch"><div class="row head"><h2 id="ch" class="grow"><label for="cmd">curl command</label></h2><button type="button" id="sample">Sample</button><button type="button" id="clear">Clear</button></div>
+<textarea id="cmd" rows="8" spellcheck="false" autocomplete="off" autocapitalize="off" aria-describedby="err"></textarea>
+<p id="err" class="err" role="alert"></p>
+<ul id="warn" class="warn" aria-label="Warnings" hidden></ul>
+</section>
+<div class="cols">
+<section aria-labelledby="ph"><h2 id="ph">Parsed request</h2>
+<div id="summary" class="card"></div>
+</section>
+<section aria-labelledby="oh"><h2 id="oh">Code</h2>
+<fieldset class="langs"><legend class="sr">Language</legend><div id="langs" class="seg"></div></fieldset>
+<div class="row head"><span class="muted grow" id="langname"></span><button type="button" id="copy" class="primary">Copy</button></div>
+<pre id="code" tabindex="0" aria-labelledby="oh langname"><code id="out"></code></pre>
+<p id="status" role="status" class="muted"></p>
+</section>
+</div>
+<details><summary>Supported options</summary>
+<p class="muted"><code>-X</code> <code>-H</code> <code>-d</code> <code>--data-raw</code> <code>--data-binary</code> <code>--data-urlencode</code> <code>--json</code> <code>-F</code> <code>--form-string</code> <code>-u</code> <code>-b</code> <code>-A</code> <code>-e</code> <code>-L</code> <code>-k</code> <code>--compressed</code> <code>-G</code> <code>-I</code> <code>-m</code> <code>--url</code> <code>--url-query</code> <code>--oauth2-bearer</code>. Output-only flags such as <code>-s</code> <code>-v</code> <code>-o</code> <code>-i</code> are accepted and have no effect on the code; anything else is listed as a warning. Quoting follows the shell: <code>'…'</code>, <code>"…"</code>, <code>$'…'</code>, backslashes and line continuations (<kbd>\</kbd>, <kbd>^</kbd>, <kbd>`</kbd>). Files named with <code>@file</code> become placeholders, since the page can't read your disk.</p></details>
+</main><script type="module" src="/_/curl/app.js"></script></body></html>

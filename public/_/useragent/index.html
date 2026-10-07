@@ -1,0 +1,26 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>User agent parser</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/useragent/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>User agent</h1><p class="sub">Parse any User-Agent string into browser, engine, OS, device and bot. Also shows what your own browser reports. Runs in your browser.</p>
+
+<section aria-labelledby="ph"><h2 id="ph">Parse a user agent</h2>
+<label for="ua">User-Agent string <span class="muted">(starts as yours)</span></label>
+<textarea id="ua" rows="3" autocomplete="off" spellcheck="false" autocapitalize="off" aria-describedby="uaerr"></textarea>
+<p id="uaerr" class="err" role="alert"></p>
+<fieldset class="ex"><legend>Examples</legend><div id="samples" class="row"></div></fieldset>
+<p class="summary"><output id="sum" for="ua"></output></p>
+<table id="res"><caption class="vh">Parsed fields</caption>
+<thead><tr><th scope="col">Field</th><th scope="col">Value</th><th scope="col" class="hide-s">What it means</th></tr></thead><tbody id="rows"></tbody></table>
+<ul id="notes" class="notes"></ul>
+<div class="row acts"><button type="button" id="cpjson">Copy as JSON</button><button type="button" id="mine">Use my user agent</button></div>
+</section>
+
+<section aria-labelledby="yh"><h2 id="yh">Your browser's client hints</h2>
+<p class="muted">Chromium browsers also expose <code>navigator.userAgentData</code>: structured, honest values, some only on request (high entropy). Firefox and Safari do not support it yet.</p>
+<table id="ch"><caption class="vh">navigator.userAgentData values</caption>
+<thead><tr><th scope="col">Property</th><th scope="col">Value</th><th scope="col" class="hide-s">What it means</th></tr></thead><tbody id="chrows"></tbody></table>
+</section>
+<details class="help"><summary>How reliable is a user agent?</summary>
+<p class="muted">Not very. Anyone can send any string, every browser pretends to be "Mozilla" and "Safari", and Chromium now freezes the OS and minor version (the "reduced" UA). Use it for statistics and bot triage, never for security. For features, test the feature itself. Bot names here come from a hand-made table of about 80 crawlers and HTTP clients; real crawlers should be verified by reverse DNS.</p></details>
+<p id="msg" class="muted" role="status"></p>
+</main><script type="module" src="/_/useragent/app.js"></script></body></html>

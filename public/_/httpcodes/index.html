@@ -1,0 +1,23 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HTTP status codes</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/httpcodes/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>HTTP status codes</h1><p class="sub">Every registered code from 100 to 511: what it means, when to send it, and the usual mistakes.</p>
+<section aria-labelledby="fh"><h2 id="fh" class="vh">Find a code</h2>
+<div class="filters">
+<div class="q"><label for="q">Search by number, name or header <span class="muted">(press <kbd>/</kbd>)</span></label>
+<input id="q" type="search" autocomplete="off" spellcheck="false" autocapitalize="off" enterkeyhint="go" aria-controls="list" aria-describedby="count"></div>
+<fieldset class="cats"><legend>Category</legend><div id="cats" class="seg"></div></fieldset>
+</div>
+<p id="count" class="muted" role="status"></p>
+</section>
+<div class="split">
+<section aria-labelledby="lh" class="listwrap"><h2 id="lh" class="vh">Matching codes</h2>
+<ul id="list" class="list"></ul>
+<p id="empty" class="muted" hidden>No code matches. Try a number like <code>4</code> or <code>429</code>, or a word like <code>redirect</code>.</p>
+</section>
+<article id="detail" class="card detail" tabindex="-1" aria-labelledby="dh"></article>
+</div>
+<details class="help"><summary>Keyboard and links</summary>
+<p class="muted">Press <kbd>/</kbd> to search, <kbd>Enter</kbd> to open the first match, <kbd>↑</kbd> <kbd>↓</kbd> to move through the list. Link to any code with its number after <code>#</code>, for example <a href="#429">#429</a>. The Try it links ask <code>mock.6o2f.dev</code> for a real response with that status (1xx codes cannot be sent that way).</p></details>
+<p id="msg" class="muted" role="status"></p>
+</main><script type="module" src="/_/httpcodes/app.js"></script></body></html>

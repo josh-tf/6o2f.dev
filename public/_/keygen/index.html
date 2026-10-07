@@ -1,0 +1,33 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Key pair generator</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/keygen/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Key pairs</h1><p class="sub">Generate RSA, ECDSA and Ed25519 key pairs with WebCrypto. Export PEM, JWK and OpenSSH formats.</p>
+<p class="warn" role="note">Keys are generated in this browser and never sent or stored. Reloading the page discards them, so copy or download what you need first.</p>
+<section aria-labelledby="oh"><h2 id="oh">Options</h2>
+<form id="f" class="card">
+<fieldset><legend>Key type</legend><div class="row">
+<label class="chk"><input type="radio" name="kty" value="RSA">RSA</label>
+<label class="chk"><input type="radio" name="kty" value="EC" checked>ECDSA</label>
+<label class="chk"><input type="radio" name="kty" value="Ed25519" id="ed">Ed25519</label>
+</div><p id="ednote" class="muted small" hidden>This browser's WebCrypto does not support Ed25519.</p></fieldset>
+<div class="row opts">
+<div id="o-size" hidden><label for="size">RSA key size</label><select id="size"><option value="2048">2048 bits</option><option value="3072" selected>3072 bits</option><option value="4096">4096 bits</option></select></div>
+<div id="o-use" hidden><label for="use">RSA algorithm</label><select id="use"><option value="RSASSA-PKCS1-v1_5">PKCS#1 v1.5 signing (RS256, SSH)</option><option value="RSA-PSS">RSA-PSS signing (PS256)</option><option value="RSA-OAEP">RSA-OAEP encryption</option></select></div>
+<div id="o-curve"><label for="curve">Curve</label><select id="curve"><option value="P-256">P-256 (ES256)</option><option value="P-384">P-384 (ES384)</option><option value="P-521">P-521 (ES512)</option></select></div>
+<div class="grow"><label for="comment">SSH comment</label><input id="comment" class="wide" value="me@laptop" autocomplete="off" spellcheck="false" autocapitalize="off" maxlength="200"></div>
+</div>
+<div class="row gen"><button id="go" type="submit" class="primary">Generate key pair</button><span id="st" class="muted" role="status"></span></div>
+<p id="err" class="err" role="alert"></p>
+</form></section>
+<section aria-labelledby="kh" id="out"><h2 id="kh">Keys</h2>
+<dl class="facts"><dt>Type</dt><dd><output id="desc"></output></dd><dt>SSH fingerprint</dt><dd><output id="fp" class="mono"></output></dd></dl>
+<div id="blocks"></div>
+<details><summary>Using these keys</summary><ul class="muted small">
+<li>Append the OpenSSH line to <code>~/.ssh/authorized_keys</code> on a server.</li>
+<li>Save the private key as e.g. <code>id_ecdsa</code> with <code>chmod 600</code>. OpenSSH reads PKCS#8 RSA and ECDSA keys directly; convert Ed25519 keys with <code>ssh-keygen -p -f id_ed25519</code> if your OpenSSH version rejects them.</li>
+<li>Check a fingerprint with <code>ssh-keygen -lf key.pub</code>.</li>
+<li>JWKs plug into JWT libraries: see the <a href="https://jwtgen.6o2f.dev">JWT signer</a>.</li>
+</ul></details>
+</section>
+<p id="msg" class="muted" role="status"></p>
+</main><script type="module" src="/_/keygen/app.js"></script></body></html>

@@ -1,0 +1,12 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DNS</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/dns/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>DNS</h1><p class="sub">Look up records over Cloudflare DNS-over-HTTPS. Enter an IP address for a reverse (PTR) lookup.</p>
+<form class="card" id="f">
+<label for="name">Name or IP</label><input id="name" required value="cloudflare.com" autocomplete="off" spellcheck="false" autocapitalize="off" enterkeyhint="search" class="wide">
+<fieldset><legend>Record type</legend><div id="chips" class="chips"></div></fieldset>
+<div class="row"><button type="submit" class="primary" data-v="one">Look up</button><button type="submit" data-v="all">All records</button><button type="submit" data-v="cmp">Compare resolvers</button></div>
+</form>
+<p id="msg" class="err" role="alert"></p>
+<section id="out" hidden aria-live="polite"></section>
+</main><script type="module" src="/_/dns/app.js"></script></body></html>

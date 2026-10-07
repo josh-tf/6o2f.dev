@@ -1,0 +1,90 @@
+.warn {
+  color: var(--fg);
+  border-left: 3px solid var(--danger);
+  padding: 6px 12px;
+  background: var(--card);
+  margin: 0 0 8px;
+}
+.small {
+  font-size: 0.85em;
+  margin: 6px 0;
+}
+.wide {
+  width: 100%;
+}
+.grow {
+  flex: 1;
+  min-width: 180px;
+}
+.opts {
+  align-items: flex-end;
+}
+.opts > div {
+  min-width: 0;
+}
+label.chk {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 12px 0 0;
+  color: var(--fg);
+  font-size: 1em;
+  min-height: 32px;
+}
+fieldset {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  margin: 0 0 6px;
+  padding: 6px 12px 8px;
+}
+legend {
+  color: var(--muted);
+  font-size: 0.85em;
+  padding: 0 6px;
+}
+.gen {
+  margin-top: 14px;
+}
+.facts {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 4px 14px;
+  margin: 0 0 14px;
+}
+.facts dt {
+  color: var(--muted);
+}
+.facts dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.kb {
+  margin: 0 0 16px;
+}
+.kb .row {
+  justify-content: space-between;
+}
+.kb label {
+  margin: 0;
+}
+.kb textarea {
+  resize: vertical;
+  margin-top: 6px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-all;
+}
+.kb .acts {
+  display: flex;
+  gap: 6px;
+}
+#out[aria-busy='true'] #blocks {
+  opacity: 0.5;
+}
+details {
+  margin-top: 8px;
+}
+summary {
+  cursor: pointer;
+  min-height: 32px;
+}

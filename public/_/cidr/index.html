@@ -1,0 +1,69 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CIDR calculator</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/cidr/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>CIDR calculator</h1><p class="sub">IPv4 and IPv6 subnets: ranges, masks, splitting, merging and membership. Runs in your browser.</p>
+
+<section aria-labelledby="bh"><h2 id="bh">Block</h2>
+<label for="cidr">Address or block <span class="muted">(10.0.0.0/8, 10.1.2.3 255.255.0.0, 2001:db8::/48)</span></label>
+<div class="row"><input id="cidr" class="grow" value="192.168.1.130/26" autocomplete="off" spellcheck="false" autocapitalize="off" aria-describedby="cerr"><button type="button" id="cpcidr">Copy network</button></div>
+<p id="cerr" class="err" role="alert"></p>
+<p id="hostnote" class="note" hidden></p>
+<div class="two">
+<table id="info"><caption class="vh">Block details</caption><tbody id="irows"></tbody></table>
+<div><h3>Binary</h3><pre id="bin" class="bin" aria-label="Binary view: network bits highlighted"></pre>
+<h3>Flags</h3><ul id="flags" class="flags"></ul></div>
+</div>
+</section>
+
+<div class="grid2">
+<section aria-labelledby="sh" class="card"><h2 id="sh">Split into subnets</h2>
+<label for="np">New prefix length</label>
+<input id="np" type="number" min="0" max="32" step="1" value="28" inputmode="numeric" aria-describedby="serr">
+<p id="serr" class="err" role="alert"></p>
+<p id="ssum" class="muted" role="status"></p>
+<ol id="subs" class="subs"></ol>
+<button type="button" id="cpsubs">Copy list</button>
+</section>
+
+<section aria-labelledby="ih" class="card"><h2 id="ih">Is an address in this block?</h2>
+<label for="probe">Address</label>
+<input id="probe" value="192.168.1.150" autocomplete="off" spellcheck="false" autocapitalize="off">
+<p><output id="inres" for="probe cidr" class="big"></output></p>
+
+<h2 id="ch" class="mt">IP to integer and back</h2>
+<label for="conv">Address, decimal or 0x hex</label>
+<input id="conv" value="3232235777" autocomplete="off" spellcheck="false" autocapitalize="off" aria-describedby="cverr">
+<p id="cverr" class="err" role="alert"></p>
+<table id="cvt"><caption class="vh">Conversion results</caption><tbody id="cvrows"></tbody></table>
+</section>
+</div>
+
+<div class="grid2">
+<section aria-labelledby="ah" class="card"><h2 id="ah">Merge a list</h2>
+<label for="agg">CIDRs, addresses or a-b ranges, one per line or comma separated</label>
+<textarea id="agg" rows="8" autocomplete="off" spellcheck="false" autocapitalize="off" aria-describedby="aerr">10.0.0.0/25
+10.0.0.128/25
+10.0.1.0/24
+10.0.2.17
+192.168.0.0/24, 192.168.0.64/26
+2001:db8::/33
+2001:db8:8000::/33</textarea>
+<p id="aerr" class="err" role="alert"></p>
+<p id="asum" class="muted" role="status"></p>
+<pre id="aout"></pre>
+<button type="button" id="cpagg" class="mt8">Copy result</button>
+</section>
+
+<section aria-labelledby="rh" class="card"><h2 id="rh">Range to CIDRs</h2>
+<fieldset><legend>Address range</legend>
+<div class="row"><div class="grow"><label for="rs">First</label><input id="rs" value="10.0.0.5" autocomplete="off" spellcheck="false" autocapitalize="off"></div>
+<div class="grow"><label for="re">Last</label><input id="re" value="10.0.0.70" autocomplete="off" spellcheck="false" autocapitalize="off"></div></div>
+</fieldset>
+<p id="rerr" class="err" role="alert"></p>
+<p id="rsum" class="muted" role="status"></p>
+<pre id="rout"></pre>
+<button type="button" id="cprange" class="mt8">Copy result</button>
+</section>
+</div>
+<p id="msg" class="muted" role="status"></p>
+</main><script type="module" src="/_/cidr/app.js"></script></body></html>

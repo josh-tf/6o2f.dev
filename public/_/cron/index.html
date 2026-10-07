@@ -1,0 +1,17 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cron</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/cron/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Cron</h1><p class="sub">Explain a cron schedule and see when it next runs. Runs in your browser; nothing is sent.</p>
+<label for="expr">Cron expression</label>
+<input id="expr" class="expr" spellcheck="false" autocomplete="off" autocapitalize="off" aria-describedby="fieldhelp err" placeholder="minute hour day-of-month month day-of-week">
+<p class="fields muted" id="fieldhelp">minute &middot; hour &middot; day-of-month &middot; month &middot; day-of-week (also @hourly @daily @weekly @monthly @yearly)</p>
+<fieldset class="presets"><legend>Presets</legend><div class="row" id="presets"></div></fieldset>
+<output id="explain" class="explain" for="expr" aria-live="polite"></output>
+<p id="err" class="explain err" role="alert"></p>
+<section id="runs"><div class="row"><h2 style="flex:1;margin:0">Next 10 runs</h2>
+  <fieldset class="tz"><legend class="sr">Time zone</legend><label><input type="radio" name="tz" value="local" checked> <span id="tzname">Local</span></label><label><input type="radio" name="tz" value="utc"> UTC</label></fieldset></div>
+  <table><caption class="sr">Next 10 run times</caption><thead><tr><th scope="col">#</th><th scope="col">When</th><th scope="col">From now</th></tr></thead><tbody id="list"></tbody></table></section>
+<section><details><summary>Syntax</summary>
+<p>Fields accept <code>*</code> (any), a number, a list <code>1,15</code>, a range <code>1-5</code> and a step <code>*/10</code> or <code>0-30/5</code>. Months and weekdays also take names (<code>JAN</code>, <code>MON-FRI</code>); Sunday is 0 or 7.</p>
+<p>When both day-of-month and day-of-week are restricted, the job runs when <em>either</em> matches (standard Vixie cron behaviour).</p></details></section>
+</main><script type="module" src="/_/cron/app.js"></script></body></html>

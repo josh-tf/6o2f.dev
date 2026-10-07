@@ -1,0 +1,52 @@
+.opts {
+  display: grid;
+  grid-template-columns: 1fr 9em;
+  gap: 12px;
+}
+.opts select,
+.opts input {
+  width: 100%;
+}
+.checks {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 12px 0 4px;
+  gap: 4px 18px;
+  border: 0;
+  padding: 0;
+}
+.checks legend {
+  color: var(--muted);
+  font-size: 0.85em;
+  padding: 0;
+  margin-bottom: 4px;
+}
+.checks label {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  margin: 0;
+  color: var(--fg);
+  min-height: 32px;
+}
+#out {
+  font-size: 0.9em;
+}
+dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 4px 16px;
+  margin: 12px 0 0;
+}
+dt {
+  color: var(--muted);
+}
+dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 560px) {
+  .opts {
+    grid-template-columns: 1fr;
+  }
+}

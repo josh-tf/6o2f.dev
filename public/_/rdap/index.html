@@ -1,0 +1,9 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Whois</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/rdap/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Whois</h1><p class="sub">Registration data for a domain, IP address or AS number, from the public RDAP registries.</p>
+<form class="row end" id="f"><div class="grow"><label for="q">Domain, IP or ASN</label><input id="q" required value="example.com" autocomplete="off" spellcheck="false" autocapitalize="off" enterkeyhint="search"></div><div><button type="submit" class="primary" id="go">Look up</button></form>
+<p id="msg" class="err" role="alert"></p>
+<section id="out" hidden><h2 id="title"></h2><div class="card"><table><caption class="vh">Registration summary</caption><tbody id="rows"></tbody></table>
+<p><button type="button" id="rawb" aria-expanded="false" aria-controls="raw">Raw JSON</button></p><pre id="raw" hidden></pre></div></section>
+</main><script type="module" src="/_/rdap/app.js"></script></body></html>

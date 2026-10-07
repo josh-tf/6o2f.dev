@@ -1,0 +1,11 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Feeds</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/rss/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Feeds</h1><p class="sub">RSS and Atom, merged newest first. Up to 20 feeds; read state is remembered in this browser only.</p>
+<form id="add"><label for="url">Feed URL <span class="muted">(RSS or Atom)</span></label><div class="row"><input id="url" type="url" required inputmode="url" placeholder="https://blog.cloudflare.com/rss/" autocomplete="off" autocapitalize="off" spellcheck="false"><button type="submit" class="primary">Add feed</button></div></form>
+<p id="msg" class="err" role="alert"></p>
+<ul id="feeds" class="row chips" aria-label="Subscribed feeds"></ul>
+<div class="row bar2"><h2 style="margin:0">Latest</h2><span id="count" class="muted" role="status"></span><span class="sp"></span><button type="button" id="refresh">Refresh</button><button type="button" id="seen">Mark all read</button></div>
+<p id="errs" class="err" role="alert"></p>
+<ul id="items" class="card"></ul><div id="empty" class="muted" role="status" hidden></div>
+</main><script type="module" src="/_/rss/app.js"></script></body></html>

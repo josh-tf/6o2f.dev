@@ -1,0 +1,21 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Random</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/random/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Random</h1><p class="sub">Dice, coins, numbers, lists and colors. Uses your browser's cryptographic RNG; nothing is sent anywhere.</p>
+<div class="gens">
+<form class="card" id="dice"><h2>Dice</h2><label for="d-in">Notation (NdM+K)</label>
+<div class="row"><input id="d-in" value="3d6+2" autocomplete="off" spellcheck="false" autocapitalize="off"><button type="submit" class="primary">Roll</button></div><output class="out" role="status"></output></form>
+<form class="card" id="coin"><h2>Coin</h2><button type="submit" class="primary">Flip</button><output class="out" role="status"></output></form>
+<form class="card" id="num"><h2>Number <span class="muted" style="font-weight:400;font-size:.8em">(inclusive)</span></h2><div class="row"><div><label for="n-min">Min</label><input id="n-min" type="number" step="1" value="1" inputmode="numeric"></div><div><label for="n-max">Max</label><input id="n-max" type="number" step="1" value="100" inputmode="numeric"></div></div>
+<p><button type="submit" class="primary">Generate</button></p><output class="out" role="status"></output></form>
+<form class="card" id="color"><h2>Color</h2><button type="submit" class="primary">Random hex color</button><output class="out" role="status"></output></form>
+<form class="card wide" id="list"><h2>List</h2><label for="l-in">One item per line</label>
+<textarea id="l-in" rows="5" spellcheck="false">Pizza
+Tacos
+Ramen
+Dumplings
+Curry</textarea>
+<div class="row" style="margin-top:10px"><label for="l-k" style="margin:0">Pick</label><input id="l-k" type="number" min="1" step="1" value="1" inputmode="numeric" style="width:7.5em"><button type="submit" class="primary" value="pick">Pick</button><button type="submit" value="shuffle">Shuffle</button></div><output class="out" role="status"></output></form>
+</div>
+<section class="card"><div class="row"><h2 style="margin:0">History</h2><span class="sp"></span><button type="button" id="clear">Clear</button></div><ol id="hist" class="muted"></ol><p id="hist-empty" class="muted">Nothing yet.</p></section>
+</main><script type="module" src="/_/random/app.js"></script></body></html>

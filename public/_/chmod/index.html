@@ -1,0 +1,69 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>chmod calculator</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/chmod/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>chmod</h1><p class="sub">Tick permissions or type a mode in any notation; the others follow. Runs in your browser.</p>
+
+<section class="two">
+<div class="card">
+<h2>Permissions</h2>
+<table class="matrix"><caption class="sr">Permission bits for owner, group and others</caption>
+<thead><tr><th scope="col"><span class="sr">Permission</span></th><th scope="col">Owner</th><th scope="col">Group</th><th scope="col">Others</th></tr></thead>
+<tbody>
+<tr><th scope="row">Read <span class="muted">4</span></th><td><input type="checkbox" data-bit="256" aria-label="Owner read"></td><td><input type="checkbox" data-bit="32" aria-label="Group read"></td><td><input type="checkbox" data-bit="4" aria-label="Others read"></td></tr>
+<tr><th scope="row">Write <span class="muted">2</span></th><td><input type="checkbox" data-bit="128" aria-label="Owner write"></td><td><input type="checkbox" data-bit="16" aria-label="Group write"></td><td><input type="checkbox" data-bit="2" aria-label="Others write"></td></tr>
+<tr><th scope="row">Execute <span class="muted">1</span></th><td><input type="checkbox" data-bit="64" aria-label="Owner execute"></td><td><input type="checkbox" data-bit="8" aria-label="Group execute"></td><td><input type="checkbox" data-bit="1" aria-label="Others execute"></td></tr>
+</tbody>
+<tfoot><tr><th scope="row">Digit</th><td id="d6" class="mono"></td><td id="d3" class="mono"></td><td id="d0" class="mono"></td></tr></tfoot></table>
+<fieldset class="special"><legend>Special bits</legend>
+<label class="cb"><input type="checkbox" data-bit="2048"> setuid <span class="muted">4000</span></label>
+<label class="cb"><input type="checkbox" data-bit="1024"> setgid <span class="muted">2000</span></label>
+<label class="cb"><input type="checkbox" data-bit="512"> sticky <span class="muted">1000</span></label>
+</fieldset>
+</div>
+
+<div class="card">
+<h2>Notations</h2>
+<label for="oct">Octal</label>
+<input id="oct" inputmode="numeric" maxlength="6" autocomplete="off" spellcheck="false" autocapitalize="off" aria-describedby="e-oct">
+<p id="e-oct" class="err" role="alert"></p>
+<label for="sym">Symbolic <span class="muted">(u=rwx,go=rx, a+x, g-w, or rwxr-xr-x)</span></label>
+<input id="sym" autocomplete="off" spellcheck="false" autocapitalize="off" aria-describedby="e-sym">
+<p id="e-sym" class="err" role="alert"></p>
+<label for="ls">As <code>ls -l</code> shows it</label>
+<input id="ls" maxlength="10" autocomplete="off" spellcheck="false" autocapitalize="off" aria-describedby="e-ls">
+<p id="e-ls" class="err" role="alert"></p>
+<details><summary>How symbolic mode works</summary>
+<p class="muted">Who: <code>u</code> owner, <code>g</code> group, <code>o</code> others, <code>a</code> all. Operator: <code>+</code> add, <code>-</code> remove, <code>=</code> set exactly. Permissions: <code>r w x</code>, <code>s</code> setuid/setgid, <code>t</code> sticky, <code>X</code> execute only if already executable, or copy another class with <code>u g o</code>. Relative edits like <code>g+w</code> apply to the mode you had when you clicked into the field. With no who, this tool means <code>a</code>; real <code>chmod</code> would apply your umask.</p></details>
+</div>
+</section>
+
+<section>
+<h2>Command</h2>
+<div class="row">
+<div><label for="file">File or directory</label><input id="file" value="deploy.sh" autocomplete="off" spellcheck="false" autocapitalize="off"></div>
+<label class="cb inl"><input id="rec" type="checkbox"> Recursive <code>-R</code></label>
+</div>
+<div class="cmdrow"><output id="cmd" class="cmd mono" for="oct file rec"></output><button id="cp-cmd" type="button" class="primary">Copy</button><button id="cp-sym" type="button">Copy symbolic</button></div>
+<p id="explain" class="explain" role="status"></p>
+<ul id="notes" class="notes"></ul>
+<p id="msg" class="muted" role="status"></p>
+</section>
+
+<section>
+<h2>Presets</h2>
+<ul id="presets" class="presets"></ul>
+</section>
+
+<section class="card">
+<h2>umask</h2>
+<p class="muted">New files start at 666 and new directories at 777; the umask switches bits off. Run <code>umask</code> in a shell to see yours.</p>
+<label for="um">umask</label>
+<input id="um" value="022" inputmode="numeric" maxlength="6" autocomplete="off" spellcheck="false" autocapitalize="off" aria-describedby="e-um">
+<p id="e-um" class="err" role="alert"></p>
+<div class="row" role="group" aria-label="Common umasks" id="umpre"></div>
+<table class="res"><caption class="sr">Permissions of new files and directories for this umask</caption>
+<thead><tr><th scope="col">New</th><th scope="col">Octal</th><th scope="col">Symbolic</th></tr></thead>
+<tbody id="umout"></tbody></table>
+<p id="umwhat" class="muted"></p>
+</section>
+</main><script type="module" src="/_/chmod/app.js"></script></body></html>

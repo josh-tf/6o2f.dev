@@ -1,0 +1,15 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Certificate decoder</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/cert/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Certificates</h1><p class="sub">Decode X.509 certificates, chains and public keys from PEM. Parsed in your browser; nothing is sent.</p>
+<section aria-labelledby="ih"><h2 id="ih">Input</h2>
+<label for="in">PEM certificates (one or a whole chain) or a public key</label>
+<textarea id="in" rows="10" spellcheck="false" autocomplete="off" autocapitalize="off" aria-describedby="in-help err"></textarea>
+<p id="in-help" class="muted small">Accepts <code>CERTIFICATE</code>, <code>PUBLIC KEY</code> and <code>RSA PUBLIC KEY</code> blocks, bare base64, or a binary DER file. Get a server's chain with <code>openssl s_client -connect host:443 -showcerts</code>.</p>
+<div class="row"><label for="file" class="vh">Open a certificate file</label><input id="file" type="file" accept=".pem,.crt,.cer,.der,.cert,.pub,.key,application/x-x509-ca-cert,application/x-pem-file"><button id="ex" type="button">Load example</button><button id="clear" type="button">Clear</button></div>
+<p id="err" class="err" role="alert"></p>
+</section>
+<section id="chainbox" aria-labelledby="chh" hidden><h2 id="chh">Chain</h2><ol id="chain" class="chain"></ol></section>
+<section aria-labelledby="dh"><h2 id="dh">Decoded</h2><p id="st" class="muted" role="status"></p><div id="out"></div></section>
+<p id="msg" class="muted" role="status"></p>
+</main><script type="module" src="/_/cert/app.js"></script></body></html>

@@ -1,0 +1,22 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Passwords</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/password/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Passwords</h1><p class="sub">Generated only in your browser with the cryptographic random number generator. Nothing is sent, logged or stored.</p>
+<fieldset class="tabs"><legend class="sr">Mode</legend><label><input type="radio" name="mode" value="pw" checked> Password</label><label><input type="radio" name="mode" value="pp"> Passphrase</label></fieldset>
+<form id="f" class="card">
+<fieldset id="pw"><legend class="sr">Password options</legend>
+<label for="len">Length: <output id="lenv" for="len">20</output></label><input id="len" type="range" min="8" max="128" step="1" value="20" style="width:100%">
+<fieldset class="row checks"><legend class="sr">Character sets</legend><label><input type="checkbox" name="set" value="lower" checked> a-z</label><label><input type="checkbox" name="set" value="upper" checked> A-Z</label><label><input type="checkbox" name="set" value="digits" checked> 0-9</label><label><input type="checkbox" name="set" value="symbols" checked> Symbols</label><label><input type="checkbox" id="nolook" checked> Exclude look-alikes (I l 1 O 0 o |)</label></fieldset>
+</fieldset>
+<fieldset id="pp" hidden><legend class="sr">Passphrase options</legend>
+<label for="words">Words: <output id="wordsv" for="words">5</output></label><input id="words" type="range" min="3" max="12" step="1" value="5" style="width:100%">
+<div class="row"><div><label for="sep">Separator</label><input id="sep" type="text" value="-" maxlength="3" autocomplete="off" autocapitalize="off" spellcheck="false" style="width:5em"></div></div>
+<fieldset class="row checks"><legend class="sr">Word options</legend><label><input type="checkbox" id="cap" checked> Capitalise</label><label><input type="checkbox" id="num"> Add a number</label></fieldset>
+<p class="muted" style="font-size:.85em;margin:4px 0 0">Words come from the EFF short wordlist (1296 words, about 10.3 bits each).</p>
+</fieldset>
+<div class="result"><output id="res" class="mono"></output></div>
+<div class="row"><button type="submit" class="primary" id="go">Generate</button><button type="button" id="copy">Copy</button><button type="button" id="ten">Generate 10</button><span id="msg" class="muted" role="status"></span></div>
+<p id="ent" role="status"></p>
+</form>
+<section id="list" class="card" hidden aria-labelledby="lh"><div class="row"><h2 id="lh" style="margin:0">Ten more</h2><span style="flex:1"></span><button type="button" id="copyall">Copy all</button></div><ul id="ul"></ul></section>
+</main><script type="module" src="/_/password/app.js"></script></body></html>

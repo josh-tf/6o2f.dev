@@ -1,0 +1,25 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>.gitignore generator</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/gitignore/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>.gitignore</h1><p class="sub">Pick your languages, tools, editors and operating systems; get one combined .gitignore with duplicates removed. Templates are condensed from github/gitignore and built into the page.</p>
+<div class="cols">
+<section class="first" aria-labelledby="ph"><h2 id="ph">Templates</h2>
+<label for="q">Search templates</label>
+<div class="row"><input id="q" class="grow" type="search" autocomplete="off" spellcheck="false" autocapitalize="off" placeholder="e.g. python, intellij, flutter" aria-describedby="q-help count"><button id="none" type="button">Clear selection</button></div>
+<p class="muted small"><span id="q-help">Press <kbd>Enter</kbd> in the search box to add or remove the best match.</span> <span id="count" role="status"></span></p>
+<div id="chips"></div>
+</section>
+<section class="first" aria-labelledby="oh"><h2 id="oh">Result</h2>
+<label for="out">.gitignore</label>
+<textarea id="out" rows="24" readonly spellcheck="false" autocomplete="off"></textarea>
+<div class="row acts"><button id="copy" type="button" class="primary">Copy</button><button id="dl" type="button">Download .gitignore</button><span id="stats" class="muted small"></span></div>
+<details><summary>Tips</summary><ul class="muted small">
+<li>Already committed a file? Ignoring it is not enough: run <code>git rm --cached &lt;file&gt;</code>.</li>
+<li>Lines starting with <code>!</code> re-include something an earlier pattern ignored.</li>
+<li>Editor and OS files are often better in your global ignore file: <code>git config --global core.excludesFile ~/.gitignore_global</code>.</li>
+<li>The selection is kept in the page address, so you can bookmark or share it.</li>
+</ul></details>
+</section>
+</div>
+<p id="msg" class="muted" role="status"></p>
+</main><script type="module" src="/_/gitignore/app.js"></script></body></html>

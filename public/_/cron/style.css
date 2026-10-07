@@ -1,0 +1,73 @@
+.expr {
+  width: 100%;
+  font-size: 1.2rem;
+  padding: 10px 12px;
+}
+.fields {
+  margin: 6px 0 12px;
+  font-size: 0.85em;
+}
+#presets button {
+  padding: 4px 10px;
+  font-size: 0.9em;
+  min-height: 32px;
+}
+.explain {
+  display: block;
+  font-size: 1.1rem;
+  margin: 16px 0 0;
+  min-height: 1.6em;
+}
+.explain.err {
+  font-size: 1rem;
+  margin-top: 4px;
+  min-height: 0;
+}
+.explain.err:empty {
+  display: none;
+}
+.presets {
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+.presets legend {
+  color: var(--muted);
+  font-size: 0.85em;
+  padding: 0 0 4px;
+}
+#list td:last-child {
+  color: var(--muted);
+  white-space: nowrap;
+}
+summary {
+  cursor: pointer;
+}
+details p {
+  margin: 8px 0 0;
+}
+.tz {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 14px;
+}
+.tz label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  color: var(--fg);
+}
+.sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+#list td:first-child {
+  color: var(--muted);
+  width: 3ch;
+}

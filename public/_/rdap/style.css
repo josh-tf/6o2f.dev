@@ -1,0 +1,32 @@
+.row.end {
+  align-items: flex-end;
+}
+.grow {
+  flex: 1;
+  min-width: 220px;
+}
+.grow input {
+  width: 100%;
+}
+th.k {
+  font-size: inherit;
+  font-weight: 400;
+  color: var(--muted);
+  white-space: nowrap;
+  vertical-align: top;
+  width: 1%;
+}
+td.v {
+  word-break: break-word;
+}
+.vh {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+#raw {
+  max-height: 480px;
+}
