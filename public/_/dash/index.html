@@ -1,0 +1,20 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>dev@6o2f:~$</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/dash/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1 class="sr">Tools</h1>
+<p id="noaccess" class="notice" role="status" hidden>You are signed in, but an admin has not given you access to the locked tools yet. The public tools (no lock) work now. Ask the admin to approve your account.</p>
+<div id="finder" class="term">
+  <div class="in"><span class="a">&gt;</span><input id="fq" type="search" placeholder="open a tool…" aria-label="Filter tools" aria-controls="fr" aria-describedby="fkeys" autocomplete="off" autocapitalize="off" spellcheck="false" autofocus></div>
+  <div class="fbody" id="fb" data-open="false">
+    <div class="rows" id="fr" role="list" aria-label="Tools"></div>
+    <aside id="pv" aria-label="Tool details"><div class="pin"></div><button type="button" id="pvx" aria-label="Hide details">✕</button></aside>
+  </div>
+  <div class="ft"><span id="fc" role="status"></span><span id="fkeys"><span><kbd>↑</kbd><kbd>↓</kbd> move</span> <span><kbd>⏎</kbd> open</span> <span><kbd>alt</kbd>+<kbd>p</kbd> pin</span> <span><kbd>/</kbd> search</span></span><span class="sp"></span><button type="button" id="lucky" title="Open a random tool">i'm feeling lucky</button><button type="button" id="tg" aria-expanded="false" aria-controls="pv">→ details</button></div>
+</div>
+<details class="settings"><summary>API tokens</summary>
+<section><p class="muted">For curl: <code>Authorization: Bearer &lt;token&gt;</code></p>
+<div class="card"><form id="newtoken"><label for="tname">Token name</label><div class="row"><input id="tname" name="name" placeholder="e.g. laptop scripts" required maxlength="60" autocomplete="off"><button type="submit" class="primary">Create</button></div></form>
+<p id="terr" class="err" role="alert"></p>
+<div id="shownbox" class="row" hidden><output id="shown" class="mono" style="word-break:break-all"></output><button type="button" id="copytok">Copy</button></div>
+<table><caption class="sr">Your API tokens</caption><thead><tr><th scope="col">Name</th><th scope="col">Last used</th><th scope="col"><span class="sr">Actions</span></th></tr></thead><tbody id="tokens"></tbody></table><p id="notok" class="muted" hidden>No tokens yet.</p></div></section></details>
+</main><script type="module" src="/_/dash/app.js"></script></body></html>
