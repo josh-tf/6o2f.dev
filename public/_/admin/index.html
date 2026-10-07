@@ -1,0 +1,80 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Admin</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/admin/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Admin</h1><p class="sub">Who can use what, what people publish, which tools are on, and how everything is used.</p>
+<div class="tabs" role="tablist" aria-label="Admin sections"><button type="button" role="tab" id="t-users" data-t="users" aria-selected="true" aria-controls="p-users">Users</button><button type="button" role="tab" id="t-content" data-t="content" aria-selected="false" aria-controls="p-content">Content</button><button type="button" role="tab" id="t-bots" data-t="bots" aria-selected="false" aria-controls="p-bots">Bots</button><button type="button" role="tab" id="t-controls" data-t="controls" aria-selected="false" aria-controls="p-controls">Controls</button><button type="button" role="tab" id="t-stats" data-t="stats" aria-selected="false" aria-controls="p-stats">Analytics</button><button type="button" role="tab" id="t-log" data-t="log" aria-selected="false" aria-controls="p-log">Log</button></div>
+
+<section id="p-users" role="tabpanel" aria-labelledby="t-users">
+<section id="pending" hidden><h2>Waiting for access <span id="pcount" class="badge"></span></h2>
+<p class="muted">These people signed in with Discord but have no access to the locked tools yet. Public tools work for them already.</p><div id="pendlist" class="list"></div></section>
+<details class="card" id="addbox"><summary><b>Add a user by Discord id</b></summary>
+<form id="add"><label for="uid">Discord user id <span class="muted">(Discord → Settings → Advanced → Developer Mode, then right-click a user → Copy User ID)</span></label>
+<input id="uid" required pattern="\d{15,25}" inputmode="numeric" autocomplete="off" spellcheck="false" title="15 to 25 digits" placeholder="e.g. 219517248388202498">
+<fieldset class="tools"><legend>Tools</legend><div class="toolsbar"><button type="button" data-all="#addtools">All</button><button type="button" data-none="#addtools">None</button></div>
+<div id="addtools" class="chips"></div></fieldset>
+<div class="row"><button type="submit" class="primary">Add user</button><span id="msg" class="err" role="alert"></span><output id="addok" class="muted" role="status"></output></div></form></details>
+<h2>Users <span id="ucount" class="badge"></span></h2><div id="users" class="list"></div><p id="umsg" class="err" role="alert"></p>
+</section>
+
+<section id="p-content" role="tabpanel" aria-labelledby="t-content" hidden>
+<h2 class="sr">Content</h2>
+<p class="muted">Everything people have published at a public URL, newest first. Delete removes it for everyone and is logged.</p>
+<div class="row filters"><label for="cq" class="sr">Search content</label><input id="cq" type="search" placeholder="Search title, URL or owner" autocomplete="off" spellcheck="false">
+<label for="ck" class="sr">Kind</label><select id="ck"><option value="">All kinds</option><option value="link">Short links</option><option value="paste">Pastes</option><option value="poll">Polls</option><option value="countdown">Countdowns</option><option value="drop">Drop files</option><option value="hook">Webhook endpoints</option></select>
+<button type="button" id="creload">Refresh</button><span id="ccount" class="muted" role="status"></span></div>
+<p id="cmsg" class="err" role="alert"></p>
+<div class="scroll"><table id="ctab"><caption class="sr">Published content</caption><thead><tr><th scope="col">Kind</th><th scope="col">Content</th><th scope="col">Owner</th><th scope="col">Created</th><th scope="col">Expires</th><th scope="col"><span class="sr">Actions</span></th></tr></thead><tbody></tbody></table></div>
+</section>
+
+<section id="p-bots" role="tabpanel" aria-labelledby="t-bots" hidden>
+<h2 class="sr">Bots</h2>
+<div class="row lead"><p class="muted grow">IPs caught by the honeypots (scanner paths on any host, and a hidden link robots.txt forbids) get 24 hours in an endless, slow fake labyrinth. Signed-in users always get through. Edge blocks are in <a href="https://dash.cloudflare.com/?to=/:account/6o2f.dev/security/events" target="_blank" rel="noopener">Cloudflare security events</a>.</p><button type="button" id="breload">Refresh</button></div>
+<p id="bmsg" class="err" role="alert"></p>
+<div id="bkpis" class="kpis" aria-live="polite"></div>
+<div class="card"><div class="row"><h3 class="grow">Activity, last 7 days</h3><p class="legend" id="blegend"></p></div><div id="bchart" class="chart"></div></div>
+
+<h2>Labyrinth</h2>
+<div class="labgrid"><div id="lkpis" class="minis"></div>
+<div class="card"><h3>Crawlers that went in</h3><div id="lcrawl"></div></div></div>
+
+<div class="grid2"><div class="card"><h3>What they look for</h3><div id="btraps"></div></div>
+<div class="card"><h3>Where they come from</h3><div id="bcountries"></div></div></div>
+
+<h2>Recent activity <span id="gcount" class="badge"></span></h2>
+<div class="card flush"><ol id="bfeed" class="feed"></ol></div>
+<p class="muted small">One line per IP, newest first. Detailed logs keep each IP's first 50 requests a day for 7 days; the counters keep counting. IPv6 is grouped per /64.</p>
+</section>
+
+<section id="p-controls" role="tabpanel" aria-labelledby="t-controls" hidden>
+<h2>New sign-ins</h2>
+<div class="card"><form id="defform"><fieldset class="opts"><legend class="sr">What new sign-ins get</legend>
+<label><input type="radio" name="def" value="none"> Nothing yet: wait for my approval <span class="muted">(public tools work straight away)</span></label>
+<label><input type="radio" name="def" value="all"> Every locked tool</label>
+<label><input type="radio" name="def" value="some"> These locked tools:</label></fieldset>
+<div id="defchips" class="chips" hidden></div>
+<div class="savebar"><button type="submit" class="primary" id="defsave" disabled>Save</button><span id="defst" class="st" role="status"></span></div></form></div>
+<h2>Tools</h2>
+<p class="muted">Maintenance shows a notice instead of the tool; Off also hides it from the launcher. Admins can still open both. Changes reach every server within 30 seconds.</p>
+<div class="row filters"><label for="tq" class="sr">Filter tools</label><input id="tq" type="search" placeholder="Filter tools" autocomplete="off" spellcheck="false"><span id="tsum" class="muted" role="status"></span></div>
+<div class="scroll"><table id="ttab"><caption class="sr">Tool availability</caption><thead><tr><th scope="col">Tool</th><th scope="col">Access</th><th scope="col">State</th></tr></thead><tbody></tbody></table></div>
+<p id="tmsg" class="err" role="alert"></p>
+</section>
+
+<section id="p-log" role="tabpanel" aria-labelledby="t-log" hidden>
+<h2 class="sr">Audit log</h2>
+<p class="muted">Every change made in this panel, newest first. Kept for 400 days.</p>
+<div class="scroll"><table id="ltab"><caption class="sr">Admin actions</caption><thead><tr><th scope="col">When</th><th scope="col">Admin</th><th scope="col">Action</th><th scope="col">Target</th><th scope="col">Details</th></tr></thead><tbody></tbody></table></div>
+<button type="button" id="lmore" hidden>Load older</button>
+</section>
+
+<section id="p-stats" role="tabpanel" aria-labelledby="t-stats" hidden>
+<h2 class="sr">Analytics</h2><div class="row"><div class="seg" id="range" role="group" aria-label="Time range"><button type="button" data-d="7" aria-pressed="false">7 days</button><button type="button" data-d="30" aria-pressed="true">30 days</button><button type="button" data-d="90" aria-pressed="false">90 days</button></div><button type="button" id="csv">Download CSV</button><span class="muted">Days are UTC. Counters only: no IP addresses or user agents are stored.</span></div>
+<div id="kpis" class="kpis" aria-live="polite"></div>
+<div class="card"><h3>Requests and visitors per day</h3><div id="chart"></div><p class="muted legend"><i class="k1"></i>requests <i class="k2"></i>visitors (unique per day) <i class="k3"></i>errors</p></div>
+<div class="grid3"><div class="card"><h3>Countries</h3><div id="countries"></div></div><div class="card"><h3>Browsers</h3><div id="browsers"></div></div><div class="card"><h3>Devices</h3><div id="devices"></div></div></div>
+<div id="tooldetail" class="card" hidden></div>
+<div class="card"><div class="row"><h3 class="grow">Tools <span class="muted small">(select a tool for its own chart)</span></h3><label for="tfilt" class="sr">Filter tools</label><input id="tfilt" type="search" placeholder="Filter" autocomplete="off" spellcheck="false" class="small-in"></div><div class="scroll"><table id="tooltab"><caption class="sr">Requests per tool</caption><tbody></tbody></table></div><button type="button" class="more-btn" id="tmore" hidden></button></div>
+<div class="card"><h3>Errors by endpoint</h3><div class="scroll"><table id="errtab"><caption class="sr">Endpoints with errors</caption><tbody></tbody></table></div><p class="muted small">404s aren't recorded. Endpoint paths are kept for 60 days.</p></div>
+<div class="grid2"><div class="card"><h3>Most active users</h3><div id="topusers"></div></div><div class="card"><h3>Top endpoints</h3><div class="scroll"><table id="paths"><caption class="sr">Most requested endpoints</caption><tbody></tbody></table></div><button type="button" class="more-btn" id="pmore" hidden></button></div></div>
+</section>
+</main><script type="module" src="/_/admin/app.js"></script></body></html>
