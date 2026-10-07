@@ -1,0 +1,12 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Timer</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/timer/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Timer</h1><p class="sub">Stopwatch, countdown and pomodoro. Keeps time in background tabs and across reloads.</p>
+<div class="row" role="group" aria-label="Mode" id="modes"><button type="button" data-m="sw">Stopwatch</button><button type="button" data-m="cd">Countdown</button><button type="button" data-m="pomo">Pomodoro 25/5</button></div>
+<fieldset id="set" class="row" hidden><legend>Countdown length</legend><label for="hh">hours</label><input id="hh" type="number" min="0" max="99" step="1" inputmode="numeric" value="0"><label for="mm">minutes</label><input id="mm" type="number" min="0" max="59" step="1" inputmode="numeric" value="5"><label for="ss">seconds</label><input id="ss" type="number" min="0" max="59" step="1" inputmode="numeric" value="0"></fieldset>
+<div id="big" role="timer" aria-live="off">00:00.00</div>
+<p id="phase" class="muted" role="status"></p>
+<div class="row ctl"><button type="button" id="go" class="primary">Start</button><button type="button" id="lap">Lap</button><button type="button" id="reset">Reset</button></div>
+<p class="muted keys"><kbd>Space</kbd> start/stop &middot; <kbd>L</kbd> lap &middot; <kbd>R</kbd> reset</p>
+<section id="laps" hidden><h2>Laps</h2><table><caption class="sr">Lap times, newest first</caption><thead><tr><th scope="col">#</th><th scope="col">Lap</th><th scope="col">Total</th></tr></thead><tbody id="lb"></tbody></table></section>
+</main><script type="module" src="/_/timer/app.js"></script></body></html>

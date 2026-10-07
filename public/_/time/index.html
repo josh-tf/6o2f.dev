@@ -1,0 +1,12 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Timestamp</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/time/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Timestamp</h1><p class="sub">Unix epoch (s, ms, µs or ns) to dates and back. Runs in your browser.</p>
+<section class="now"><h2>Now</h2><table id="now"><caption class="vh">Current time, updating live</caption><tbody></tbody></table></section>
+<section><h2>Convert</h2>
+<label for="in">Epoch (s, ms, µs or ns) or a date string</label>
+<div class="row"><input id="in" class="grow" autocomplete="off" spellcheck="false" autocapitalize="off" aria-describedby="msg err"><button id="usenow" type="button">Use now</button></div>
+<label for="dt">Or pick a local date and time</label><input id="dt" type="datetime-local" step="1">
+<p id="msg" class="muted" role="status"></p><p id="err" class="err" role="alert"></p>
+<table id="out"><caption class="vh">The time in each format</caption><tbody></tbody></table></section>
+</main><script type="module" src="/_/time/app.js"></script></body></html>

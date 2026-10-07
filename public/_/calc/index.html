@@ -1,0 +1,10 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Calculator</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/calc/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Calculator</h1><p class="sub">Type an expression, press Enter to keep it. Runs in your browser.</p>
+<form id="f"><label for="x">Expression</label>
+<input id="x" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" autofocus value="20% of 150 + sqrt(144) * 2^3">
+<div class="row res"><output id="r" for="x" aria-live="polite"></output><span id="cpmsg" class="sr" role="status"></span><button type="button" id="cp">Copy</button><button type="submit" class="primary">Keep</button></div></form>
+<details class="muted help"><summary>Operators, functions and examples</summary><p>+ - * / % ^ ( ) &middot; pi e ans &middot; sqrt abs sin cos tan asin acos atan ln log exp floor ceil round min max &middot; <code>20% of 150</code> &middot; <code>5%</code> is 0.05 &middot; <code>100 % 7</code> is the remainder &middot; <kbd>Enter</kbd> keeps a result as <code>ans</code></p></details>
+<section><div class="row hh"><h2>History</h2><span class="sp"></span><button type="button" id="clr">Clear</button></div><ul id="h"></ul></section>
+</main><script type="module" src="/_/calc/app.js"></script></body></html>

@@ -1,0 +1,47 @@
+.grow {
+  flex: 1;
+  min-width: 0;
+}
+#in {
+  font-size: 1.1rem;
+}
+td.v {
+  font-family: var(--mono);
+  overflow-wrap: anywhere;
+}
+td.c {
+  width: 1%;
+  text-align: right;
+}
+th {
+  white-space: nowrap;
+  width: 1%;
+}
+td button {
+  padding: 3px 10px;
+  font-size: 0.85em;
+  min-height: 32px;
+}
+#dt:focus,
+#dt:focus-within {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+#err:empty,
+#msg:empty {
+  display: none;
+}
+.vh {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+@media (max-width: 560px) {
+  #out th {
+    white-space: normal;
+    width: 7em;
+  }
+}

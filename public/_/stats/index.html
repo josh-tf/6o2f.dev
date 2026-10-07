@@ -1,0 +1,44 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Statistics</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/stats/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Statistics</h1><p class="sub">Paste numbers to get the mean, median, spread, quartiles, outliers and a histogram. Runs in your browser.</p>
+<section aria-labelledby="dh"><h2 id="dh">Data</h2>
+<label for="data">Numbers, separated by commas, spaces or new lines</label>
+<textarea id="data" rows="6" autocomplete="off" spellcheck="false" autocapitalize="off" aria-describedby="note"></textarea>
+<div class="row opts">
+<div><label for="method">Quartile method</label><select id="method">
+<option value="inclusive">Inclusive (Excel QUARTILE.INC, R type 7)</option>
+<option value="exclusive">Exclusive (Excel QUARTILE.EXC, Minitab)</option>
+<option value="tukey">Tukey hinges (halves, TI-84)</option></select></div>
+<span class="grow"></span>
+<button type="button" id="example">Load example</button><button type="button" id="clear">Clear</button>
+</div>
+<p id="note" class="muted" role="status"></p>
+<p id="err" class="err" role="alert"></p>
+</section>
+<div id="out">
+<section aria-labelledby="sh"><div class="row"><h2 id="sh" class="m0">Summary</h2><span class="grow"></span><button type="button" id="copy">Copy as table</button></div>
+<p id="msg" class="muted" role="status"></p>
+<div class="tables">
+<table id="t-centre"><caption>Centre</caption><tbody></tbody></table>
+<table id="t-spread"><caption>Spread</caption><tbody></tbody></table>
+<table id="t-shape"><caption>Position and shape</caption><tbody></tbody></table>
+</div>
+<details class="help"><summary>What these mean</summary>
+<p>Sample variance and standard deviation divide by <var>n</var>&nbsp;&minus;&nbsp;1 (use them when the numbers are a sample of a bigger group); population versions divide by <var>n</var>. Outliers are values more than 1.5&nbsp;&times;&nbsp;IQR below Q1 or above Q3. Skewness is the adjusted Fisher-Pearson coefficient and kurtosis is excess kurtosis, matching Excel's SKEW and KURT. Percentiles use linear interpolation (the exclusive method when that is selected).</p>
+</details>
+</section>
+<section aria-labelledby="ph"><h2 id="ph">Percentiles</h2>
+<div class="tablewrap" tabindex="0" role="region" aria-label="Percentile values, scrollable"><table id="t-pct"><caption class="vh">Percentiles</caption><thead></thead><tbody></tbody></table></div>
+</section>
+<section aria-labelledby="hh"><div class="row"><h2 id="hh" class="m0">Histogram</h2><span class="grow"></span>
+<label for="bins" class="inline">Bins</label><input id="bins" type="number" min="1" max="200" step="1" inputmode="numeric" autocomplete="off" style="width:120px">
+<button type="button" id="auto">Auto</button></div>
+<div class="chartwrap"><svg id="hist" viewBox="0 0 640 240" role="img" aria-label="Histogram"></svg></div>
+</section>
+<section aria-labelledby="lh"><h2 id="lh">Sorted values</h2>
+<p class="muted small" id="listnote"></p>
+<ol id="list" class="vals"></ol>
+</section>
+</div>
+</main><script type="module" src="/_/stats/app.js"></script></body></html>

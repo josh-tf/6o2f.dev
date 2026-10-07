@@ -1,0 +1,15 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Units</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/units/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Units</h1><p class="sub">Type in any field and the rest update. Runs in your browser.</p>
+<label for="cat">Category</label><select id="cat"></select>
+<div class="conv">
+<div><label for="v">Value</label><input id="v" inputmode="decimal" autocomplete="off" spellcheck="false"></div>
+<div><label for="from">From</label><select id="from"></select></div>
+<button id="swap" type="button" aria-label="Swap units" title="Swap">&#8646;</button>
+<div><label for="to">To</label><select id="to"></select></div>
+</div>
+<div class="row res"><output id="res" for="v from to" aria-live="polite"></output><button id="cp" type="button">Copy</button></div>
+<p id="warn" class="err" role="alert" hidden>Below absolute zero (0 K): not a physical temperature.</p>
+<section><h2>All units</h2><div id="all"></div></section>
+</main><script type="module" src="/_/units/app.js"></script></body></html>

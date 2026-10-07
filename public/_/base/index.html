@@ -1,0 +1,20 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bases</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/base/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Bases</h1><p class="sub">Convert integers between binary, octal, decimal, hex, base 36 and any base 2-36. Edit any field; the rest follow. Exact for arbitrarily large and negative values; runs in your browser.</p>
+<div class="card fields">
+<div class="full"><label for="b2">Binary (2)</label><input id="b2" data-b="2" autocomplete="off" spellcheck="false" autocapitalize="off"></div>
+<div><label for="b8">Octal (8)</label><input id="b8" data-b="8" autocomplete="off" spellcheck="false" autocapitalize="off"></div>
+<div><label for="b10">Decimal (10)</label><input id="b10" data-b="10" autocomplete="off" spellcheck="false" autocapitalize="off"></div>
+<div><label for="b16">Hex (16)</label><input id="b16" data-b="16" autocomplete="off" spellcheck="false" autocapitalize="off"></div>
+<div><label for="b36">Base 36</label><input id="b36" data-b="36" autocomplete="off" spellcheck="false" autocapitalize="off"></div>
+<div class="cust"><label for="bx">Custom base</label><div class="row"><input id="base" type="number" min="2" max="36" step="1" value="7" inputmode="numeric" aria-label="Custom base (2-36)" style="width:7.5em"><input id="bx" autocomplete="off" spellcheck="false" autocapitalize="off" style="flex:1"></div></div>
+<p id="err" class="err" role="alert"></p>
+</div>
+<section class="card"><h2>Bytes</h2>
+<dl><dt>Big endian</dt><dd id="be" class="mono"></dd><dt>Little endian</dt><dd id="le" class="mono"></dd></dl>
+<p class="muted" style="margin:8px 0 0;font-size:.85em">Minimal width; negatives in two's complement.</p></section>
+<section class="card"><h2>Bits</h2>
+<div id="grid" role="group" aria-label="64 bits, most significant first"></div>
+<p id="gnote" class="muted" style="margin:8px 0 0;font-size:.85em">Click a bit to toggle it. Bit 63 is top left, bit 0 is bottom right.</p></section>
+</main><script type="module" src="/_/base/app.js"></script></body></html>

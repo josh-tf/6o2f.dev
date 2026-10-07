@@ -1,0 +1,131 @@
+.plan {
+  border: 0;
+  padding: 0;
+  margin: 0 0 6px;
+  min-width: 0;
+}
+.plan legend {
+  color: var(--muted);
+  font-size: 0.85em;
+  padding: 0;
+  margin-bottom: 2px;
+}
+.plan {
+  display: flex;
+  gap: 10px;
+  align-items: end;
+  flex-wrap: wrap;
+}
+.plan select {
+  max-width: 260px;
+}
+#add {
+  align-items: end;
+  margin-top: 6px;
+}
+#add input {
+  width: 260px;
+}
+#list {
+  list-style: none;
+  margin: 16px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+#list li {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 10px 14px;
+}
+.top {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+.top .n {
+  font-weight: 700;
+  flex: 1;
+  min-width: 140px;
+}
+.top .n small {
+  font-weight: 400;
+  color: var(--muted);
+}
+.top .t {
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+.top .o {
+  color: var(--muted);
+  min-width: 80px;
+}
+.top .x {
+  padding: 2px 9px;
+}
+.flag {
+  color: var(--accent);
+  font-size: 0.85em;
+  font-weight: 700;
+}
+.strip {
+  display: grid;
+  grid-template-columns: repeat(24, 1fr);
+  gap: 2px;
+  margin-top: 8px;
+}
+.strip span {
+  height: 14px;
+  border-radius: 2px;
+  background: var(--line);
+  opacity: 0.55;
+}
+.strip span.w {
+  background: var(--accent);
+  opacity: 0.75;
+}
+.strip span.m {
+  opacity: 1;
+  outline: 2px solid var(--fg);
+  outline-offset: 1px;
+}
+.key i {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  vertical-align: -1px;
+  background: var(--accent);
+  opacity: 0.75;
+}
+.key i.m {
+  background: var(--line);
+  outline: 2px solid var(--fg);
+  opacity: 1;
+}
+@media (max-width: 560px) {
+  #add input {
+    width: 100%;
+  }
+  #add > div {
+    flex: 1;
+  }
+}
+
+#dt:focus-within {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  margin: 0;
+}
+.top time {
+  white-space: nowrap;
+}

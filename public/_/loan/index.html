@@ -1,0 +1,51 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Loan calculator</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/loan/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Loan calculator</h1><p class="sub">Repayments, interest and a full amortisation schedule for a loan or mortgage. Runs in your browser.</p>
+<div class="top">
+<form id="f" class="card" autocomplete="off" novalidate>
+<fieldset><legend>Loan</legend>
+<label for="principal">Loan amount ($)</label><input id="principal" type="number" min="0" max="10000000000" step="1000" inputmode="decimal" value="300000" style="width:100%">
+<div class="two">
+<div><label for="rate">Interest rate (% a year)</label><input id="rate" type="number" min="0" max="100" step="0.05" inputmode="decimal" value="6" style="width:100%"></div>
+<div><label for="start">Loan start date</label><input id="start" type="date" min="1900-01-01" max="2200-12-31" aria-describedby="start-h"><p id="start-h" class="muted hint">Repayments start one period later.</p></div>
+</div>
+</fieldset>
+<fieldset><legend>Term</legend>
+<div class="two">
+<div><label for="years">Years</label><input id="years" type="number" min="0" max="100" step="1" inputmode="numeric" value="30" style="width:100%"></div>
+<div><label for="months">Months</label><input id="months" type="number" min="0" max="1199" step="1" inputmode="numeric" value="0" style="width:100%"></div>
+</div>
+<label for="freq">Repayment frequency</label>
+<select id="freq"><option value="monthly">Monthly</option><option value="fortnightly">Fortnightly</option><option value="weekly">Weekly</option></select>
+</fieldset>
+<details id="more"><summary>Extra repayment, interest-only and balloon</summary>
+<label for="extra">Extra repayment each period ($)</label><input id="extra" type="number" min="0" step="10" inputmode="decimal" value="0" style="width:100%">
+<label for="io">Interest-only period (months)</label><input id="io" type="number" min="0" step="1" inputmode="numeric" value="0" style="width:100%">
+<label for="balloon">Balloon due with the last repayment ($)</label><input id="balloon" type="number" min="0" step="1000" inputmode="decimal" value="0" style="width:100%">
+<p class="muted hint">Interest-only repayments cover interest alone, so the balance stays flat. A balloon is left unpaid until the final repayment.</p>
+</details>
+<div class="row"><button id="reset" type="button">Reset</button></div>
+</form>
+<div>
+<p id="err" class="err" role="alert"></p>
+<div id="out" class="stats" aria-live="polite">
+<div class="stat big"><span id="l-pay">Monthly repayment</span><output id="o-pay" aria-labelledby="l-pay"></output></div>
+<div class="stat"><span id="l-int">Total interest</span><output id="o-int" aria-labelledby="l-int"></output></div>
+<div class="stat"><span id="l-tot">Total cost</span><output id="o-tot" aria-labelledby="l-tot"></output></div>
+<div class="stat"><span id="l-end">Paid off</span><output id="o-end" aria-labelledby="l-end"></output></div>
+</div>
+<p id="note" class="muted" role="status"></p>
+</div>
+</div>
+<section><h2>Balance and interest over time</h2>
+<div class="chartwrap"><svg id="chart" viewBox="0 0 640 260" role="img" aria-label="Chart"></svg></div>
+<p class="legend"><span class="k bal"></span> Balance owing <span class="k int"></span> Interest paid so far</p>
+</section>
+<section><div class="row"><h2 style="margin:0">Schedule</h2><span class="grow"></span><button id="copycsv" type="button">Copy CSV</button></div>
+<p id="msg" class="muted" role="status"></p>
+<div class="tablewrap" tabindex="0" role="region" aria-label="Amortisation schedule"><table id="sched"><caption class="vh">Amortisation schedule</caption>
+<thead><tr><th scope="col">#</th><th scope="col">Date</th><th scope="col" class="r">Repayment</th><th scope="col" class="r">Interest</th><th scope="col" class="r">Principal</th><th scope="col" class="r">Balance</th></tr></thead><tbody></tbody></table></div>
+<div class="row pager"><button id="prev" type="button">Previous</button><span id="pageinfo" class="muted grow" role="status"></span><button id="next" type="button">Next</button></div>
+</section>
+</main><script type="module" src="/_/loan/app.js"></script></body></html>

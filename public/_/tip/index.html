@@ -1,0 +1,46 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tip splitter</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/tip/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Tip and bill splitter</h1><p class="sub">Work out the tip and split the bill fairly, to the cent. Runs in your browser.</p>
+<div class="top">
+<form id="f" class="card" autocomplete="off" novalidate>
+<div class="two">
+<div><label for="bill">Bill amount</label><input id="bill" type="number" min="0" step="0.01" inputmode="decimal" value="186.40" style="width:100%"></div>
+<div><label for="cur">Currency</label><select id="cur"></select></div>
+</div>
+<fieldset><legend>Tip</legend>
+<div class="presets" id="presets" role="group" aria-label="Tip presets">
+<button type="button" data-v="10" aria-pressed="false">10%</button><button type="button" data-v="15" aria-pressed="false">15%</button><button type="button" data-v="18" aria-pressed="false">18%</button><button type="button" data-v="20" aria-pressed="false">20%</button>
+</div>
+<label for="tip">Tip (%)</label><input id="tip" type="number" min="0" max="1000" step="0.5" inputmode="decimal" value="15" style="width:100%">
+</fieldset>
+<fieldset><legend>Tax</legend>
+<label for="tax">Tax rate (%, 0 if none)</label><input id="tax" type="number" min="0" max="100" step="0.5" inputmode="decimal" value="10" style="width:100%">
+<label class="chk"><input id="inc" type="checkbox" checked> The bill amount already includes tax</label>
+<label class="chk"><input id="pre" type="checkbox" checked> Work the tip out before tax</label>
+</fieldset>
+<fieldset><legend>People</legend>
+<label for="n">Number of people</label><input id="n" type="number" min="1" max="30" step="1" inputmode="numeric" value="4" style="width:100%">
+<details id="uneven"><summary>Uneven shares</summary>
+<p class="muted hint">A share of 2 pays twice as much as a share of 1. Use 0 for someone who is not paying.</p>
+<div id="shares" class="shares"></div></details>
+<label class="chk"><input id="up" type="checkbox"> Round each person up to a whole unit (the extra goes to the tip)</label>
+</fieldset>
+<div class="row"><button id="reset" type="button">Reset</button></div>
+</form>
+<div>
+<p id="err" class="err" role="alert"></p>
+<div id="out">
+<div class="stats" aria-live="polite">
+<div class="stat big"><span id="l-each">Each person pays</span><output id="o-each" aria-labelledby="l-each"></output></div>
+<div class="stat"><span id="l-tip">Tip</span><output id="o-tip" aria-labelledby="l-tip"></output></div>
+<div class="stat"><span id="l-tot">Total</span><output id="o-tot" aria-labelledby="l-tot"></output></div>
+</div>
+<p id="note" class="muted" role="status"></p>
+<div class="tablewrap" tabindex="0" role="region" aria-label="Per-person breakdown"><table id="tbl"><caption class="vh">Per-person breakdown</caption>
+<thead><tr><th scope="col">Person</th><th scope="col" class="r">Share</th><th scope="col" class="r">Bill and tax</th><th scope="col" class="r">Tip</th><th scope="col" class="r">Pays</th></tr></thead><tbody></tbody><tfoot></tfoot></table></div>
+<div class="row"><button id="copy" type="button">Copy summary</button><span id="msg" class="muted" role="status"></span></div>
+</div>
+</div>
+</div>
+</main><script type="module" src="/_/tip/app.js"></script></body></html>

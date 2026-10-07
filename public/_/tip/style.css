@@ -1,0 +1,153 @@
+.top {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
+  gap: 20px;
+  align-items: start;
+}
+@media (max-width: 760px) {
+  .top {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+.grow {
+  flex: 1;
+  min-width: 0;
+}
+fieldset {
+  border: 0;
+  padding: 0;
+  margin: 14px 0 0;
+}
+legend {
+  font-weight: 600;
+  padding: 0;
+  margin-bottom: 2px;
+}
+.two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.two > div {
+  min-width: 0;
+}
+select {
+  width: 100%;
+}
+.presets {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin: 6px 0;
+}
+.presets button {
+  padding: 7px 0;
+  min-height: 36px;
+}
+.presets button[aria-pressed='true'] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-fg);
+  font-weight: 700;
+}
+label.chk {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  color: var(--fg);
+  font-size: 0.9em;
+  margin: 10px 0 0;
+  cursor: pointer;
+}
+label.chk input {
+  margin: 3px 0 0;
+  flex: none;
+  width: 16px;
+  height: 16px;
+}
+details {
+  margin: 12px 0;
+}
+summary {
+  cursor: pointer;
+  color: var(--accent);
+  padding: 4px 0;
+}
+.hint {
+  font-size: 0.85em;
+  margin: 6px 0;
+}
+.shares {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 4px 10px;
+}
+.shares label {
+  margin: 6px 0 2px;
+}
+.stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.stat {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  min-width: 0;
+}
+.stat span {
+  display: block;
+  color: var(--muted);
+  font-size: 0.85em;
+}
+.stat output {
+  display: block;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  overflow-wrap: anywhere;
+}
+.stat.big {
+  grid-column: 1/-1;
+  border-color: var(--accent);
+}
+.stat.big output {
+  font-size: 2rem;
+  color: var(--accent);
+}
+#note {
+  margin: 10px 0;
+}
+.tablewrap {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--card);
+  margin-bottom: 10px;
+}
+table {
+  font-variant-numeric: tabular-nums;
+}
+.r {
+  text-align: right;
+}
+td,
+th {
+  white-space: nowrap;
+}
+tfoot td,
+tfoot th {
+  font-weight: 700;
+  border-bottom: 0;
+  color: var(--fg);
+}
+.vh {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

@@ -1,0 +1,37 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Percent</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/percent/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Percent</h1><p class="sub">The everyday percentage sums, each with the working shown. Results update as you type.</p>
+<div class="row top"><label for="dp">Decimal places</label><input id="dp" type="number" min="0" max="10" step="1" value="2" inputmode="numeric" autocomplete="off"></div>
+
+<section class="card calc" data-k="of" aria-labelledby="h1x"><h2 id="h1x">Percent of a number</h2>
+<p class="sent"><label for="of-x">What is</label><input id="of-x" type="number" step="any" inputmode="decimal" autocomplete="off" value="20"><label for="of-y">% of</label><input id="of-y" type="number" step="any" inputmode="decimal" autocomplete="off" value="150"><span>?</span></p>
+<div class="res"><output for="of-x of-y"></output><button type="button" class="cp">Copy</button></div><p class="how"></p></section>
+
+<section class="card calc" data-k="what" aria-labelledby="h2x"><h2 id="h2x">What percent one number is of another</h2>
+<p class="sent"><label for="wh-x">The number</label><input id="wh-x" type="number" step="any" inputmode="decimal" autocomplete="off" value="30"><label for="wh-y">is what % of</label><input id="wh-y" type="number" step="any" inputmode="decimal" autocomplete="off" value="150"><span>?</span></p>
+<div class="res"><output for="wh-x wh-y"></output><button type="button" class="cp">Copy</button></div><p class="how"></p></section>
+
+<section class="card calc" data-k="chg" aria-labelledby="h3x"><h2 id="h3x">Percent change</h2>
+<p class="sent"><label for="ch-a">From</label><input id="ch-a" type="number" step="any" inputmode="decimal" autocomplete="off" value="50"><label for="ch-b">to</label><input id="ch-b" type="number" step="any" inputmode="decimal" autocomplete="off" value="75"></p>
+<div class="res"><output for="ch-a ch-b"></output><button type="button" class="cp">Copy</button></div><p class="how"></p></section>
+
+<section class="card calc" data-k="adj" aria-labelledby="h4x"><h2 id="h4x">Increase or decrease by a percent</h2>
+<p class="sent"><label for="ad-d" class="vh">Direction</label><select id="ad-d"><option value="1">Increase</option><option value="-1" selected>Decrease</option></select><label for="ad-y">the value</label><input id="ad-y" type="number" step="any" inputmode="decimal" autocomplete="off" value="80"><label for="ad-x">by</label><input id="ad-x" type="number" step="any" inputmode="decimal" autocomplete="off" value="25"><span>%</span></p>
+<div class="res"><output for="ad-d ad-y ad-x"></output><button type="button" class="cp">Copy</button></div><p class="how"></p></section>
+
+<section class="card calc" data-k="rev" aria-labelledby="h5x"><h2 id="h5x">Reverse percentage: find the original</h2>
+<p class="sent"><span>After a</span><label for="rv-d" class="vh">Direction</label><select id="rv-d"><option value="1" selected>increase</option><option value="-1">decrease</option></select><label for="rv-x">of</label><input id="rv-x" type="number" step="any" inputmode="decimal" autocomplete="off" value="15"><label for="rv-f2">% the value is</label><input id="rv-f2" type="number" step="any" inputmode="decimal" autocomplete="off" value="115"></p>
+<div class="res"><output for="rv-d rv-x rv-f2"></output><button type="button" class="cp">Copy</button></div><p class="how"></p>
+<p class="muted note">Example: a price of 115 including 15% tax was 100 before tax. Taking 15% off 115 gives 97.75, which is wrong.</p></section>
+
+<section class="card calc" data-k="pts" aria-labelledby="h6x"><h2 id="h6x">Percentage points vs percent</h2>
+<p class="sent"><label for="pt-a">A rate going from</label><input id="pt-a" type="number" step="any" inputmode="decimal" autocomplete="off" value="4"><label for="pt-b">% to</label><input id="pt-b" type="number" step="any" inputmode="decimal" autocomplete="off" value="5"><span>%</span></p>
+<div class="res"><output for="pt-a pt-b"></output><button type="button" class="cp">Copy</button></div><p class="how"></p>
+<p class="muted note">Interest going from 4% to 5% is up 1 percentage point, which is a 25% rise in the rate.</p></section>
+
+<section class="card calc" data-k="stk" aria-labelledby="h7x"><h2 id="h7x">Two discounts in a row</h2>
+<p class="sent"><label for="st-a">Take</label><input id="st-a" type="number" step="any" inputmode="decimal" autocomplete="off" value="20"><label for="st-b">% off, then</label><input id="st-b" type="number" step="any" inputmode="decimal" autocomplete="off" value="10"><label for="st-p">% off a price of</label><input id="st-p" type="number" step="any" inputmode="decimal" autocomplete="off" value="100"></p>
+<div class="res"><output for="st-a st-b st-p"></output><button type="button" class="cp">Copy</button></div><p class="how"></p></section>
+<p id="msg" class="muted" role="status"></p>
+</main><script type="module" src="/_/percent/app.js"></script></body></html>

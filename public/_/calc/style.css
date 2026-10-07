@@ -1,0 +1,79 @@
+#x {
+  width: 100%;
+  font-size: 1.3rem;
+  padding: 12px;
+}
+.res {
+  margin-top: 10px;
+}
+#r {
+  flex: 1;
+  font-size: 1.5rem;
+  font-weight: 700;
+  min-height: 1.6em;
+  overflow-wrap: anywhere;
+}
+#r.err {
+  font-size: 1rem;
+  font-weight: 400;
+}
+.help {
+  font-size: 0.85em;
+}
+#h {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+#h li {
+  border-bottom: 1px solid var(--line);
+}
+#h button {
+  all: unset;
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  padding: 8px 6px;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+#h button:hover,
+#h button:focus-visible {
+  background: var(--card);
+}
+#h button:focus-visible {
+  outline: 2px solid var(--accent);
+}
+#h span {
+  flex: 1;
+  overflow-wrap: anywhere;
+}
+#h b {
+  overflow-wrap: anywhere;
+  text-align: right;
+}
+
+.hh h2 {
+  margin: 0;
+}
+.sp {
+  flex: 1;
+}
+.sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  margin: 0;
+}
+.help summary {
+  cursor: pointer;
+}
+kbd {
+  border: 1px solid var(--line);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  padding: 0 5px;
+  background: var(--card);
+}

@@ -1,0 +1,32 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Durations</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/duration/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Durations</h1><p class="sub">Convert between ISO 8601 durations, h:mm:ss, plain numbers and everyday phrases. Runs in your browser.</p>
+<section class="card" aria-labelledby="h-in"><h2 id="h-in">Duration</h2>
+<label for="in">Type a duration: ISO 8601, a clock time, a number or a phrase</label>
+<input id="in" type="text" autocomplete="off" spellcheck="false" autocapitalize="off" aria-describedby="err hint">
+<p id="err" class="err" role="alert"></p>
+<div class="ex" role="group" aria-label="Examples"><span class="muted" id="hint">Try:</span></div>
+<div class="row opts">
+<div><label for="plain">Plain numbers are</label>
+<select id="plain"><option value="seconds">seconds</option><option value="milliseconds">milliseconds</option><option value="minutes">minutes</option><option value="hours">hours</option><option value="days">days</option></select></div>
+<div><label for="largest">Largest unit when spelled out</label>
+<select id="largest"><option value="years">years</option><option value="months">months</option><option value="weeks">weeks</option><option value="days" selected>days</option><option value="hours">hours</option><option value="minutes">minutes</option><option value="seconds">seconds</option></select></div>
+</div>
+</section>
+<section class="card" aria-labelledby="h-out"><h2 id="h-out">As</h2>
+<table id="fmt"><caption class="vh">The duration in different formats</caption><tbody></tbody></table>
+<p id="nominal" class="muted" hidden>Years and months have no fixed length: this uses the Gregorian averages, 365.2425 days a year and 30.436875 days a month.</p>
+</section>
+<section class="card" aria-labelledby="h-tot"><h2 id="h-tot">Total in every unit</h2>
+<table id="tot"><caption class="vh">The duration as a total of each unit</caption><thead><tr><th scope="col">Unit</th><th scope="col">Total</th><th scope="col"><span class="vh">Copy</span></th></tr></thead><tbody></tbody></table>
+</section>
+<details class="card"><summary>What it understands</summary>
+<ul class="muted">
+<li>ISO 8601: <code>P1Y2M3DT4H5M6S</code>, <code>PT90M</code>, <code>P2W</code>, <code>PT0.5S</code>, a leading <code>-</code> for negative.</li>
+<li>Clock: <code>1:30:15</code> (h:mm:ss), <code>90:00</code> (m:ss), <code>1:02:03:04</code> (d:hh:mm:ss), fractions like <code>0:00:01.25</code>.</li>
+<li>Phrases: <code>2h30m</code>, <code>90 minutes</code>, <code>1.5 days</code>, <code>a week and 3 days</code>, <code>an hour and a half</code>, <code>half a day</code>, <code>5 minutes ago</code>.</li>
+<li>Units: ms, s/sec, m/min, h/hr, d/day, w/wk, fortnight, mo/month, y/yr. Number words one to twelve, twenty, thirty and so on.</li>
+</ul></details>
+<p id="msg" class="muted" role="status"></p>
+</main><script type="module" src="/_/duration/app.js"></script></body></html>

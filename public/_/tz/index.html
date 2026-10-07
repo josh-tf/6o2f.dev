@@ -1,0 +1,15 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Time zones</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/tz/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Time zones</h1><p class="sub">World clock and meeting planner. Runs in your browser.</p>
+<fieldset class="plan"><legend>Meeting time</legend>
+<div><label for="dt">Date and time</label><input id="dt" type="datetime-local" required></div>
+<div><label for="base">In zone</label><select id="base"></select></div>
+<button id="now" type="button">Now</button>
+</fieldset>
+<form id="add" class="row"><div><label for="zone">Add a zone</label><input id="zone" list="zones" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="e.g. Paris, Asia/Dubai" required></div><button class="primary" type="submit">Add</button><span id="err" class="err" role="alert"></span><span id="ok" class="muted" role="status"></span></form>
+<datalist id="zones"></datalist>
+<p class="muted key"><i class="w"></i> working hours 09:00-17:00 &middot; <i class="m"></i> selected time</p>
+<h2 class="sr">Zones</h2>
+<ul id="list" aria-label="Zones"></ul>
+</main><script type="module" src="/_/tz/app.js"></script></body></html>

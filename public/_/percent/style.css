@@ -1,0 +1,75 @@
+.top {
+  gap: 10px;
+  align-items: center;
+}
+.top label {
+  margin: 0;
+}
+#dp {
+  width: 7.5em;
+}
+.calc {
+  margin-top: 16px;
+}
+.calc h2 {
+  margin-bottom: 6px;
+}
+.sent {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+}
+.sent label {
+  display: inline;
+  margin: 0;
+  color: var(--fg);
+  font-size: 1em;
+}
+.sent input {
+  width: 8.5em;
+}
+.res {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+.res output {
+  flex: 1;
+  min-width: 0;
+  font-size: 1.25rem;
+}
+.res output.err {
+  font-size: 0.95rem;
+}
+.res output span {
+  font-size: 0.75em;
+}
+.cp {
+  padding: 4px 12px;
+  min-height: 32px;
+}
+.how {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 0.85em;
+  word-break: break-word;
+}
+.how:empty {
+  display: none;
+}
+.note {
+  margin: 8px 0 0;
+  font-size: 0.85em;
+}
+.vh {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

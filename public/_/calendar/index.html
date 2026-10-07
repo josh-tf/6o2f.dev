@@ -1,0 +1,26 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Calendar</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/calendar/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Calendar</h1><p class="sub">A whole year on one page, with ISO week numbers. Pick a day for its details. Prints on one page.</p>
+<section class="card ctl" aria-labelledby="h-ctl"><h2 id="h-ctl" class="vh">Year and options</h2>
+<div class="row yr">
+<button type="button" id="prev" aria-label="Previous year">&larr;</button>
+<div><label for="year">Year</label><input id="year" type="number" min="1" max="9999" step="1" inputmode="numeric" autocomplete="off"></div>
+<button type="button" id="next" aria-label="Next year">&rarr;</button>
+<button type="button" id="today">Today</button>
+</div>
+<fieldset><legend>Weeks start on</legend>
+<label class="inl"><input type="radio" name="ws" value="1" checked> Monday</label>
+<label class="inl"><input type="radio" name="ws" value="0"> Sunday</label></fieldset>
+<div class="row jump"><div><label for="jump">Jump to date</label><input id="jump" type="date" min="0001-01-01" max="9999-12-31"></div><button type="button" id="go">Go</button></div>
+<button type="button" id="print">Print</button>
+</section>
+<p class="muted keys"><kbd>&larr;</kbd> <kbd>&rarr;</kbd> change the year (outside the grid). In the grid: arrows move by day and week, <kbd>PgUp</kbd> <kbd>PgDn</kbd> by month, <kbd>Home</kbd> <kbd>End</kbd> to the week's start and end.</p>
+<section class="card sel" aria-labelledby="h-sel"><h2 id="h-sel">Selected day</h2>
+<div id="info"></div>
+<p id="jerr" class="err" role="alert"></p>
+</section>
+<section aria-labelledby="h-year"><h2 id="h-year" class="ptitle"></h2>
+<div id="cal" class="cal"></div></section>
+<p id="msg" class="muted" role="status"></p>
+</main><script type="module" src="/_/calendar/app.js"></script></body></html>

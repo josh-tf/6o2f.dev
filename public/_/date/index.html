@@ -1,0 +1,61 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dates</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/date/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Dates</h1><p class="sub">Add to a date, measure the gap between two, count business days, look up ISO weeks and ages. Runs in your browser.</p>
+<fieldset class="zone"><legend>Times are in</legend>
+<label class="inl"><input type="radio" name="tz" value="local" checked> <span>Local time <span id="tzname"></span></span></label>
+<label class="inl"><input type="radio" name="tz" value="utc"> UTC</label></fieldset>
+
+<section class="card" aria-labelledby="h-add"><h2 id="h-add">Add or subtract</h2>
+<div class="row wrap">
+<div><label for="a-start">Start</label><input id="a-start" type="datetime-local" step="60"></div>
+<fieldset><legend>Operation</legend>
+<label class="inl"><input type="radio" name="op" value="1" checked> Add</label>
+<label class="inl"><input type="radio" name="op" value="-1"> Subtract</label></fieldset>
+<button type="button" id="a-now">Now</button>
+</div>
+<div class="units">
+<div><label for="a-y">Years</label><input id="a-y" type="number" min="-10000" max="10000" step="1" value="0" inputmode="numeric" autocomplete="off"></div>
+<div><label for="a-m">Months</label><input id="a-m" type="number" min="-100000" max="100000" step="1" value="1" inputmode="numeric" autocomplete="off"></div>
+<div><label for="a-w">Weeks</label><input id="a-w" type="number" min="-100000" max="100000" step="1" value="0" inputmode="numeric" autocomplete="off"></div>
+<div><label for="a-d">Days</label><input id="a-d" type="number" min="-1000000" max="1000000" step="1" value="0" inputmode="numeric" autocomplete="off"></div>
+<div><label for="a-h">Hours</label><input id="a-h" type="number" min="-10000000" max="10000000" step="1" value="0" inputmode="numeric" autocomplete="off"></div>
+</div>
+<div class="res"><output id="a-out" for="a-start a-y a-m a-w a-d a-h"></output><button type="button" id="a-copy">Copy</button></div>
+<p id="a-err" class="err" role="alert"></p>
+<details><summary>How it counts</summary><p class="muted">Years and months are added first and the day is clamped to the month's end, so 31 January + 1 month is 28 February (29 in a leap year). Then weeks and days move the calendar date, keeping the clock time. Hours are real elapsed time, so in local time 24 hours across a daylight-saving change can land an hour off.</p></details>
+</section>
+
+<section class="card" aria-labelledby="h-diff"><h2 id="h-diff">Difference between two dates</h2>
+<div class="row wrap">
+<div><label for="d-from">From</label><input id="d-from" type="datetime-local" step="60"></div>
+<div><label for="d-to">To</label><input id="d-to" type="datetime-local" step="60"></div>
+<button type="button" id="d-swap">Swap</button>
+</div>
+<p class="big"><output id="d-out" for="d-from d-to"></output></p>
+<p id="d-err" class="err" role="alert"></p>
+<table id="d-tot"><caption class="vh">Total time between the two dates</caption><tbody></tbody></table>
+<h3>Business days</h3>
+<p><output id="b-out" for="d-from d-to hol"></output></p>
+<details><summary>Holidays to exclude</summary>
+<label for="hol">Paste dates as YYYY-MM-DD, any separator (other text on the line is ignored)</label>
+<textarea id="hol" rows="4" autocomplete="off" spellcheck="false" autocapitalize="off"></textarea>
+<p id="hol-err" class="err" role="alert"></p></details>
+</section>
+
+<section class="card" aria-labelledby="h-info"><h2 id="h-info">About a date</h2>
+<div class="row wrap"><div><label for="i-date">Date</label><input id="i-date" type="date"></div><button type="button" id="i-today">Today</button></div>
+<table id="i-tab"><caption class="vh">Facts about the chosen date</caption><tbody></tbody></table>
+</section>
+
+<section class="card" aria-labelledby="h-age"><h2 id="h-age">Age</h2>
+<div class="row wrap">
+<div><label for="g-birth">Date of birth</label><input id="g-birth" type="date" autocomplete="bday"></div>
+<div><label for="g-on">Age on</label><input id="g-on" type="date"></div>
+</div>
+<p class="big"><output id="g-out" for="g-birth g-on"></output></p>
+<p id="g-more" class="muted"></p>
+<p id="g-err" class="err" role="alert"></p>
+</section>
+<p id="msg" class="muted" role="status"></p>
+</main><script type="module" src="/_/date/app.js"></script></body></html>
