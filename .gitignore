@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+
+# Wrangler local state, build output and secrets
+.wrangler/
+.dev.vars
+.dev.vars.*
+!.dev.vars.example
+
+# Generated: `pnpm types` writes this from wrangler.jsonc (typecheck runs it first)
+worker-configuration.d.ts
+
+# Mail SPA build output (built from web-mail/ by `pnpm build:mail` on deploy)
+public/_/mail/
+
+# Tooling caches and local editor/agent settings
+.eslintcache
+.cspellcache
+*.tsbuildinfo
+.claude/settings.local.json
+.vscode/
+.idea/
+
+# OS and logs
+.DS_Store
+Thumbs.db
+*.log
+npm-debug.log*
+pnpm-debug.log*

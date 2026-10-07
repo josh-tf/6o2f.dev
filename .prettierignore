@@ -1,0 +1,10 @@
+node_modules
+.wrangler
+pnpm-lock.yaml
+worker-configuration.d.ts
+public/_/mail
+**/vendor/**
+web-mail/node_modules
+web-mail/dist
+# HTML is hand-written and whitespace-sensitive (inline elements, <pre>); formatting it would change rendering.
+*.html

@@ -1,0 +1,38 @@
+{
+  "name": "6o2f-dev",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "pnpm build:mail && wrangler deploy",
+    "types": "wrangler types --strict-vars=false",
+    "typecheck": "pnpm types >/dev/null && tsc --noEmit",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "spell": "cspell --no-progress --gitignore \"**/*.{ts,tsx,js,mjs,json,jsonc,md,html,css,sql}\"",
+    "test": "node --test --experimental-strip-types --no-warnings \"src/**/*.test.ts\"",
+    "check": "pnpm typecheck && pnpm lint && pnpm format:check && pnpm spell && pnpm test",
+    "audit:ui": "node scripts/audit.mjs all",
+    "db:migrate:local": "wrangler d1 migrations apply DB --local",
+    "db:migrate:remote": "wrangler d1 migrations apply DB --remote",
+    "build:mail": "pnpm -C web-mail install && pnpm -C web-mail build"
+  },
+  "dependencies": {
+    "hono": "^4.13.12",
+    "postal-mime": "^4.0.4"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "axe-core": "^4.14.0",
+    "cspell": "^10.3.6",
+    "eslint": "^10.12.0",
+    "globals": "^17.13.0",
+    "playwright-core": "^1.63.0",
+    "prettier": "^3.9.9",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.71.1",
+    "wrangler": "4.142.0"
+  },
+  "packageManager": "pnpm@9.1.0"
+}
