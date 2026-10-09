@@ -350,7 +350,7 @@ const escHtml = (s: string) => s.replace(/[&<>"]/g, (ch) => ({ '&': '&amp;', '<'
  * text come as <pre> with their maze URLs linked, so the inspector can highlight the one followed next. */
 app.get('/api/bots/page', (c) => {
   const path = c.req.query('path') ?? '/',
-    fmt = c.req.query('fmt') as Fmt | 'none',
+    fmt = (c.req.query('fmt') ?? 'html') as Fmt | 'none', // no fmt: a page cached from before formats existed, and everything then got HTML
     host = /^[a-z0-9.-]{1,100}$/i.test(c.req.query('host') ?? '') ? c.req.query('host')! : c.env.DOMAIN;
   if (fmt === 'html') return c.json({ html: mazeDoc(path, 'html', host) });
   const raw =
