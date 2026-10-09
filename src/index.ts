@@ -2,7 +2,7 @@
 import { Hono, type Context } from 'hono';
 import { bodyLimit } from 'hono/body-limit';
 import { HTTPException } from 'hono/http-exception';
-import { auth, canUse, authenticate, avatarUrl, fail, gate, logout, sha256hex, type AppEnv } from './auth.ts';
+import { ADMIN_TOOLS, auth, canUse, authenticate, avatarUrl, fail, gate, logout, sha256hex, type AppEnv } from './auth.ts';
 import { byName, tools } from './tools/index.ts';
 import type { Tool } from './tools/types.ts';
 import { SEO } from './seo.ts';
@@ -25,7 +25,7 @@ dash.get('/api/tools', async (c) => {
   // Tools switched off in the admin panel are hidden from everyone but admins; maintenance ones stay listed with a flag.
   return c.json(
     tools
-      .filter((t) => (u ? t.public || canUse(u, t.name) : t.name !== 'admin') && (u?.isAdmin || st.tools[t.name] !== 'off'))
+      .filter((t) => (u ? t.public || canUse(u, t.name) : !ADMIN_TOOLS.has(t.name)) && (u?.isAdmin || st.tools[t.name] !== 'off'))
       .map(({ name, title, blurb, icon, note, public: pub }) => ({
         name,
         title,
@@ -248,8 +248,9 @@ root.all('*', async (c) => {
   const host = (c.env.DEV && c.req.header('x-host')) || new URL(c.req.url).hostname;
   if (host === c.env.DOMAIN) return decorate(await dash.fetch(c.req.raw, c.env, c.executionCtx), undefined, host, c.req.path);
   const tool = host.endsWith(`.${c.env.DOMAIN}`) ? byName.get(host.slice(0, -c.env.DOMAIN.length - 1)) : undefined;
-  if (!tool) return c.json({ error: 'Not found' }, 404);
-  const state = tool.name === 'admin' ? undefined : (await settings(c.env)).tools[tool.name];
+  // An unknown subdomain (a typo, or a removed tool): browsers go to the launcher, API clients get a 404.
+  if (!tool) return c.req.method === 'GET' || c.req.method === 'HEAD' ? c.redirect(`https://${c.env.DOMAIN}/`, 302) : c.json({ error: 'Not found' }, 404);
+  const state = ADMIN_TOOLS.has(tool.name) ? undefined : (await settings(c.env)).tools[tool.name];
   // Off or in maintenance: everyone but admins gets a 503 (admins pass, so they can check the tool before switching it back on).
   if (state && !(await authenticate(c).catch(() => null))?.isAdmin) return unavailable(c, tool, state);
   return decorate(await tool.app.fetch(c.req.raw, c.env, c.executionCtx), tool, host, c.req.path);

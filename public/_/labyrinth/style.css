@@ -1,0 +1,414 @@
+/* Labyrinth page. Shared dashboard styles (cards, KPIs, charts, badges, the chart palette) come from /_/admin/style.css,
+   which this page also loads. */
+.kind.k-trap {
+  color: var(--danger);
+  border-color: color-mix(in srgb, var(--danger) 45%, var(--line));
+}
+main > .row {
+  margin-bottom: 12px;
+}
+main .grid2 {
+  margin-top: 14px;
+}
+main > .card {
+  margin-top: 14px;
+}
+/* bots layout */
+main .lead {
+  align-items: flex-start;
+  flex-wrap: nowrap;
+}
+main .lead p {
+  margin: 0;
+}
+main > .card,
+main .grid2 {
+  margin-top: 14px;
+}
+main .card > .row {
+  margin-bottom: 6px;
+}
+main .card h3 {
+  margin: 0;
+}
+main .card > h3 {
+  margin-bottom: 10px;
+}
+.labgrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: 14px;
+  align-items: start;
+}
+.minis {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.mini {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 10px 12px;
+}
+.mini small {
+  display: block;
+  color: var(--muted);
+  font-size: 0.78em;
+}
+.mini b {
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--c-maze);
+}
+.card.flush {
+  padding: 0;
+  overflow: hidden;
+}
+.feed {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.feed > li {
+  border-bottom: 1px solid var(--line);
+  padding: 10px 14px;
+}
+.feed > li:last-child {
+  border-bottom: 0;
+}
+.fl {
+  display: grid;
+  grid-template-columns: 5.5em minmax(0, 15em) minmax(0, 1fr) auto auto;
+  gap: 12px;
+  align-items: center;
+}
+.fw {
+  white-space: nowrap;
+  color: var(--muted);
+  font-size: 0.85em;
+}
+.fi {
+  min-width: 0;
+}
+.fi .ua {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.fd {
+  min-width: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 6px;
+  align-items: center;
+}
+.fd > .muted {
+  flex-basis: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.fa {
+  display: flex;
+  gap: 6px;
+}
+.fa button {
+  padding: 3px 10px;
+  font-size: 0.85em;
+}
+.trail {
+  margin: 10px 0 0 calc(5.5em + 12px);
+  font-size: 0.86em;
+}
+.trail ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 3px;
+  max-height: 280px;
+  overflow: auto;
+}
+@media (max-width: 760px) {
+  .labgrid {
+    grid-template-columns: 1fr;
+  }
+  .fl {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas: 'w i s' 'd d d' 'a a a';
+  }
+  .fw {
+    grid-area: w;
+  }
+  .fi {
+    grid-area: i;
+  }
+  .fs {
+    grid-area: s;
+  }
+  .fd {
+    grid-area: d;
+  }
+  .fa {
+    grid-area: a;
+  }
+  .trail {
+    margin-left: 0;
+  }
+  main .lead {
+    flex-wrap: wrap;
+  }
+}
+#lcrawl .brow .tr i {
+  background: var(--c-maze);
+}
+#btraps .brow .tr i {
+  background: var(--danger);
+}
+/* labyrinth: four numbers in a row, crawler list under them (no empty column) */
+.labgrid {
+  grid-template-columns: 1fr;
+}
+.minis {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+@media (max-width: 560px) {
+  .minis {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* ---------- maze ---------- */
+main .lead {
+  align-items: flex-start;
+}
+main .lead p {
+  margin: 0;
+}
+.maze-box {
+  position: relative;
+  height: min(68vh, 620px);
+  min-height: 320px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--c-maze) 9%, var(--card)), var(--card) 70%);
+  overflow: hidden;
+  margin: 12px 0 14px;
+}
+.maze-box canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.maze-bots,
+.maze-feed {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+  font-size: 0.88em;
+  max-height: 300px;
+  overflow: auto;
+}
+.maze-bots li,
+.maze-feed li {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  min-width: 0;
+}
+.maze-bots li > :last-child,
+.maze-feed li > :last-child {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.maze-bots i,
+.maze-feed i {
+  flex: none;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  align-self: center;
+}
+.maze-feed .fw {
+  flex: none;
+}
+
+/* ---------- bot inspector ---------- */
+.insp {
+  width: min(1120px, calc(100vw - 24px));
+  max-height: calc(100vh - 24px);
+  padding: 18px 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: var(--fg);
+}
+.insp::backdrop {
+  background: rgb(0 0 0 / 0.55);
+}
+.insp-head {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.insp-head h2 {
+  margin: 0;
+  font-size: 1.15rem;
+  overflow-wrap: anywhere;
+}
+.insp-head p {
+  margin: 4px 0 0;
+  overflow-wrap: anywhere;
+}
+.insp-minis {
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  margin: 10px 0 12px;
+}
+.insp-track svg {
+  display: block;
+  width: 100%;
+  height: 46px;
+  cursor: pointer;
+}
+.insp-track rect.trap {
+  fill: var(--danger);
+}
+.insp-track rect.maze {
+  fill: var(--c-maze);
+}
+.insp-track rect.flagged {
+  fill: var(--c-flag);
+}
+.insp-track line.gap {
+  stroke: var(--muted);
+  stroke-dasharray: 2 3;
+}
+.insp-track line.cur {
+  stroke: var(--fg);
+  stroke-width: 2;
+}
+.insp-track input {
+  width: 100%;
+  margin: 4px 0 0;
+}
+.insp-ctl {
+  gap: 6px;
+  margin: 8px 0 12px;
+}
+.insp-ctl button {
+  min-width: 2.6em;
+}
+.insp-speed {
+  margin-left: 8px;
+}
+.insp-main {
+  display: grid;
+  grid-template-columns: minmax(0, 300px) minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+}
+.insp-steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 470px;
+  overflow: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  font-size: 0.85em;
+}
+.insp-steps li {
+  border-bottom: 1px solid var(--line);
+}
+.insp-steps button {
+  all: unset;
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  padding: 6px 10px;
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+.insp-steps button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+.insp-steps li[aria-current='step'] {
+  background: color-mix(in srgb, var(--c-maze) 16%, transparent);
+}
+.browser {
+  margin: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--card);
+}
+.browser-bar {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 7px 10px;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.85em;
+}
+.browser-bar .mono {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: var(--bg);
+}
+.dots {
+  display: flex;
+  gap: 5px;
+}
+.dots i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--line);
+}
+.browser iframe {
+  display: block;
+  width: 100%;
+  height: 380px;
+  border: 0;
+  background: #fff;
+}
+.browser figcaption {
+  padding: 7px 10px;
+  border-top: 1px solid var(--line);
+}
+.link-btn {
+  all: unset;
+  cursor: pointer;
+  font-family: var(--mono);
+  font-weight: 700;
+  text-decoration: underline dotted;
+}
+.link-btn:focus-visible {
+  outline: 2px solid var(--accent);
+}
+#maze-canvas {
+  cursor: crosshair;
+}
+@media (max-width: 760px) {
+  .insp-main {
+    grid-template-columns: 1fr;
+  }
+  .insp-steps {
+    max-height: 200px;
+  }
+}
+/* amber text on a light card needs darkening to reach 4.5:1 */
+.kind.k-flagged {
+  color: color-mix(in srgb, var(--c-flag) 65%, var(--fg));
+}

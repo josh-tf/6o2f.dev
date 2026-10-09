@@ -1,4 +1,5 @@
 import { tool as t_admin } from './admin/index.ts';
+import { tool as t_labyrinth } from './labyrinth/index.ts';
 import { tool as t_b64 } from './b64/index.ts';
 import { tool as t_base } from './base/index.ts';
 import { tool as t_calc } from './calc/index.ts';
@@ -114,6 +115,7 @@ export const tools = [
   t_mock,
   t_mail,
   t_admin,
+  t_labyrinth,
   t_json,
   t_uuid,
   t_hash,

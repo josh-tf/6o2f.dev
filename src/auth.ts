@@ -76,8 +76,10 @@ export const toolOf = (c: Context<AppEnv>) => {
   const host = (c.env.DEV && c.req.header('x-host')) || new URL(c.req.url).hostname;
   return host.endsWith(`.${c.env.DOMAIN}`) ? host.slice(0, -c.env.DOMAIN.length - 1) : '';
 };
+/** Tools only admins can open or see in the launcher; they can't be granted, switched off or put in maintenance. */
+export const ADMIN_TOOLS = new Set(['admin', 'labyrinth']);
 export const canUse = (u: Pick<User, 'isAdmin' | 'tools'>, tool: string) =>
-  !tool || u.isAdmin || (tool !== 'admin' && u.tools === '*') || (tool !== 'admin' && u.tools.split(',').includes(tool));
+  !tool || u.isAdmin || (!ADMIN_TOOLS.has(tool) && (u.tools === '*' || u.tools.split(',').includes(tool)));
 
 /** Login required (session cookie or Bearer token). Browsers asking for HTML are sent to Discord login; others get 401 JSON. */
 export const gate: MiddlewareHandler<AppEnv> = async (c, next) => {

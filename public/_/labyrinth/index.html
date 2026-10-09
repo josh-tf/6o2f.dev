@@ -1,0 +1,40 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Labyrinth</title><link rel="stylesheet" href="/_/ui.css"><link rel="stylesheet" href="/_/admin/style.css"><link rel="stylesheet" href="/_/labyrinth/style.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"></head>
+<body><header class="bar"></header><main>
+<h1>Labyrinth</h1><p class="sub">IPs caught by the honeypots (scanner paths on any host, and a hidden link robots.txt forbids) get 24 hours in an endless, slow fake labyrinth: pages, directory listings, JSON and bait files that only lead deeper. Signed-in users always get through. Edge blocks are in <a href="https://dash.cloudflare.com/?to=/:account/6o2f.dev/security/events" target="_blank" rel="noopener noreferrer">Cloudflare security events</a>.</p>
+<h2>Live map</h2>
+<div class="row lead"><p class="muted grow">One request at a time. Every dot is a page they were served and every line is a link they followed. Red diamonds are honeypots they tripped on the way in. Each bot keeps its own colour; click one (here or in the lists) to replay what it saw.</p>
+<div class="seg" id="maze-mode" role="group" aria-label="Playback"><button type="button" data-s="1" aria-pressed="true">Live</button><button type="button" data-s="60" aria-pressed="false">Replay 24 h ×60</button><button type="button" data-s="600" aria-pressed="false">×600</button></div></div>
+<p id="maze-msg" class="err" role="alert"></p>
+<div class="maze-box"><canvas id="maze-canvas" role="img" aria-label="Animated map of the labyrinth. The same events are listed as text under Footsteps."></canvas></div>
+<div class="grid2"><div class="card"><h3>In the maze <span id="maze-count" class="badge"></span></h3><ol id="maze-bots" class="maze-bots"></ol></div>
+<div class="card"><h3>Footsteps</h3><ol id="maze-feed" class="maze-feed"></ol></div></div>
+<p class="muted small">Live runs about 8 seconds behind. Only each IP's first 50 requests a day are logged, so a long crawl stops moving here while its counter (the total) keeps going.</p>
+
+<div class="row lead"><h2 class="grow">Last 7 days</h2><button type="button" id="breload">Refresh</button></div>
+<p id="bmsg" class="err" role="alert"></p>
+<div id="bkpis" class="kpis" aria-live="polite"></div>
+<div class="card"><div class="row"><h3 class="grow">Activity, last 7 days</h3><p class="legend" id="blegend"></p></div><div id="bchart" class="chart"></div></div>
+
+<div class="labgrid"><div id="lkpis" class="minis"></div>
+<div class="card"><h3>Crawlers that went in</h3><div id="lcrawl"></div></div></div>
+
+<div class="card"><h3>Who gets stuck most <span class="muted small">(by crawler, last 7 days)</span></h3><div class="scroll" tabindex="0" role="region" aria-label="Crawler leaderboard"><table id="families"><caption class="sr">Crawler families ranked by time held in the labyrinth</caption></table></div><p class="muted small">Grouped by what the user agent claims; scrapers often lie, so treat a name as a hint. Deepest is the most labyrinth pages a single IP walked.</p></div>
+<div class="grid2"><div class="card"><h3>What they look for</h3><div id="btraps"></div></div>
+<div class="card"><h3>Where they come from</h3><div id="bcountries"></div></div></div>
+
+<h2>Recent activity <span id="gcount" class="badge"></span></h2>
+<div class="card flush"><ol id="bfeed" class="feed"></ol></div>
+<p class="muted small">One line per IP, newest first. Detailed logs keep each IP's first 50 requests a day for 7 days; the counters keep counting. IPv6 is grouped per /64.</p>
+<dialog id="insp" class="insp" aria-labelledby="insp-h">
+<div class="insp-head"><div class="grow"><h2 id="insp-h">Bot</h2><p id="insp-sub" class="muted small"></p></div><button type="button" id="insp-x" aria-label="Close">Close</button></div>
+<p id="insp-msg" class="err" role="alert"></p>
+<div id="insp-kpis" class="minis insp-minis"></div>
+<div class="insp-track"><svg id="insp-strip" aria-hidden="true"></svg><label for="insp-seek" class="sr">Step</label><input type="range" id="insp-seek" min="0" max="0" value="0"></div>
+<div class="row insp-ctl"><button type="button" id="insp-first" aria-label="First step">⏮</button><button type="button" id="insp-prev" aria-label="Previous step">◀</button><button type="button" id="insp-play" class="primary">Play</button><button type="button" id="insp-next" aria-label="Next step">▶</button><button type="button" id="insp-last" aria-label="Last step">⏭</button>
+<label class="insp-speed">Speed <select id="insp-speed"><option value="1">Real time</option><option value="10" selected>10×</option><option value="60">60×</option><option value="0">1 step a second</option></select></label><span id="insp-pos" class="muted small" role="status"></span></div>
+<div class="insp-main"><ol id="insp-steps" class="insp-steps"></ol>
+<figure class="browser"><div class="browser-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span id="insp-url" class="mono"></span><span id="insp-wait" class="muted small"></span></div><iframe id="insp-frame" sandbox="allow-same-origin" title="The page this bot was served"></iframe>
+<figcaption id="insp-note" class="muted small"></figcaption></figure></div>
+</dialog>
+</main><script type="module" src="/_/labyrinth/app.js"></script></body></html>
