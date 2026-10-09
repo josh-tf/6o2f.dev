@@ -582,7 +582,7 @@ function drawFeed() {
       <span class="fi"><b class="mono">${esc(r.ip)}</b> <span class="muted small">${esc(r.country ?? '')}</span><span class="ua muted small" title="${esc(r.ua ?? '')}">${esc(r.ua || '(no user agent)')}</span></span>
       <span class="fd">${parts}<span class="muted small">first <span class="mono">${esc(r.first_path ?? '')}</span> ${on}</span></span>
       <span class="fs">${live ? `<span class="badge warn">flagged</span>` : '<span class="muted small">expired</span>'}</span>
-      <span class="fa"><button type="button" data-acts aria-expanded="false">Trail</button>${live ? '<button type="button" data-unflag>Unflag</button>' : ''}</span></div></li>`;
+      <span class="fa"><button type="button" data-watch="${esc(r.ip)}">Watch</button><button type="button" data-acts aria-expanded="false">Trail</button>${live ? '<button type="button" data-unflag>Unflag</button>' : ''}</span></div></li>`;
         })
         .join('')
     : '<li class="empty">No bots caught yet. They usually turn up within a day.</li>';
@@ -705,7 +705,7 @@ function mzStep(e, animate) {
           ? `followed a link to “${esc(e.title)}” <span class="muted">depth ${n.depth}</span>`
           : `found the hidden link on ${esc(short(e.host))}: “${esc(e.title)}”`;
   const li = document.createElement('li');
-  li.innerHTML = `<span class="fw">${new Date(e.at).toLocaleTimeString()}</span><i style="background:hsl(${b.hue} 75% 55%)"></i><span><b class="mono">${esc(e.ip)}</b> ${flagOf(e.country)} ${what}</span>`;
+  li.innerHTML = `<span class="fw">${new Date(e.at).toLocaleTimeString()}</span><i style="background:hsl(${b.hue} 75% 55%)"></i><span><button type="button" class="link-btn" data-watch="${esc(e.ip)}">${esc(e.ip)}</button> ${flagOf(e.country)} ${what}</span>`;
   const f = $('#maze-feed');
   f.prepend(li);
   while (f.children.length > 60) f.lastChild.remove();
@@ -874,6 +874,7 @@ function mzFrame() {
       y = sy(bot.y),
       fade = Math.max(0.25, 1 - idle / 600_000),
       col = `hsl(${bot.hue} 80% 58% / ${fade})`;
+    Object.assign(bot, { sx: x, sy: y, drawn: t });
     g.shadowColor = col;
     g.shadowBlur = 12;
     g.fillStyle = col;
@@ -912,6 +913,17 @@ function mzFrame() {
     mzBots(recent);
   }
 }
+// Clicking a bot on the map opens its inspector.
+$('#maze-canvas').addEventListener('click', (e) => {
+  const r = e.currentTarget.getBoundingClientRect(),
+    x = e.clientX - r.left,
+    y = e.clientY - r.top,
+    now = performance.now();
+  const hit = [...MZ.bots.values()]
+    .filter((b) => now - b.drawn < 500 && Math.hypot(b.sx - x, b.sy - y) < 18)
+    .sort((a, b) => Math.hypot(a.sx - x, a.sy - y) - Math.hypot(b.sx - x, b.sy - y))[0];
+  if (hit) openInspector(hit.ip);
+});
 /** The side list of bots currently inside, refreshed once a second. */
 function mzBots(list) {
   $('#maze-count').textContent = list.length;
@@ -920,11 +932,192 @@ function mzBots(list) {
     ? list
         .map(
           (b) =>
-            `<li><i style="background:hsl(${b.hue} 75% 55%)"></i><span><b class="mono">${esc(b.ip)}</b> ${flagOf(b.country)} <span class="kind k-${esc(b.kind)}">${BK[b.kind] ?? esc(b.kind)}</span> ${num(b.steps)} step${b.steps === 1 ? '' : 's'} here, depth ${b.deepest}${b.total ? `, ${num(b.total)} labyrinth pages all told` : ''}<br><span class="muted small" title="${esc(b.ua ?? '')}">${esc((b.ua || '(no user agent)').slice(0, 90))}</span></span></li>`,
+            `<li><i style="background:hsl(${b.hue} 75% 55%)"></i><span><button type="button" class="link-btn" data-watch="${esc(b.ip)}">${esc(b.ip)}</button> ${flagOf(b.country)} <span class="kind k-${esc(b.kind)}">${BK[b.kind] ?? esc(b.kind)}</span> ${num(b.steps)} step${b.steps === 1 ? '' : 's'} here, depth ${b.deepest}${b.total ? `, ${num(b.total)} labyrinth pages all told` : ''}<br><span class="muted small" title="${esc(b.ua ?? '')}">${esc((b.ua || '(no user agent)').slice(0, 90))}</span></span></li>`,
         )
         .join('')
     : '<li class="muted">Nobody inside right now.</li>';
 }
+
+/* ---------- bot inspector (one bot's requests, played back with the pages it was served) ---------- */
+const GAP = 300_000, // idle gaps longer than this are collapsed on the strip and skipped in playback
+  INS = { bot: null, steps: [], i: 0, timer: 0, pages: new Map() };
+const dur = (ms) => (ms < 90_000 ? `${Math.round(ms / 1000)} s` : ms < 5_400_000 ? `${Math.round(ms / 60_000)} min` : `${(ms / 3_600_000).toFixed(1)} h`);
+document.addEventListener('click', (e) => {
+  const b = e.target.closest('[data-watch]');
+  if (b) openInspector(b.dataset.watch);
+});
+async function openInspector(ip) {
+  inspStop();
+  $('#insp-msg').textContent = '';
+  $('#insp-h').textContent = ip;
+  if (!$('#insp').open) $('#insp').showModal();
+  let d;
+  try {
+    d = await api(`/api/bots/timeline?ip=${encodeURIComponent(ip)}`);
+  } catch (x) {
+    $('#insp-msg').textContent = x.message;
+    return;
+  }
+  // Which page linked to which: a step reached through a link on an earlier page is that page's child, one level deeper.
+  const from = new Map();
+  for (const [k, s] of d.steps.entries()) {
+    const p = s.path.startsWith('/__maze/') ? from.get(s.path.slice(8)) : undefined;
+    Object.assign(s, { n: k, parent: p, depth: p ? p.depth + 1 : 0, link: p ? p.links.indexOf(s.path.slice(8)) : -1, gap: k ? s.at - d.steps[k - 1].at : 0 });
+    if (p && !p.next) p.next = s;
+    for (const l of s.links) if (!from.has(l)) from.set(l, s);
+  }
+  Object.assign(INS, { bot: d.bot, steps: d.steps, i: 0 });
+  const b = d.bot,
+    wasted = d.steps.reduce((a, s) => a + s.delay, 0);
+  $('#insp-h').innerHTML = `${esc(b.ip)} ${flagOf(b.country)}`;
+  $('#insp-sub').textContent = b.ua || '(no user agent)';
+  $('#insp-kpis').innerHTML = [
+    ['First seen', ago(b.first_at)],
+    ['Last seen', ago(b.last_at)],
+    ['Requests', `${num(b.hits)}${d.steps.length < b.hits ? ` (${num(d.steps.length)} logged)` : ''}`],
+    ['Labyrinth pages', num(b.maze)],
+    ['Deepest', d.steps.length ? `depth ${Math.max(...d.steps.map((s) => s.depth))}` : '—'],
+    ['Made to wait', `~${dur(wasted)}${d.steps.length < b.hits ? '+' : ''}`],
+  ]
+    .map(([k, v]) => `<div class="mini"><small>${k}</small><b>${esc(v)}</b></div>`)
+    .join('');
+  $('#insp-steps').innerHTML = d.steps
+    .map(
+      (s) =>
+        `<li data-n="${s.n}"><button type="button"><span class="fw">${new Date(s.at).toLocaleTimeString()}</span> <span class="kind k-${esc(s.kind)}">${BK[s.kind] ?? esc(s.kind)}</span><br>${
+          s.kind === 'maze' ? `“${esc(s.title)}” <span class="muted">depth ${s.depth}</span>` : `<span class="mono">${esc(s.path)}</span>`
+        }</button></li>`,
+    )
+    .join('');
+  $('#insp-seek').max = String(Math.max(0, d.steps.length - 1));
+  inspStrip();
+  if (d.steps.length) inspGo(0);
+  else $('#insp-note').textContent = 'No logged requests for this bot (logs keep 7 days).';
+}
+/** The traffic strip: one bar per request on a time axis, with idle gaps over 5 min squeezed to a dashed mark. */
+function inspStrip() {
+  const S = INS.steps,
+    svg = $('#insp-strip'),
+    W = svg.clientWidth || 800;
+  let t = 0;
+  for (const s of S) s.x = t += Math.min(s.gap, GAP) || 0;
+  const k = (W - 8) / Math.max(1, t);
+  svg.setAttribute('viewBox', `0 0 ${W} 46`);
+  svg.innerHTML =
+    S.map((s) => (s.gap > GAP ? `<line class="gap" x1="${4 + (s.x - GAP / 2) * k}" x2="${4 + (s.x - GAP / 2) * k}" y1="4" y2="42"/>` : '')).join('') +
+    S.map(
+      (s) => `<rect class="${esc(s.kind)}" x="${4 + s.x * k - 1}" y="${s.kind === 'maze' ? 14 : 6}" width="2" height="${s.kind === 'maze' ? 26 : 34}" rx="1"/>`,
+    ).join('') +
+    `<line class="cur" y1="0" y2="46"/>`;
+  svg.dataset.k = k;
+}
+async function inspGo(i) {
+  const S = INS.steps;
+  if (!S.length) return;
+  INS.i = i = Math.max(0, Math.min(S.length - 1, i));
+  const s = S[i];
+  $('#insp-seek').value = String(i);
+  const cur = $('#insp-strip .cur'),
+    x = 4 + s.x * Number($('#insp-strip').dataset.k);
+  cur?.setAttribute('x1', x);
+  cur?.setAttribute('x2', x);
+  for (const li of $('#insp-steps').children) li.toggleAttribute('aria-current', false);
+  const li = $(`#insp-steps li[data-n="${i}"]`);
+  li?.setAttribute('aria-current', 'step');
+  li?.scrollIntoView({ block: 'nearest' });
+  $('#insp-pos').textContent = `Step ${num(i + 1)} of ${num(S.length)} · ${new Date(s.at).toLocaleString()}${i && s.gap ? ` · +${dur(s.gap)}` : ''}`;
+  $('#insp-url').textContent = `${s.method} https://${s.host}${s.path}`;
+  $('#insp-wait').textContent = `held ${(s.delay / 1000).toFixed(1)} s`;
+  const how =
+    s.kind === 'trap'
+      ? `Tripped a honeypot asking for <span class="mono">${esc(s.path)}</span>, and got this page instead.`
+      : s.kind === 'flagged'
+        ? `Already flagged, asked for <span class="mono">${esc(s.path)}</span> and got this page instead of the site (a non-HTML request got a 403).`
+        : s.parent
+          ? `Got here from step ${s.parent.n + 1} by following link ${s.link + 1} of 8.`
+          : `Came in through the hidden link on ${esc(short(s.host))}, or through a link on a page that wasn't logged.`;
+  const nx = s.next;
+  $('#insp-note').innerHTML =
+    `${how} ${nx ? `Next it clicked the highlighted link (step ${nx.n + 1}, ${dur(nx.at - s.at)} later).` : 'It followed no link from this page that was logged.'}`;
+  let html = INS.pages.get(s.path);
+  if (!html) {
+    try {
+      html = (await api(`/api/bots/page?path=${encodeURIComponent(s.path)}`)).html;
+      INS.pages.set(s.path, html);
+    } catch (x) {
+      $('#insp-msg').textContent = x.message;
+      return;
+    }
+  }
+  if (INS.i !== i) return; // moved on while loading
+  const next = nx && `<a href="/__maze/${nx.path.slice(8)}"`;
+  $('#insp-frame').srcdoc = next
+    ? html
+        .replace('</head>', '<style>[data-next]{background:#ffe066;outline:3px solid #e8590c;outline-offset:2px}</style></head>')
+        .replace(next, `${next} data-next`)
+    : html;
+}
+function inspStop() {
+  clearTimeout(INS.timer);
+  INS.timer = 0;
+  $('#insp-play').textContent = 'Play';
+}
+function inspPlay() {
+  if (INS.timer) return inspStop();
+  if (INS.i >= INS.steps.length - 1) inspGo(0);
+  $('#insp-play').textContent = 'Pause';
+  const tick = () => {
+    const nx = INS.steps[INS.i + 1];
+    if (!nx) return inspStop();
+    const sp = Number($('#insp-speed').value);
+    INS.timer = setTimeout(
+      () => {
+        inspGo(INS.i + 1);
+        tick();
+      },
+      !sp || nx.gap > GAP ? 1000 : Math.max(80, nx.gap / sp),
+    );
+  };
+  tick();
+}
+$('#insp-play').addEventListener('click', inspPlay);
+$('#insp-speed').addEventListener('change', () => {
+  if (!INS.timer) return;
+  inspStop();
+  inspPlay();
+});
+$('#insp-first').addEventListener('click', () => inspGo(0));
+$('#insp-last').addEventListener('click', () => inspGo(INS.steps.length - 1));
+$('#insp-prev').addEventListener('click', () => inspGo(INS.i - 1));
+$('#insp-next').addEventListener('click', () => inspGo(INS.i + 1));
+$('#insp-seek').addEventListener('input', (e) => inspGo(Number(e.target.value)));
+$('#insp-steps').addEventListener('click', (e) => {
+  const li = e.target.closest('li[data-n]');
+  if (li) inspGo(Number(li.dataset.n));
+});
+$('#insp-strip').addEventListener('click', (e) => {
+  const r = e.currentTarget.getBoundingClientRect(),
+    x = ((e.clientX - r.left) / r.width) * Number(e.currentTarget.viewBox.baseVal.width),
+    k = Number(e.currentTarget.dataset.k);
+  let best = 0;
+  for (const s of INS.steps) if (Math.abs(4 + s.x * k - x) < Math.abs(4 + INS.steps[best].x * k - x)) best = s.n;
+  inspGo(best);
+});
+$('#insp').addEventListener('keydown', (e) => {
+  if (e.target.matches('input, select')) return;
+  if (e.key === ' ' && !e.target.matches('button')) {
+    e.preventDefault();
+    inspPlay();
+  } else if (e.key === 'ArrowRight') inspGo(INS.i + 1);
+  else if (e.key === 'ArrowLeft') inspGo(INS.i - 1);
+});
+// The frame may be same-origin (it runs no scripts: sandbox has no allow-scripts) so the clicked link can be scrolled into view.
+$('#insp-frame').addEventListener('load', (e) => {
+  const a = e.target.contentDocument?.querySelector('[data-next]');
+  if (a) e.target.contentWindow.scrollTo(0, a.offsetTop - 120); // not scrollIntoView: that scrolls the admin page too
+});
+$('#insp-x').addEventListener('click', () => $('#insp').close());
+$('#insp').addEventListener('close', inspStop);
 
 /* ---------- audit log ---------- */
 const ACTIONS = {

@@ -100,17 +100,19 @@ export function mazePage(path: string) {
   return { title, links, body, delay: 1500 + r() * 1500 };
 }
 
+/** The HTML of a labyrinth page, exactly as a bot is served it. */
+export function mazeHtml(path: string) {
+  const { title, links, body } = mazePage(path);
+  const list = links.map((l) => `<li><a href="${MAZE}${l.id}">${l.label} ${l.id.slice(0, 4)}</a></li>`).join('');
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="robots" content="noindex,nofollow"><title>${title}</title></head><body><h1>${title}</h1>${body}<ul>${list}</ul></body></html>`;
+}
+
 /** An endless page of plausible filler linking to more of the same. Slow on purpose (1.5-3 s): it costs us wall time, not CPU. */
 export async function maze(path: string): Promise<Response> {
-  const { title, links, body, delay } = mazePage(path);
-  const list = links.map((l) => `<li><a href="${MAZE}${l.id}">${l.label} ${l.id.slice(0, 4)}</a></li>`).join('');
-  await new Promise((res) => setTimeout(res, delay));
-  return new Response(
-    `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="robots" content="noindex,nofollow"><title>${title}</title></head><body><h1>${title}</h1>${body}<ul>${list}</ul></body></html>`,
-    {
-      headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store', 'x-robots-tag': 'noindex, nofollow' },
-    },
-  );
+  await new Promise((res) => setTimeout(res, mazePage(path).delay));
+  return new Response(mazeHtml(path), {
+    headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store', 'x-robots-tag': 'noindex, nofollow' },
+  });
 }
 
 /** The hidden link added to every page: invisible, out of the tab order and the accessibility tree. */

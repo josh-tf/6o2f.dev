@@ -47,7 +47,7 @@
 
 <section id="p-maze" role="tabpanel" aria-labelledby="t-maze" hidden>
 <h2 class="sr">Maze</h2>
-<div class="row lead"><p class="muted grow">Bots inside the labyrinth, one request at a time. Every dot is a page they were served and every line is a link they followed. Red diamonds are honeypots they tripped on the way in. Each bot keeps its own colour.</p>
+<div class="row lead"><p class="muted grow">Bots inside the labyrinth, one request at a time. Every dot is a page they were served and every line is a link they followed. Red diamonds are honeypots they tripped on the way in. Each bot keeps its own colour; click one (here or in the lists) to replay what it saw.</p>
 <div class="seg" id="maze-mode" role="group" aria-label="Playback"><button type="button" data-s="1" aria-pressed="true">Live</button><button type="button" data-s="60" aria-pressed="false">Replay 24 h ×60</button><button type="button" data-s="600" aria-pressed="false">×600</button></div></div>
 <p id="maze-msg" class="err" role="alert"></p>
 <div class="maze-box"><canvas id="maze-canvas" role="img" aria-label="Animated map of the labyrinth. The same events are listed as text under Footsteps."></canvas></div>
@@ -88,4 +88,15 @@
 <div class="card"><h3>Errors by endpoint</h3><div class="scroll"><table id="errtab"><caption class="sr">Endpoints with errors</caption><tbody></tbody></table></div><p class="muted small">404s aren't recorded. Endpoint paths are kept for 60 days.</p></div>
 <div class="grid2"><div class="card"><h3>Most active users</h3><div id="topusers"></div></div><div class="card"><h3>Top endpoints</h3><div class="scroll"><table id="paths"><caption class="sr">Most requested endpoints</caption><tbody></tbody></table></div><button type="button" class="more-btn" id="pmore" hidden></button></div></div>
 </section>
+<dialog id="insp" class="insp" aria-labelledby="insp-h">
+<div class="insp-head"><div class="grow"><h2 id="insp-h">Bot</h2><p id="insp-sub" class="muted small"></p></div><button type="button" id="insp-x" aria-label="Close">Close</button></div>
+<p id="insp-msg" class="err" role="alert"></p>
+<div id="insp-kpis" class="minis insp-minis"></div>
+<div class="insp-track"><svg id="insp-strip" aria-hidden="true"></svg><label for="insp-seek" class="sr">Step</label><input type="range" id="insp-seek" min="0" max="0" value="0"></div>
+<div class="row insp-ctl"><button type="button" id="insp-first" aria-label="First step">⏮</button><button type="button" id="insp-prev" aria-label="Previous step">◀</button><button type="button" id="insp-play" class="primary">Play</button><button type="button" id="insp-next" aria-label="Next step">▶</button><button type="button" id="insp-last" aria-label="Last step">⏭</button>
+<label class="insp-speed">Speed <select id="insp-speed"><option value="1">Real time</option><option value="10" selected>10×</option><option value="60">60×</option><option value="0">1 step a second</option></select></label><span id="insp-pos" class="muted small" role="status"></span></div>
+<div class="insp-main"><ol id="insp-steps" class="insp-steps"></ol>
+<figure class="browser"><div class="browser-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span id="insp-url" class="mono"></span><span id="insp-wait" class="muted small"></span></div><iframe id="insp-frame" sandbox="allow-same-origin" title="The page this bot was served"></iframe>
+<figcaption id="insp-note" class="muted small"></figcaption></figure></div>
+</dialog>
 </main><script type="module" src="/_/admin/app.js"></script></body></html>

@@ -4,7 +4,7 @@ import { tools } from '../index.ts';
 import type { Tool } from '../types.ts';
 import { errors, overview, toolDetail, userActivity } from './stats.ts';
 import { clearSettings, settings } from '../../settings.ts';
-import { flagged, mazePage, unflag } from '../../guard.ts';
+import { flagged, mazeHtml, mazePage, unflag } from '../../guard.ts';
 
 const app = new Hono<AppEnv>();
 
@@ -297,6 +297,25 @@ app.get('/api/bots/maze', async (c) => {
     }),
   );
 });
+/** Bot inspector: one IP's logged requests, oldest first, each with the page it was served (title, onward links, the
+ * labyrinth's delay), plus its counters. The query string carries the IP because an IPv6 key holds a slash. */
+app.get('/api/bots/timeline', async (c) => {
+  const ip = c.req.query('ip') ?? '';
+  const [bot, log] = await Promise.all([
+    c.env.DB.prepare('SELECT * FROM bot_ips WHERE ip = ?').bind(ip).first(),
+    c.env.DB.prepare('SELECT id, at, host, method, path, kind FROM bot_log WHERE ip = ? ORDER BY id LIMIT 500').bind(ip).all<{ path: string }>(),
+  ]);
+  if (!bot) fail(404, 'No such bot');
+  return c.json({
+    bot,
+    steps: log.results.map((r) => {
+      const p = mazePage(r.path);
+      return { ...r, title: p.title, links: p.links.map((l) => l.id), delay: Math.round(p.delay) };
+    }),
+  });
+});
+/** The exact HTML a bot got for a path (every bot gets the same page for the same path). */
+app.get('/api/bots/page', (c) => c.json({ html: mazeHtml(c.req.query('path') ?? '/') }));
 app.get('/api/bots/:ip', async (c) => {
   const ip = decodeURIComponent(c.req.param('ip'));
   const { results } = await c.env.DB.prepare('SELECT * FROM bot_log WHERE ip = ? ORDER BY id DESC LIMIT 200').bind(ip).all();
