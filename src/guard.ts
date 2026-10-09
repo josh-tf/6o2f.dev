@@ -100,6 +100,8 @@ export function mazePage(path: string) {
   return { title, links, body, delay: 1500 + r() * 1500 };
 }
 
+/** Said in every labyrinth document, in a place bots skip (a comment, a footer, a field): nothing here is real. */
+export const DECOY = 'Decoy: generated for bots that ignore robots.txt. Nothing here is real; no system uses these values.';
 const STATUS = ['active', 'pending', 'archived', 'approved', 'under review', 'superseded'];
 /** The HTML of a labyrinth page, exactly as a bot is served it. Each path is one of three page types (a report, a
  * directory listing, a page of records) so the maze doesn't look like one template; all carry the same 8 links.
@@ -131,7 +133,7 @@ export function mazeHtml(path: string) {
         );
     main = `<h1>${title}</h1><p>Showing records ${from}-${from + 6} of ${(from + 900 + n(40000)).toLocaleString('en-US')}. Last synced ${date()}.</p><table><tr><th>ID</th><th>Record</th><th>Status</th><th>Updated</th></tr>${rows.join('')}</table><p><a ${href(links[7].id)}>Next page</a></p>${body.slice(0, body.indexOf('</p>') + 4)}`;
   }
-  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="robots" content="noindex,nofollow"><title>${title}</title></head><body>${main}</body></html>`;
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="robots" content="noindex,nofollow"><title>${title}</title></head><body><!-- ${DECOY} -->${main}<footer><small>${DECOY}</small></footer></body></html>`;
 }
 /* ---------- formats: what a bot gets depends on what it asked for ---------- */
 export type Fmt = 'html' | 'json' | 'text';
@@ -158,6 +160,7 @@ export function mazeDoc(path: string, fmt: Fmt, host: string) {
   if (fmt === 'json') {
     const from = 1 + n(400) * 7;
     return JSON.stringify({
+      _notice: DECOY,
       data: links.slice(0, 7).map((l, i) => ({
         id: from + i,
         name: `${l.label} ${l.id.slice(0, 4)}`,
@@ -174,11 +177,13 @@ export function mazeDoc(path: string, fmt: Fmt, host: string) {
       .slice(1)
       .map((l) => `[submodule "${l.label.replace(/ /g, '-')}"]\n\tpath = vendor/${l.label.replace(/ /g, '-')}\n\turl = ${url(l.id)}\n`)
       .join('');
-    return `[core]
+    return `# ${DECOY}
+[core]
 ${['repositoryformatversion = 0', 'filemode = true', 'bare = false', 'logallrefupdates = true'].map((l) => `\t${l}\n`).join('')}[remote "origin"]\n\turl = ${url(links[0].id)}\n\tfetch = +refs/heads/*:refs/remotes/origin/*\n[branch "main"]\n\tremote = origin\n\tmerge = refs/heads/main\n${sub}`;
   }
   const db = `${word()}_${word()}`;
   return [
+    `# ${DECOY}`,
     `APP_NAME="${title}"`,
     'APP_ENV=production',
     'APP_DEBUG=false',

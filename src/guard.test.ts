@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { crawlerFamily, holdFor, ipKey, isTrap, maze, MAZE, mazeCost, mazeDoc, mazeFormat, mazeHtml, mazePage } from './guard.ts';
+import { crawlerFamily, DECOY, holdFor, ipKey, isTrap, maze, MAZE, mazeCost, mazeDoc, mazeFormat, mazeHtml, mazePage } from './guard.ts';
 
 test('trap paths', () => {
   for (const p of [
@@ -88,8 +88,8 @@ test('JSON and bait files carry the same 8 maze links', () => {
       assert.equal(mazeDoc(path, fmt, host), doc, 'deterministic');
     }
   }
-  assert.match(mazeDoc('/.env', 'text', host), /^APP_NAME=.*\nAPP_ENV=production/);
-  assert.match(mazeDoc('/.git/config', 'text', host), /^\[core\]\n\trepositoryformatversion = 0\n/);
+  assert.match(mazeDoc('/.env', 'text', host), /^# Decoy: .*\nAPP_NAME=.*\nAPP_ENV=production/);
+  assert.match(mazeDoc('/.git/config', 'text', host), /^# Decoy: .*\n\[core\]\n\trepositoryformatversion = 0\n/);
 });
 
 test('holdFor stretches the delay for a bot that keeps coming, up to 4x', () => {
@@ -119,4 +119,10 @@ test('crawler families', () => {
   assert.deepEqual(crawlerFamily(''), { name: '(no user agent)', type: 'Script' });
   assert.deepEqual(crawlerFamily('Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/126.0'), { name: 'Browser-like', type: 'Other' });
   assert.deepEqual(crawlerFamily('Fuzzer9000/1.0'), { name: 'Fuzzer9000', type: 'Other' });
+});
+
+test('every document tells a human it is a decoy', () => {
+  for (const path of [`${MAZE}0badcafe`, `${MAZE}00000001`, `${MAZE}00000002`, '/.env', '/.git/config'])
+    for (const fmt of ['html', 'json', 'text'] as const) assert.ok(mazeDoc(path, fmt, 'x.6o2f.dev').includes(DECOY), `${fmt} ${path}`);
+  assert.equal(JSON.parse(mazeDoc(`${MAZE}0badcafe`, 'json', 'x.6o2f.dev'))._notice, DECOY);
 });
