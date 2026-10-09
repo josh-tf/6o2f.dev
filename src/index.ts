@@ -7,7 +7,7 @@ import { byName, tools } from './tools/index.ts';
 import type { Tool } from './tools/types.ts';
 import { SEO } from './seo.ts';
 import { settings, type ToolState } from './settings.ts';
-import { botEvent, flag, isFlagged, isTrap, MAZE, maze, trapLink } from './guard.ts';
+import { botEvent, flag, holdFor, isFlagged, isTrap, MAZE, maze, mazeFormat, trapLink } from './guard.ts';
 import { sweepDrop } from './tools/drop/index.ts';
 import { runUptime } from './tools/uptime/index.ts';
 import { dayOf, pruneStats, record } from './stats.ts';
@@ -146,7 +146,9 @@ root.use('*', async (c, next) => {
   c.set('bot', true);
   const country = (c.req.raw.cf?.country as string) ?? '',
     ua = c.req.header('user-agent') ?? '';
-  const kind = !trap ? 'flagged' : path.startsWith(MAZE) ? 'maze' : 'trap';
+  const kind = !trap ? 'flagged' : path.startsWith(MAZE) ? 'maze' : 'trap',
+    fmt = mazeFormat(path, c.req.header('accept') ?? ''),
+    held = fmt ? holdFor(ip, path) : 0;
   // Honeypot hits (not maze pages) are also counted per path per day (stats_dim kind 'trap') for the trend.
   c.executionCtx.waitUntil(
     Promise.all([
@@ -160,10 +162,10 @@ root.use('*', async (c, next) => {
             .bind(dayOf(), `/${path.split('/')[1]}`.slice(0, 40))
             .run()
         : null,
-      botEvent(c.env, { ip, host: hostOf(c), method: c.req.method, path, kind, country, ua }),
+      botEvent(c.env, { ip, host: hostOf(c), method: c.req.method, path, kind, country, ua, fmt, held }),
     ]).catch((e) => console.error('guard', e)),
   );
-  return c.req.header('accept')?.includes('text/html') || trap ? maze(path) : c.json({ error: 'Forbidden' }, 403);
+  return fmt ? maze(path, fmt, hostOf(c), held) : c.json({ error: 'Forbidden' }, 403);
 });
 root.get('/_me', async (c) => {
   const u = await authenticate(c).catch(() => null);

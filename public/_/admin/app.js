@@ -19,6 +19,13 @@ const ago = (ms) => {
   return `${out} ago`;
 };
 const num = (n) => Number(n).toLocaleString('en-US');
+const size = (b) =>
+  b < 1024 ? `${b} B` : b < 1048576 ? `${(b / 1024).toFixed(1)} KB` : b < 1073741824 ? `${(b / 1048576).toFixed(1)} MB` : `${(b / 1073741824).toFixed(2)} GB`;
+/** Words of labyrinth filler as books (a novel is about 90,000 words). */
+const books = (w) =>
+  w >= 45_000
+    ? `≈ ${(w / 90_000).toFixed(w >= 900_000 ? 0 : 1)} novel${w >= 135_000 ? 's' : ''}`
+    : `≈ ${Math.max(1, Math.round(w / 300))} book page${w >= 450 ? 's' : ''}`;
 const pct = (a, b) => (b ? `${(Math.round((a / b) * 1000) / 10).toFixed(1)}%` : '0%');
 
 /* ---------- tabs ---------- */
@@ -521,14 +528,18 @@ async function loadBots() {
   $('#bchart').innerHTML = stacked(dl.days.map(dayLabel), series, 'Bot activity per day, last 7 days');
   // labyrinth
   const crawlers = d.ips.filter((r) => r.maze > 0).sort((a, b) => b.maze - a.maze);
-  const secs = d.maze.pages * 2.25;
+  const c = d.cost;
   $('#lkpis').innerHTML = [
     ['Crawlers', d.maze.crawlers],
     ['Pages served', d.maze.pages],
     ['Deepest crawl', d.maze.deepest ? `${num(d.maze.deepest)} page${d.maze.deepest === 1 ? '' : 's'}` : '—'],
-    ['Their time wasted', secs < 90 ? `~${Math.round(secs)} s` : `~${Math.round(secs / 60)} min`],
+    ['Time held up', c.held ? dur(c.held) : '—'],
+    ['Junk they downloaded', size(c.bytes)],
+    ['Filler they read', `${num(c.words)} words`, c.words ? books(c.words) : ''],
   ]
-    .map(([k, v]) => `<div class="mini"><small>${k}</small><b>${typeof v === 'number' ? num(v) : esc(v)}</b></div>`)
+    .map(
+      ([k, v, sub]) => `<div class="mini"><small>${k}</small><b>${typeof v === 'number' ? num(v) : esc(v)}</b>${sub ? `<small>${esc(sub)}</small>` : ''}</div>`,
+    )
     .join('');
   $('#lcrawl').innerHTML = crawlers.length
     ? bars(
@@ -536,6 +547,14 @@ async function loadBots() {
         '',
       ) + '<p class="muted small">Pages each crawler walked through. Real browsers never see the hidden link, so every one of these ignored robots.txt.</p>'
     : '<p class="empty">Nobody has followed the hidden link yet.</p>';
+  $('#families').innerHTML = d.families.length
+    ? `<thead><tr><th scope="col">Crawler</th><th scope="col">IPs</th><th scope="col">Requests</th><th scope="col">Maze pages</th><th scope="col">Deepest</th><th scope="col">Held up</th><th scope="col">Downloaded</th></tr></thead><tbody>${d.families
+        .map(
+          (f) =>
+            `<tr><td><b>${esc(f.name)}</b> <span class="kind k-${f.type === 'AI' ? 'maze' : f.type === 'Scanner' ? 'trap' : 'flagged'}">${esc(f.type)}</span></td><td>${num(f.ips)}</td><td>${num(f.hits)}</td><td>${num(f.maze)}</td><td>${num(f.deepest)}</td><td>${f.held ? dur(f.held) : '—'}</td><td>${size(f.bytes)}</td></tr>`,
+        )
+        .join('')}</tbody>`
+    : '<tbody><tr><td class="empty">No bots in the last 7 days.</td></tr></tbody>';
   $('#btraps').innerHTML = bars(topN(trapFamilies(d.traps), 8), 'No honeypot hits in the last 7 days.');
   $('#bcountries').innerHTML = bars(
     topN(
@@ -694,7 +713,17 @@ function mzStep(e, animate) {
   if (b.node && b.node !== n) MZ.trails.push({ a: b.node, b: n, hue: b.hue, at: animate ? now : -1e9 });
   if (MZ.trails.length > 600) MZ.trails.splice(0, MZ.trails.length - 600);
   Object.assign(b, { fx: b.x, fy: b.y, t0: now, dur: animate && !still.matches ? 750 : 0, node: n, steps: b.steps + 1, deepest: Math.max(b.deepest, n.depth) });
-  Object.assign(b, { at: e.at, country: e.country, ua: e.ua, total: e.total, host: e.host, kind: e.kind });
+  Object.assign(b, {
+    at: e.at,
+    country: e.country,
+    ua: e.ua,
+    family: e.family,
+    total: e.total,
+    host: e.host,
+    kind: e.kind,
+    bytes: e.bytes ?? 0,
+    held: e.held ?? 0,
+  });
   if (!animate) return;
   const what =
     e.kind === 'trap'
@@ -904,6 +933,8 @@ function mzFrame() {
   g.fillText(head, 14, 22);
   g.fillStyle = C.muted;
   g.fillText(`${num(MZ.nodes.size)} pages mapped · ${recent.length} bot${recent.length === 1 ? '' : 's'} inside`, 14, 40);
+  const all = [...MZ.bots.values()];
+  g.fillText(`${size(all.reduce((a, b) => a + b.bytes, 0))} of junk fed · ${dur(all.reduce((a, b) => a + b.held, 0))} of their time`, 14, 58);
   if (!MZ.nodes.size) {
     g.textAlign = 'center';
     g.fillText(MZ.all.length ? 'Waiting for the next step…' : 'No bots in the last 24 hours.', W / 2, H / 2);
@@ -932,13 +963,14 @@ function mzBots(list) {
     ? list
         .map(
           (b) =>
-            `<li><i style="background:hsl(${b.hue} 75% 55%)"></i><span><button type="button" class="link-btn" data-watch="${esc(b.ip)}">${esc(b.ip)}</button> ${flagOf(b.country)} <span class="kind k-${esc(b.kind)}">${BK[b.kind] ?? esc(b.kind)}</span> ${num(b.steps)} step${b.steps === 1 ? '' : 's'} here, depth ${b.deepest}${b.total ? `, ${num(b.total)} labyrinth pages all told` : ''}<br><span class="muted small" title="${esc(b.ua ?? '')}">${esc((b.ua || '(no user agent)').slice(0, 90))}</span></span></li>`,
+            `<li><i style="background:hsl(${b.hue} 75% 55%)"></i><span><button type="button" class="link-btn" data-watch="${esc(b.ip)}">${esc(b.ip)}</button> ${flagOf(b.country)} <b>${esc(b.family ?? '')}</b> <span class="kind k-${esc(b.kind)}">${BK[b.kind] ?? esc(b.kind)}</span> ${num(b.steps)} step${b.steps === 1 ? '' : 's'} here, depth ${b.deepest}${b.total ? `, ${num(b.total)} labyrinth pages all told` : ''}${b.bytes ? ` · ${size(b.bytes)} downloaded, held ${dur(b.held)}` : ''}<br><span class="muted small" title="${esc(b.ua ?? '')}">${esc((b.ua || '(no user agent)').slice(0, 90))}</span></span></li>`,
         )
         .join('')
     : '<li class="muted">Nobody inside right now.</li>';
 }
 
 /* ---------- bot inspector (one bot's requests, played back with the pages it was served) ---------- */
+const FMT = { html: 'HTML', json: 'JSON', text: 'bait file' };
 const GAP = 300_000, // idle gaps longer than this are collapsed on the strip and skipped in playback
   INS = { bot: null, steps: [], i: 0, timer: 0, pages: new Map() };
 const dur = (ms) => (ms < 90_000 ? `${Math.round(ms / 1000)} s` : ms < 5_400_000 ? `${Math.round(ms / 60_000)} min` : `${(ms / 3_600_000).toFixed(1)} h`);
@@ -967,9 +999,12 @@ async function openInspector(ip) {
     for (const l of s.links) if (!from.has(l)) from.set(l, s);
   }
   Object.assign(INS, { bot: d.bot, steps: d.steps, i: 0 });
+  // Pace while active: logged steps per minute, not counting idle gaps over 5 min.
   const b = d.bot,
-    wasted = d.steps.reduce((a, s) => a + s.delay, 0);
-  $('#insp-h').innerHTML = `${esc(b.ip)} ${flagOf(b.country)}`;
+    busy = d.steps.reduce((a, s) => a + (s.gap > GAP ? 0 : s.gap), 0),
+    pace = busy > 0 ? ((d.steps.length - 1) / busy) * 60_000 : 0;
+  $('#insp-h').innerHTML =
+    `${esc(b.ip)} ${flagOf(b.country)} <span class="badge">${esc(b.family.name)}</span> <span class="muted small">${esc(b.family.type)}</span>`;
   $('#insp-sub').textContent = b.ua || '(no user agent)';
   $('#insp-kpis').innerHTML = [
     ['First seen', ago(b.first_at)],
@@ -977,14 +1012,18 @@ async function openInspector(ip) {
     ['Requests', `${num(b.hits)}${d.steps.length < b.hits ? ` (${num(d.steps.length)} logged)` : ''}`],
     ['Labyrinth pages', num(b.maze)],
     ['Deepest', d.steps.length ? `depth ${Math.max(...d.steps.map((s) => s.depth))}` : '—'],
-    ['Made to wait', `~${dur(wasted)}${d.steps.length < b.hits ? '+' : ''}`],
+    ['Held up', dur(b.held_ms)],
+    ['Downloaded', size(b.bytes)],
+    ['Filler read', `${num(b.words)} words`],
+    ['Stayed', dur(b.last_at - b.first_at)],
+    ['Pace', pace ? `${pace.toFixed(1)} pages/min` : '—'],
   ]
     .map(([k, v]) => `<div class="mini"><small>${k}</small><b>${esc(v)}</b></div>`)
     .join('');
   $('#insp-steps').innerHTML = d.steps
     .map(
       (s) =>
-        `<li data-n="${s.n}"><button type="button"><span class="fw">${new Date(s.at).toLocaleTimeString()}</span> <span class="kind k-${esc(s.kind)}">${BK[s.kind] ?? esc(s.kind)}</span><br>${
+        `<li data-n="${s.n}"><button type="button"><span class="fw">${new Date(s.at).toLocaleTimeString()}</span> <span class="kind k-${esc(s.kind)}">${BK[s.kind] ?? esc(s.kind)}</span>${s.fmt !== 'html' ? ` <span class="muted small">${FMT[s.fmt] ?? '403'}</span>` : ''}<br>${
           s.kind === 'maze' ? `“${esc(s.title)}” <span class="muted">depth ${s.depth}</span>` : `<span class="mono">${esc(s.path)}</span>`
         }</button></li>`,
     )
@@ -1027,7 +1066,7 @@ async function inspGo(i) {
   li?.scrollIntoView({ block: 'nearest' });
   $('#insp-pos').textContent = `Step ${num(i + 1)} of ${num(S.length)} · ${new Date(s.at).toLocaleString()}${i && s.gap ? ` · +${dur(s.gap)}` : ''}`;
   $('#insp-url').textContent = `${s.method} https://${s.host}${s.path}`;
-  $('#insp-wait').textContent = `held ${(s.delay / 1000).toFixed(1)} s`;
+  $('#insp-wait').textContent = `${FMT[s.fmt] ?? '403'} · held ${(s.delay / 1000).toFixed(1)} s · ${size(s.bytes)} · ${num(s.words)} words`;
   const how =
     s.kind === 'trap'
       ? `Tripped a honeypot asking for <span class="mono">${esc(s.path)}</span>, and got this page instead.`
@@ -1036,14 +1075,23 @@ async function inspGo(i) {
         : s.parent
           ? `Got here from step ${s.parent.n + 1} by following link ${s.link + 1} of 8.`
           : `Came in through the hidden link on ${esc(short(s.host))}, or through a link on a page that wasn't logged.`;
-  const nx = s.next;
+  const nx = s.next,
+    got =
+      s.fmt === 'json'
+        ? ' It asked for JSON (an API client or script), so it got a page of fake records.'
+        : s.fmt === 'text'
+          ? ` It got a bait file: a fake ${s.path.startsWith('/.git') ? 'git config' : '.env'} full of maze URLs.`
+          : s.fmt
+            ? ''
+            : ' It asked for neither HTML nor JSON, so it got a 403.';
   $('#insp-note').innerHTML =
-    `${how} ${nx ? `Next it clicked the highlighted link (step ${nx.n + 1}, ${dur(nx.at - s.at)} later).` : 'It followed no link from this page that was logged.'}`;
-  let html = INS.pages.get(s.path);
+    `${how}${got} ${nx ? `Next it clicked the highlighted link (step ${nx.n + 1}, ${dur(nx.at - s.at)} later).` : 'It followed no link from this page that was logged.'}`;
+  const key = `${s.fmt ?? 'none'} ${s.host} ${s.path}`;
+  let html = INS.pages.get(key);
   if (!html) {
     try {
-      html = (await api(`/api/bots/page?path=${encodeURIComponent(s.path)}`)).html;
-      INS.pages.set(s.path, html);
+      html = (await api(`/api/bots/page?path=${encodeURIComponent(s.path)}&fmt=${s.fmt ?? 'none'}&host=${encodeURIComponent(s.host ?? '')}`)).html;
+      INS.pages.set(key, html);
     } catch (x) {
       $('#insp-msg').textContent = x.message;
       return;
