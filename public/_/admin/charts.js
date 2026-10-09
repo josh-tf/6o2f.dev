@@ -1,5 +1,6 @@
-// Small chart and formatting helpers shared by the admin and labyrinth pages (SVG/HTML strings; colours come from CSS classes).
-import { esc } from '/_/ui.js';
+// Helpers shared by the admin and labyrinth pages: formatting, small charts (SVG/HTML strings; colours come from CSS
+// classes) and the tab strip.
+import { $, esc } from '/_/ui.js';
 
 export const ago = (ms) => {
   if (!ms) return 'never';
@@ -87,3 +88,36 @@ export const spark = (series) => {
     n = series.length;
   return `<svg class="spark" viewBox="0 0 90 22" aria-hidden="true"><polyline points="${series.map((v, i) => `${(i / Math.max(1, n - 1)) * 90},${21 - (v / m) * 20}`).join(' ')}"/></svg>`;
 };
+
+/** Wires the page's `.tabs` strip (WAI-ARIA tabs, automatic activation): panels are #p-<key>, `hashes` maps key → URL hash,
+ * `load[key]` runs each time that tab is shown. Returns showTab(key). */
+export function mountTabs(hashes, load = {}) {
+  const strip = $('.tabs');
+  function showTab(t) {
+    for (const b of strip.querySelectorAll('[role=tab]')) {
+      b.setAttribute('aria-selected', String(b.dataset.t === t));
+      b.tabIndex = b.dataset.t === t ? 0 : -1;
+    }
+    for (const k of Object.keys(hashes)) $(`#p-${k}`).hidden = k !== t;
+    try {
+      history.replaceState(null, '', hashes[t]);
+    } catch {}
+    load[t]?.();
+  }
+  strip.addEventListener('click', (e) => {
+    const b = e.target.closest('[data-t]');
+    if (b) showTab(b.dataset.t);
+  });
+  // Arrow keys / Home / End move between tabs.
+  strip.addEventListener('keydown', (e) => {
+    const tabs = [...strip.querySelectorAll('[role=tab]')],
+      i = tabs.indexOf(e.target);
+    const j = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: tabs.length - 1 }[e.key];
+    if (i < 0 || j === undefined) return;
+    e.preventDefault();
+    const next = tabs[(j + tabs.length) % tabs.length];
+    showTab(next.dataset.t);
+    next.focus();
+  });
+  return showTab;
+}

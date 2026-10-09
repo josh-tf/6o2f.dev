@@ -1,5 +1,5 @@
 import { $, api, esc, mountBar } from '/_/ui.js';
-import { ago, bars, num, spark, stacked, topN, when } from '/_/admin/charts.js';
+import { ago, bars, mountTabs, num, spark, stacked, topN, when } from '/_/admin/charts.js';
 await mountBar('Labyrinth');
 
 const size = (b) =>
@@ -341,6 +341,7 @@ function mzFrame() {
     dpr = devicePixelRatio || 1,
     W = cv.clientWidth,
     H = cv.clientHeight;
+  if (!W) return; // another tab is showing: steps and the clock keep going, nothing to draw
   if (cv.width !== Math.round(W * dpr) || cv.height !== Math.round(H * dpr)) Object.assign(cv, { width: Math.round(W * dpr), height: Math.round(H * dpr) });
   const g = cv.getContext('2d'),
     C = mzColors;
@@ -698,5 +699,8 @@ $('#insp-frame').addEventListener('load', (e) => {
 $('#insp-x').addEventListener('click', () => $('#insp').close());
 $('#insp').addEventListener('close', inspStop);
 
+// Data for all three tabs loads once; the map keeps polling, the stats refresh with their button.
+const HASH = { map: '#map', stats: '#stats', bots: '#bots' };
+mountTabs(HASH)(Object.keys(HASH).find((k) => HASH[k] === location.hash) ?? 'map');
 loadMaze();
 loadBots();

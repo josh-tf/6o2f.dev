@@ -412,3 +412,40 @@ main .lead p {
 .kind.k-flagged {
   color: color-mix(in srgb, var(--c-flag) 65%, var(--fg));
 }
+/* header: one-line subtitle, details folded away, headings level with their controls */
+main .lead {
+  align-items: center;
+}
+main .lead h2 {
+  margin: 0;
+}
+.how {
+  margin: -4px 0 18px;
+  font-size: 0.9em;
+  color: var(--muted);
+}
+.how p {
+  margin: 8px 0 0;
+}
+.maze-legend {
+  flex-wrap: wrap;
+  margin: -6px 0 0;
+  font-size: 0.85em;
+}
+.maze-legend .lg-line {
+  width: 14px;
+  height: 2px;
+  border-radius: 0;
+  background: var(--line);
+}
+.maze-legend .lg-dia {
+  transform: rotate(45deg) scale(0.8);
+  border-radius: 0;
+}
+/* tabs: a little air under the strip; the Bots tab note sits above its list */
+main > .tabs {
+  margin-bottom: 16px;
+}
+.lead-note {
+  margin: 0 0 10px;
+}

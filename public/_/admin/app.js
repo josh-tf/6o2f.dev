@@ -1,5 +1,5 @@
 import { $, api, esc, mountBar } from '/_/ui.js';
-import { ago, bars, num, pct, spark, topN, when } from '/_/admin/charts.js';
+import { ago, bars, mountTabs, num, pct, spark, topN, when } from '/_/admin/charts.js';
 // The Bots and Maze tabs moved to their own tool: send old links there.
 if (/^#(bots|maze)$/.test(location.hash)) location.replace(`https://${location.hostname.replace(/^admin\./, 'labyrinth.')}/`);
 const meUser = await mountBar('Admin');
@@ -7,36 +7,11 @@ $('#labyrinth-link').href = `https://${location.hostname.replace(/^admin\./, 'la
 
 /* ---------- tabs ---------- */
 const HASH = { users: '#users', content: '#content', controls: '#controls', stats: '#analytics', log: '#log' };
-const LOAD = {
+const showTab = mountTabs(HASH, {
   content: () => loadContent(),
   controls: () => loadControls(),
   stats: () => loadStats(),
   log: () => loadLog(true),
-};
-function showTab(t) {
-  for (const b of document.querySelectorAll('.tabs [role=tab]')) {
-    b.setAttribute('aria-selected', String(b.dataset.t === t));
-    b.tabIndex = b.dataset.t === t ? 0 : -1;
-  }
-  for (const k of Object.keys(HASH)) $(`#p-${k}`).hidden = k !== t;
-  try {
-    history.replaceState(null, '', HASH[t]);
-  } catch {}
-  LOAD[t]?.();
-}
-document.querySelector('.tabs').addEventListener('click', (e) => {
-  if (e.target.dataset.t) showTab(e.target.dataset.t);
-});
-// Arrow keys / Home / End move between tabs (WAI-ARIA tabs pattern, automatic activation).
-document.querySelector('.tabs').addEventListener('keydown', (e) => {
-  const tabs = [...document.querySelectorAll('.tabs [role=tab]')],
-    i = tabs.indexOf(e.target);
-  const j = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: tabs.length - 1 }[e.key];
-  if (i < 0 || j === undefined) return;
-  e.preventDefault();
-  const next = tabs[(j + tabs.length) % tabs.length];
-  showTab(next.dataset.t);
-  next.focus();
 });
 
 /* ---------- users ---------- */
