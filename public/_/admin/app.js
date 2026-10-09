@@ -22,8 +22,15 @@ const num = (n) => Number(n).toLocaleString('en-US');
 const pct = (a, b) => (b ? `${(Math.round((a / b) * 1000) / 10).toFixed(1)}%` : '0%');
 
 /* ---------- tabs ---------- */
-const HASH = { users: '#users', content: '#content', bots: '#bots', controls: '#controls', stats: '#analytics', log: '#log' };
-const LOAD = { content: () => loadContent(), bots: () => loadBots(), controls: () => loadControls(), stats: () => loadStats(), log: () => loadLog(true) };
+const HASH = { users: '#users', content: '#content', bots: '#bots', maze: '#maze', controls: '#controls', stats: '#analytics', log: '#log' };
+const LOAD = {
+  content: () => loadContent(),
+  bots: () => loadBots(),
+  maze: () => loadMaze(),
+  controls: () => loadControls(),
+  stats: () => loadStats(),
+  log: () => loadLog(true),
+};
 function showTab(t) {
   for (const b of document.querySelectorAll('.tabs [role=tab]')) {
     b.setAttribute('aria-selected', String(b.dataset.t === t));
@@ -615,6 +622,309 @@ $('#bfeed').addEventListener('click', async (e) => {
     box.innerHTML = `<span class="err">${esc(x.message)}</span>`;
   }
 });
+
+/* ---------- maze (live map of the labyrinth) ---------- */
+// Every logged bot request is a step: the page it was served is a node, and since labyrinth pages are deterministic the
+// server sends each page's 8 onward link ids, so a page reached through one of them is drawn as that page's child.
+// One clock drives both modes: Live plays events LAG behind real time; Replay runs the last 24 h faster, then turns Live.
+const LAG = 8000,
+  STEP = 38,
+  MZ = { all: [], i: 0, after: 0, clock: 0, speed: 1, nodes: new Map(), parent: new Map(), bots: new Map(), trails: [], box: null };
+const strHash = (s) => {
+  let h = 2166136261;
+  for (let i = 0; i < s.length; i++) h = Math.imul(h ^ s.charCodeAt(i), 16777619);
+  return h >>> 0;
+};
+const flagOf = (cc) => (/^[A-Z]{2}$/.test(cc ?? '') ? String.fromCodePoint(...[...cc].map((c) => 0x1f1a5 + c.charCodeAt(0))) : '');
+const still = matchMedia('(prefers-reduced-motion: reduce)');
+let mzColors = {};
+const readColors = () => {
+  const cs = getComputedStyle(document.documentElement),
+    v = (k) => cs.getPropertyValue(k).trim();
+  mzColors = {
+    fg: v('--fg'),
+    muted: v('--muted'),
+    line: v('--line'),
+    card: v('--card'),
+    trap: v('--danger'),
+    maze: v('--c-maze'),
+    flagged: v('--c-flag'),
+    mono: v('--mono'),
+  };
+};
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', readColors);
+
+function mzReset() {
+  Object.assign(MZ, { i: 0, nodes: new Map(), parent: new Map(), bots: new Map(), trails: [], box: null });
+  $('#maze-feed').innerHTML = '';
+}
+/** The node for an event's page, created on first visit: next to the page that linked to it, else as a new entrance. */
+function mzNode(e, now) {
+  let n = MZ.nodes.get(e.path);
+  if (n) return n;
+  const p = MZ.nodes.get(MZ.parent.get(e.path.slice(8))),
+    h = strHash(e.path);
+  if (p) {
+    const ang = p.ang + (p.links.indexOf(e.path.slice(8)) - 3.5) * 0.3 + (((h % 100) - 50) / 50) * 0.08;
+    n = { x: p.x + Math.cos(ang) * STEP, y: p.y + Math.sin(ang) * STEP, ang, depth: p.depth + 1, parent: p };
+  } else {
+    const ang = ((h % 3600) / 3600) * Math.PI * 2,
+      r = 70 + ((h >>> 12) % 50);
+    n = { x: Math.cos(ang) * r, y: Math.sin(ang) * r, ang, depth: 0, parent: null };
+  }
+  Object.assign(n, { path: e.path, title: e.title, kind: e.kind, links: e.links, born: now, hit: now, visits: 0 });
+  for (const l of e.links) if (!MZ.parent.has(l)) MZ.parent.set(l, e.path);
+  MZ.nodes.set(e.path, n);
+  const b = MZ.box ?? { x0: n.x, x1: n.x, y0: n.y, y1: n.y };
+  MZ.box = { x0: Math.min(b.x0, n.x), x1: Math.max(b.x1, n.x), y0: Math.min(b.y0, n.y), y1: Math.max(b.y1, n.y) };
+  return n;
+}
+/** Plays one event: the bot (one per IP) walks to the page and reads it. animate = false builds the scene silently. */
+function mzStep(e, animate) {
+  const now = performance.now(),
+    n = mzNode(e, now);
+  n.visits++;
+  n.hit = animate ? now : -1e9;
+  let b = MZ.bots.get(e.ip);
+  if (!b) {
+    const far = 600; // new bots fly in from outside, along the entrance's direction
+    b = { ip: e.ip, hue: strHash(e.ip) % 360, x: Math.cos(n.ang) * far, y: Math.sin(n.ang) * far, node: null, steps: 0, deepest: 0 };
+    MZ.bots.set(e.ip, b);
+  }
+  if (b.node && b.node !== n) MZ.trails.push({ a: b.node, b: n, hue: b.hue, at: animate ? now : -1e9 });
+  if (MZ.trails.length > 600) MZ.trails.splice(0, MZ.trails.length - 600);
+  Object.assign(b, { fx: b.x, fy: b.y, t0: now, dur: animate && !still.matches ? 750 : 0, node: n, steps: b.steps + 1, deepest: Math.max(b.deepest, n.depth) });
+  Object.assign(b, { at: e.at, country: e.country, ua: e.ua, total: e.total, host: e.host, kind: e.kind });
+  if (!animate) return;
+  const what =
+    e.kind === 'trap'
+      ? `tripped ${where(e.host, e.path)}`
+      : e.kind === 'flagged'
+        ? `asked for ${where(e.host, e.path)}, got the maze`
+        : n.parent
+          ? `followed a link to “${esc(e.title)}” <span class="muted">depth ${n.depth}</span>`
+          : `found the hidden link on ${esc(short(e.host))}: “${esc(e.title)}”`;
+  const li = document.createElement('li');
+  li.innerHTML = `<span class="fw">${new Date(e.at).toLocaleTimeString()}</span><i style="background:hsl(${b.hue} 75% 55%)"></i><span><b class="mono">${esc(e.ip)}</b> ${flagOf(e.country)} ${what}</span>`;
+  const f = $('#maze-feed');
+  f.prepend(li);
+  while (f.children.length > 60) f.lastChild.remove();
+}
+function mzMode(speed) {
+  for (const x of document.querySelectorAll('#maze-mode button')) x.setAttribute('aria-pressed', String(Number(x.dataset.s) === speed));
+  mzReset();
+  MZ.speed = speed;
+  if (speed === 1) {
+    // Live: everything already past is laid down at once, only new steps animate.
+    MZ.clock = Date.now() - LAG;
+    while (MZ.i < MZ.all.length && MZ.all[MZ.i].at <= MZ.clock) mzStep(MZ.all[MZ.i++], false);
+  } else MZ.clock = (MZ.all[0]?.at ?? Date.now()) - 1000;
+}
+$('#maze-mode').addEventListener('click', (e) => {
+  const s = Number(e.target.closest('button')?.dataset.s);
+  if (s) mzMode(s);
+});
+
+async function mzPoll() {
+  try {
+    for (let more = true; more;) {
+      const ev = await api(`/api/bots/maze?after=${MZ.after}`);
+      MZ.all.push(...ev);
+      if (ev.length) MZ.after = ev.at(-1).id;
+      more = ev.length === 3000;
+    }
+    $('#maze-msg').textContent = '';
+  } catch (x) {
+    $('#maze-msg').textContent = x.message;
+  }
+}
+let mzRaf = 0,
+  mzTimer = 0,
+  mzList = 0,
+  mzLast = 0,
+  cam = null;
+async function loadMaze() {
+  readColors();
+  if (!MZ.after) {
+    await mzPoll();
+    mzMode(1);
+  }
+  clearInterval(mzTimer);
+  mzTimer = setInterval(mzPoll, 5000);
+  mzLast = performance.now();
+  cancelAnimationFrame(mzRaf);
+  mzRaf = requestAnimationFrame(mzFrame);
+}
+
+function mzFrame() {
+  const t = performance.now(); // not the rAF timestamp: it can be earlier than the performance.now() steps were stamped with
+  if ($('#p-maze').hidden) return clearInterval(mzTimer); // tab left: stop drawing and polling
+  mzRaf = requestAnimationFrame(mzFrame);
+  const dt = Math.min(100, t - mzLast);
+  mzLast = t;
+  // clock
+  MZ.clock += dt * MZ.speed;
+  const live = Date.now() - LAG;
+  if (MZ.speed > 1) {
+    const next = MZ.all[MZ.i];
+    if (next && next.at - MZ.clock > 4000 * MZ.speed) MZ.clock = next.at - 500 * MZ.speed; // skip quiet hours
+    if (MZ.clock >= live) {
+      for (const x of document.querySelectorAll('#maze-mode button')) x.setAttribute('aria-pressed', String(x.dataset.s === '1'));
+      MZ.speed = 1;
+    }
+  }
+  if (MZ.speed === 1) MZ.clock = live;
+  for (let k = 0; MZ.i < MZ.all.length && MZ.all[MZ.i].at <= MZ.clock && k < 40; k++) mzStep(MZ.all[MZ.i++], true);
+
+  // canvas
+  const cv = $('#maze-canvas'),
+    dpr = devicePixelRatio || 1,
+    W = cv.clientWidth,
+    H = cv.clientHeight;
+  if (cv.width !== Math.round(W * dpr) || cv.height !== Math.round(H * dpr)) Object.assign(cv, { width: Math.round(W * dpr), height: Math.round(H * dpr) });
+  const g = cv.getContext('2d'),
+    C = mzColors;
+  g.setTransform(dpr, 0, 0, dpr, 0, 0);
+  g.clearRect(0, 0, W, H);
+  // camera eases towards a fit of everything drawn so far
+  const b = MZ.box ?? { x0: -100, x1: 100, y0: -100, y1: 100 },
+    x0 = Math.min(b.x0, -130),
+    x1 = Math.max(b.x1, 130),
+    y0 = Math.min(b.y0, -130),
+    y1 = Math.max(b.y1, 130);
+  const want = { x: (x0 + x1) / 2, y: (y0 + y1) / 2, s: Math.min(2.2, (W - 60) / (x1 - x0), (H - 60) / (y1 - y0)) };
+  cam = cam && !still.matches ? { x: cam.x + (want.x - cam.x) * 0.05, y: cam.y + (want.y - cam.y) * 0.05, s: cam.s + (want.s - cam.s) * 0.05 } : want;
+  const sx = (x) => W / 2 + (x - cam.x) * cam.s,
+    sy = (y) => H / 2 + (y - cam.y) * cam.s,
+    z = Math.max(0.6, Math.min(1.6, cam.s));
+
+  // the core, where entrances ring
+  g.strokeStyle = C.line;
+  g.setLineDash([3, 5]);
+  for (const r of [45, 125]) {
+    g.beginPath();
+    g.arc(sx(0), sy(0), r * cam.s, 0, Math.PI * 2);
+    g.stroke();
+  }
+  g.setLineDash([]);
+  // corridors
+  g.lineWidth = 1;
+  g.strokeStyle = C.line;
+  g.beginPath();
+  for (const n of MZ.nodes.values())
+    if (n.parent) {
+      g.moveTo(sx(n.parent.x), sy(n.parent.y));
+      g.lineTo(sx(n.x), sy(n.y));
+    }
+  g.stroke();
+  // fresh footprints, in the bot's colour, fading over 30 s
+  g.lineWidth = 2.5 * z;
+  for (const tr of MZ.trails) {
+    const a = 1 - (t - tr.at) / 30000;
+    if (a <= 0) continue;
+    g.strokeStyle = `hsl(${tr.hue} 75% 55% / ${a * 0.8})`;
+    g.beginPath();
+    g.moveTo(sx(tr.a.x), sy(tr.a.y));
+    g.lineTo(sx(tr.b.x), sy(tr.b.y));
+    g.stroke();
+  }
+  // pages
+  for (const n of MZ.nodes.values()) {
+    const x = sx(n.x),
+      y = sy(n.y),
+      r = (n.kind === 'trap' ? 4.5 : 2.2 + Math.min(3, Math.log2(n.visits + 1) * 0.8)) * z,
+      grow = Math.max(0, Math.min(1, (t - n.born) / 400));
+    g.fillStyle = C[n.kind] ?? C.maze;
+    g.beginPath();
+    if (n.kind !== 'trap') g.arc(x, y, r * grow, 0, Math.PI * 2);
+    else
+      for (const [dx, dy] of [
+        [0, -1],
+        [1, 0],
+        [0, 1],
+        [-1, 0],
+      ])
+        g.lineTo(x + dx * r * grow, y + dy * r * grow);
+    g.fill();
+    const age = t - n.hit; // a page being read pulses and shows its title
+    if (age < 2600) {
+      g.strokeStyle = C[n.kind] ?? C.maze;
+      g.globalAlpha = 1 - age / 2600;
+      g.beginPath();
+      g.arc(x, y, r + (age / 2600) * 22 * z, 0, Math.PI * 2);
+      g.stroke();
+      g.font = `${11 * Math.min(1.2, z)}px ${C.mono}`;
+      g.fillStyle = C.fg;
+      g.textAlign = 'center';
+      g.fillText(n.kind === 'trap' || n.kind === 'flagged' ? n.path.slice(0, 40) : n.title, x, y - r - 8);
+      g.globalAlpha = 1;
+    }
+  }
+  // bots
+  const recent = [];
+  for (const bot of MZ.bots.values()) {
+    const idle = MZ.clock - bot.at;
+    if (idle > 600_000) continue; // gone quiet for 10 min of maze time: left (or out of logged requests)
+    recent.push(bot);
+    const p = bot.dur ? Math.max(0, Math.min(1, (t - bot.t0) / bot.dur)) : 1,
+      e = 1 - (1 - p) ** 3;
+    bot.x = bot.fx + (bot.node.x - bot.fx) * e;
+    bot.y = bot.fy + (bot.node.y - bot.fy) * e;
+    const x = sx(bot.x),
+      y = sy(bot.y),
+      fade = Math.max(0.25, 1 - idle / 600_000),
+      col = `hsl(${bot.hue} 80% 58% / ${fade})`;
+    g.shadowColor = col;
+    g.shadowBlur = 12;
+    g.fillStyle = col;
+    g.beginPath();
+    g.arc(x, y, 5 * z, 0, Math.PI * 2);
+    g.fill();
+    g.shadowBlur = 0;
+    const reading = t - bot.t0 - bot.dur; // the labyrinth makes them wait 1.5-3 s per page
+    if (p === 1 && reading < 2250 * Math.max(1, MZ.speed / 60) && !still.matches) {
+      g.strokeStyle = col;
+      g.lineWidth = 1.5;
+      g.beginPath();
+      g.arc(x, y, 9 * z, t / 180, t / 180 + Math.PI * 1.2);
+      g.stroke();
+    }
+    g.font = `10px ${C.mono}`;
+    g.fillStyle = C.muted;
+    g.textAlign = 'left';
+    g.fillText(`${flagOf(bot.country)} ${bot.ip}`, x + 8 * z, y + 12 * z);
+  }
+  // status
+  g.font = `12px ${C.mono}`;
+  g.textAlign = 'left';
+  g.fillStyle = MZ.speed === 1 ? C.trap : C.muted;
+  const head =
+    MZ.speed === 1 ? '● LIVE' : `▶ REPLAY ×${MZ.speed}  ${new Date(MZ.clock).toLocaleString([], { weekday: 'short', hour: '2-digit', minute: '2-digit' })}`;
+  g.fillText(head, 14, 22);
+  g.fillStyle = C.muted;
+  g.fillText(`${num(MZ.nodes.size)} pages mapped · ${recent.length} bot${recent.length === 1 ? '' : 's'} inside`, 14, 40);
+  if (!MZ.nodes.size) {
+    g.textAlign = 'center';
+    g.fillText(MZ.all.length ? 'Waiting for the next step…' : 'No bots in the last 24 hours.', W / 2, H / 2);
+  }
+  if (t - mzList > 1000) {
+    mzList = t;
+    mzBots(recent);
+  }
+}
+/** The side list of bots currently inside, refreshed once a second. */
+function mzBots(list) {
+  $('#maze-count').textContent = list.length;
+  list.sort((a, b) => b.at - a.at);
+  $('#maze-bots').innerHTML = list.length
+    ? list
+        .map(
+          (b) =>
+            `<li><i style="background:hsl(${b.hue} 75% 55%)"></i><span><b class="mono">${esc(b.ip)}</b> ${flagOf(b.country)} <span class="kind k-${esc(b.kind)}">${BK[b.kind] ?? esc(b.kind)}</span> ${num(b.steps)} step${b.steps === 1 ? '' : 's'} here, depth ${b.deepest}${b.total ? `, ${num(b.total)} labyrinth pages all told` : ''}<br><span class="muted small" title="${esc(b.ua ?? '')}">${esc((b.ua || '(no user agent)').slice(0, 90))}</span></span></li>`,
+        )
+        .join('')
+    : '<li class="muted">Nobody inside right now.</li>';
+}
 
 /* ---------- audit log ---------- */
 const ACTIONS = {

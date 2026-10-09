@@ -4,7 +4,7 @@ import { tools } from '../index.ts';
 import type { Tool } from '../types.ts';
 import { errors, overview, toolDetail, userActivity } from './stats.ts';
 import { clearSettings, settings } from '../../settings.ts';
-import { flagged, unflag } from '../../guard.ts';
+import { flagged, mazePage, unflag } from '../../guard.ts';
 
 const app = new Hono<AppEnv>();
 
@@ -279,6 +279,23 @@ app.get('/api/bots', async (c) => {
     // ponytail: wasted time is estimated from the labyrinth's 1.5-3 s delay (2.25 s average) per page.
     maze: { crawlers: mz.length, pages: mz.reduce((a, r) => a + r.maze, 0), deepest: Math.max(0, ...mz.map((r) => r.maze)) },
   });
+});
+/** Maze tab: logged bot requests after id `after` (first call: the last 24 h), oldest first, each with the page it was
+ * served (title and onward link ids, so the client can rebuild who went where), plus the IPs' country and user agent. */
+app.get('/api/bots/maze', async (c) => {
+  const after = Number(c.req.query('after')) || 0,
+    since = after ? 0 : Date.now() - 86400_000;
+  const { results } = await c.env.DB.prepare(
+    'SELECT l.id, l.at, l.ip, l.host, l.path, l.kind, i.country, i.ua, i.maze total FROM bot_log l LEFT JOIN bot_ips i ON i.ip = l.ip WHERE l.id > ? AND l.at >= ? ORDER BY l.id LIMIT 3000',
+  )
+    .bind(after, since)
+    .all<{ path: string }>();
+  return c.json(
+    results.map((r) => {
+      const p = mazePage(r.path);
+      return { ...r, title: p.title, links: p.links.map((l) => l.id) };
+    }),
+  );
 });
 app.get('/api/bots/:ip', async (c) => {
   const ip = decodeURIComponent(c.req.param('ip'));

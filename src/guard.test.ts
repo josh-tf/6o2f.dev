@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { ipKey, isTrap, maze, MAZE } from './guard.ts';
+import { ipKey, isTrap, maze, MAZE, mazePage } from './guard.ts';
 
 test('trap paths', () => {
   for (const p of [
@@ -36,4 +36,9 @@ test('maze pages are deterministic and link deeper', async () => {
   assert.equal(a, b);
   assert.equal((a.match(new RegExp(`href="${MAZE}[0-9a-f]{8}"`, 'g')) ?? []).length, 8);
   assert.match(a, /noindex/);
+  // the admin Maze tab rebuilds who went where from mazePage's links, so they must be the links actually served
+  assert.deepEqual(
+    [...a.matchAll(new RegExp(`href="${MAZE}([0-9a-f]{8})"`, 'g'))].map((m) => m[1]),
+    mazePage(`${MAZE}seed`).links.map((l) => l.id),
+  );
 });

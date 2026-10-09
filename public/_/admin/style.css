@@ -934,3 +934,60 @@ table:not(.open):not(.filtering) tr.more {
     grid-template-columns: 1fr 1fr;
   }
 }
+
+/* ---------- maze ---------- */
+#p-maze .lead {
+  align-items: flex-start;
+}
+#p-maze .lead p {
+  margin: 0;
+}
+.maze-box {
+  position: relative;
+  height: min(68vh, 620px);
+  min-height: 320px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--c-maze) 9%, var(--card)), var(--card) 70%);
+  overflow: hidden;
+  margin: 12px 0 14px;
+}
+.maze-box canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.maze-bots,
+.maze-feed {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+  font-size: 0.88em;
+  max-height: 300px;
+  overflow: auto;
+}
+.maze-bots li,
+.maze-feed li {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  min-width: 0;
+}
+.maze-bots li > :last-child,
+.maze-feed li > :last-child {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.maze-bots i,
+.maze-feed i {
+  flex: none;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  align-self: center;
+}
+.maze-feed .fw {
+  flex: none;
+}

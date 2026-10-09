@@ -81,8 +81,8 @@ const hash = (s: string) => {
   return h >>> 0;
 };
 
-/** An endless page of plausible filler linking to more of the same. Slow on purpose (1.5-3 s): it costs us wall time, not CPU. */
-export async function maze(path: string): Promise<Response> {
+/** A labyrinth page's content: the same path always gives the same title, filler and 8 onward links (8-hex-digit ids under MAZE). */
+export function mazePage(path: string) {
   const r = rng(hash(path)),
     pick = () => WORDS[Math.floor(r() * WORDS.length)];
   const sentence = () => {
@@ -90,16 +90,23 @@ export async function maze(path: string): Promise<Response> {
     return w[0].toUpperCase() + w.slice(1) + '.';
   };
   const title = `${pick()} ${pick()} ${1990 + Math.floor(r() * 35)}`.replace(/^./, (c) => c.toUpperCase());
-  const links = Array.from({ length: 8 }, () => {
-    const id = Math.floor(r() * 2 ** 32)
+  const links = Array.from({ length: 8 }, () => ({
+    id: Math.floor(r() * 2 ** 32)
       .toString(16)
-      .padStart(8, '0');
-    return `<li><a href="${MAZE}${id}">${pick()} ${pick()} ${id.slice(0, 4)}</a></li>`;
-  }).join('');
+      .padStart(8, '0'),
+    label: `${pick()} ${pick()}`,
+  }));
   const body = Array.from({ length: 4 }, () => `<p>${Array.from({ length: 4 }, sentence).join(' ')}</p>`).join('');
-  await new Promise((res) => setTimeout(res, 1500 + r() * 1500));
+  return { title, links, body, delay: 1500 + r() * 1500 };
+}
+
+/** An endless page of plausible filler linking to more of the same. Slow on purpose (1.5-3 s): it costs us wall time, not CPU. */
+export async function maze(path: string): Promise<Response> {
+  const { title, links, body, delay } = mazePage(path);
+  const list = links.map((l) => `<li><a href="${MAZE}${l.id}">${l.label} ${l.id.slice(0, 4)}</a></li>`).join('');
+  await new Promise((res) => setTimeout(res, delay));
   return new Response(
-    `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="robots" content="noindex,nofollow"><title>${title}</title></head><body><h1>${title}</h1>${body}<ul>${links}</ul></body></html>`,
+    `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="robots" content="noindex,nofollow"><title>${title}</title></head><body><h1>${title}</h1>${body}<ul>${list}</ul></body></html>`,
     {
       headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store', 'x-robots-tag': 'noindex, nofollow' },
     },
