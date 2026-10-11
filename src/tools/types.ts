@@ -14,5 +14,7 @@ export type Tool = {
   /** One line shown in the launcher's details panel: what is public and what needs sign-in. */
   note: string;
   public?: boolean;
+  /** One example command, for public tools that work from a terminal; `curl 6o2f.dev` lists only these. */
+  curl?: string;
   app: Hono<AppEnv>;
 };

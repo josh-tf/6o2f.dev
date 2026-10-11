@@ -11,7 +11,7 @@ A hundred small developer tools, one per subdomain (`json.6o2f.dev`, `cidr.6o2f.
 
 ## How it fits together
 
-- **One Worker** (`src/index.ts`, Hono) routes by hostname: the apex serves the launcher and sign-in, `<name>.6o2f.dev` goes to `src/tools/<name>/index.ts`. The contract every tool follows is in [CONTRACT.md](CONTRACT.md).
+- **One Worker** (`src/index.ts`, Hono) routes by hostname: the apex serves the launcher and sign-in (and a plain-text menu to `curl 6o2f.dev`), `<name>.6o2f.dev` goes to `src/tools/<name>/index.ts`. The contract every tool follows is in [CONTRACT.md](CONTRACT.md).
 - **Pages** live in `public/_/<name>/` (HTML, plain ES modules, CSS) and share `public/_/ui.css` and `ui.js`. There is no build step except the mail app (`web-mail/`, Vite + React).
 - **Storage:** D1 (`migrations/`, mail in `migrations-mail/`), KV (pastes, short links, clipboard, bot flags), R2 (drop files, mail), Durable Objects (webhook inboxes, device-to-device send), Workers AI.
 - **Admin panel** (`admin.6o2f.dev`): users and access, published content, tool on/off, analytics, audit log.

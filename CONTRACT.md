@@ -51,7 +51,8 @@ it was assigned, tables prefixed `<tool>_`), `PASTE` + `LINKS` (KV), `DROP` (R2)
 - **Launcher metadata lives in your tool file.** `src/tools/<name>/index.ts` exports `tool` with `title` (1-2 words), `blurb` (under ~35 chars),
   `icon` (inner markup of a 24x24 lucide-style stroke icon: `<path>/<circle>/<rect>/<line>` only, no `<svg>` wrapper, no fill or stroke attributes;
   make it distinctive and unlike the other tools'), `note` (one line for the launcher's details panel: what is public vs needs sign-in) and `public: true`
-  when the page needs no login. The launcher reads these through `/api/tools`; do not edit the dashboard or the registry (both already list your tool).
+  when the page needs no login. A public tool that works from a terminal also sets `curl` (one example command), which lists it in the plain-text
+  menu that `curl 6o2f.dev` returns. The launcher reads these through `/api/tools`; do not edit the dashboard or the registry (both already list your tool).
 - A stub already exists for your tools: `src/tools/<name>/index.ts` and `public/_/<name>/{index.html,app.js,style.css}`. Replace the placeholder icon/note and build the real thing.
 - **Client-only tools** (public): all logic in `public/_/<name>/` (put pure logic in `lib.js`, an ES module, and test it from
   `src/tools/<name>/lib.test.ts` with `// @ts-ignore` on the import). Nothing is sent to a server; no network calls. The CSP is `script-src 'self'`: no CDN scripts, no inline scripts, no eval/new Function.

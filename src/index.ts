@@ -19,7 +19,21 @@ export { SendRoom } from './tools/send/room.ts';
 const dash = new Hono<AppEnv>();
 dash.route('/auth', auth);
 // The launcher is public: signed-out visitors see every tool (private ones locked). The login page only shows sign-in errors.
-dash.get('/', (c) => c.env.ASSETS.fetch(new Request(new URL(c.req.query('error') ? '/_/login/' : '/_/dash/', c.req.url))));
+// Anything that does not ask for HTML (curl 6o2f.dev) gets a plain-text menu of the public tools that work from a terminal.
+dash.get('/', async (c) => {
+  if (c.req.header('accept')?.includes('text/html') || c.req.query('error'))
+    return c.env.ASSETS.fetch(new Request(new URL(c.req.query('error') ? '/_/login/' : '/_/dash/', c.req.url)));
+  const st = await settings(c.env);
+  const list = tools.filter((t) => !ADMIN_TOOLS.has(t.name) && st.tools[t.name] !== 'off');
+  const cli = list.filter((t) => t.public && t.curl);
+  const w = Math.max(...cli.map((t) => t.name.length)) + c.env.DOMAIN.length + 3;
+  const rows = cli.map((t) => `  ${`${t.name}.${c.env.DOMAIN}`.padEnd(w)}${t.blurb}\n    ${t.curl}`);
+  return c.text(
+    `dev@${c.env.DOMAIN.split('.')[0]}:~$ ls\n\n${rows.join('\n\n')}\n\n${list.length - cli.length} more tools run in the browser: https://${c.env.DOMAIN}\n`,
+    200,
+    { vary: 'accept', 'cache-control': 'no-store' },
+  );
+});
 dash.get('/api/tools', async (c) => {
   const [u, st] = await Promise.all([authenticate(c).catch(() => null), settings(c.env)]);
   // Tools switched off in the admin panel are hidden from everyone but admins; maintenance ones stay listed with a flag.

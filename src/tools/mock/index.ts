@@ -77,5 +77,6 @@ export const tool: Tool = {
   public: true,
   icon: '<path d="M13 2 4 14h7l-1 8 9-12h-7z"/>',
   note: 'Public, no sign-in: the builder and the mock endpoints.',
+  curl: "curl -i 'https://mock.6o2f.dev/s/503?delay=500'",
   app,
 };

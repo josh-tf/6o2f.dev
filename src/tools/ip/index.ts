@@ -38,6 +38,7 @@ export const tool: Tool = {
   blurb: 'IP, location, ASN, country info',
   icon: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>',
   note: 'Public. curl ip.6o2f.dev, /json, /country, /city, /org, /headers.',
+  curl: 'curl ip.6o2f.dev',
   public: true,
   app,
 };
