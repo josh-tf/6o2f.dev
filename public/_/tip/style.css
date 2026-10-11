@@ -25,7 +25,7 @@ legend {
 }
 .two {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 0.6fr 1fr;
   gap: 10px;
 }
 .two > div {
@@ -150,4 +150,11 @@ tfoot th {
   overflow: hidden;
   clip: rect(0 0 0 0);
   white-space: nowrap;
+}
+/* Empty, the alert must not push the results below the top of the form. */
+#err {
+  margin: 0;
+}
+#err:not(:empty) {
+  margin-bottom: 10px;
 }

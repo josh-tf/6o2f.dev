@@ -82,19 +82,25 @@ kbd {
 }
 .colhead {
   display: flex;
-  flex-wrap: wrap;
   justify-content: flex-end;
   align-items: center;
-  gap: 2px 4px;
+  gap: 2px;
   padding: 8px 8px 6px 12px;
   border-bottom: 1px solid var(--line);
 }
 .colhead h3 {
   flex: 1 1 auto;
-  min-width: 6.5em;
+  min-width: 0;
   margin: 0;
   font-size: 0.95rem;
-  overflow-wrap: anywhere;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+/* one line of controls in a 216px column: narrower buttons (still 24px, the minimum tap size) leave room for the title */
+.colhead .ib {
+  flex: none;
+  width: 24px;
 }
 .colhead output {
   color: var(--muted);

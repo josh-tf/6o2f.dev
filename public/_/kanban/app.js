@@ -169,7 +169,7 @@ function render() {
   const cols = b.columns.map((c, ci) => {
     const shown = c.cards.filter((id) => vis.has(id)),
       total = c.cards.filter((id) => !b.cards[id].archived).length;
-    const h = el('h3', { id: `ch-${c.id}`, textContent: c.name });
+    const h = el('h3', { id: `ch-${c.id}`, textContent: c.name, title: c.name });
     const count = el('output', { textContent: filtering ? `${shown.length}/${total}` : String(total) });
     count.setAttribute('aria-label', `${filtering ? `${shown.length} of ${total}` : total} cards`);
     const head = el(

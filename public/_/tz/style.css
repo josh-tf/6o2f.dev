@@ -112,6 +112,10 @@
   #add > div {
     flex: 1;
   }
+  /* the offset and remove button wrap to a second line here: the offset fills it, keeping the button at the right edge */
+  .top .o {
+    flex: 1;
+  }
 }
 
 #dt:focus-within {

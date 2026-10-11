@@ -11,5 +11,7 @@
 <p id="made" class="row" role="status" hidden></p></form>
 <section><h2>Your links</h2><div class="card"><table><caption class="vh">Your short links</caption><thead><tr><th scope="col">Link and destination</th><th scope="col">Expires</th><th scope="col"><span class="vh">Actions</span></th></tr></thead><tbody id="list"></tbody></table><p id="empty" class="muted" hidden>No links yet. Paste a URL above.</p></div></section>
 <details><summary>Use from the command line</summary>
-<pre>curl -H "Authorization: Bearer $T" -d '{"url":"https://example.com","slug":"ex","ttl":"7d"}' https://s.6o2f.dev/api/links</pre></details>
+<pre>curl https://s.6o2f.dev/api/links \
+  -H "Authorization: Bearer $T" \
+  -d '{"url":"https://example.com","slug":"ex","ttl":"7d"}'</pre></details>
 </main><script type="module" src="/_/s/app.js"></script></body></html>

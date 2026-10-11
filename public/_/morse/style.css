@@ -14,6 +14,17 @@ section.card h2 {
     grid-template-columns: 1fr;
   }
 }
+/* Labels wrap to different heights; pin both text boxes to the bottom so they line up. */
+.two > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
 #morse {
   letter-spacing: 0.08em;
 }

@@ -41,7 +41,7 @@ input[aria-invalid='true'] {
 }
 .pos {
   display: inline-flex;
-  gap: 4px;
+  gap: 8px;
   align-items: center;
 }
 section.first {
@@ -82,6 +82,10 @@ legend {
   min-width: 0;
 }
 @media (max-width: 480px) {
+  /* The move/remove buttons wrap under their stop; a wider gap after them shows which stop they belong to. */
+  .stop {
+    margin-bottom: 18px;
+  }
   .cfin {
     width: 6em;
   }

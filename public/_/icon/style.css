@@ -68,6 +68,10 @@ legend {
   margin: 0;
   padding: 18px 0 0;
 }
+/* The long text label takes its own line, so it cannot run into the next label. */
+.first .row > div:first-child {
+  flex-basis: 100%;
+}
 section.first {
   margin-top: 0;
 }

@@ -27,6 +27,8 @@
   margin: 0 0 4px;
 }
 .dr-size input {
+  display: block;
+  margin: 0;
   width: 160px;
   min-height: 36px;
 }
@@ -79,6 +81,7 @@
   flex-wrap: wrap;
   gap: 6px;
   align-items: center;
+  min-height: 36px;
 }
 .dr-sw {
   position: relative;
@@ -111,6 +114,10 @@
   outline: 2px solid var(--accent);
   outline-offset: 4px;
 }
+/* No inline baseline gap under the picker button, so it centres with the swatches. */
+.dr-cols .pickwrap {
+  display: flex;
+}
 .dr-pick {
   width: 40px;
   height: 32px;
@@ -134,8 +141,10 @@ label.ck {
 .dr-bar {
   margin-bottom: 8px;
 }
-.dr-bar .sp {
-  flex: 1;
+.dr-bar .out {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
 }
 .dr-confirm {
   display: flex;

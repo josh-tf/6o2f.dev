@@ -22,7 +22,7 @@ label.inl {
 }
 .fields {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-template-columns: 1fr 2fr 1fr;
   gap: 0 12px;
 }
 .fields .wide {
@@ -68,4 +68,11 @@ fieldset.row {
 }
 td.empty {
   color: var(--muted);
+}
+/* Grow to show the whole URL instead of cutting a line in half. */
+#url,
+#out {
+  field-sizing: content;
+  min-height: 4.4em;
+  max-height: 14em;
 }

@@ -522,3 +522,52 @@ table {
     }
   }
 }
+/* Shared layout rules, so tools do not each solve these differently. */
+/* A label or heading sharing a row with buttons is centred with them; its stacked margin would push it off-centre. */
+.row:has(> button, > .btn, > input[type='file']) > :is(label, h2) {
+  margin-block: 0;
+}
+/* A label-and-buttons row directly above a box keeps a gap before the box. */
+.row.head,
+.row:has(+ textarea),
+.row:has(+ pre) {
+  margin-bottom: 6px;
+}
+/* Edge margins inside a card must not add to its padding. */
+.card > :first-child,
+.card > :first-child:not(.row) > label:first-child {
+  margin-top: 0;
+}
+/* A first row of label-over-field columns: lift the whole row by the label margin, so its columns stay level. */
+.card > :first-child:has(> div > label:first-child) {
+  margin-top: -10px;
+}
+/* Same when the card itself is that row. */
+.card:has(> :is(legend + div, div:first-child) > label:first-child) {
+  padding-top: 6px;
+}
+.card > :last-child {
+  margin-bottom: 0;
+}
+:is(.card, table, pre, section, form) + details {
+  margin-top: 16px;
+}
+details[open] > summary {
+  margin-bottom: 8px;
+}
+/* Command examples wrap on a phone rather than hide their tail behind a sideways scroll. */
+details > pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+/* The card border already closes a table; no second line under the last row. */
+.card > table:last-child tbody tr:last-child > * {
+  border-bottom: 0;
+}
+.full {
+  width: 100%;
+}
+/* Room for both stepper buttons whatever width the original input asked for. */
+span.num {
+  min-width: calc(6ch + 66px);
+}

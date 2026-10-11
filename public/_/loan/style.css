@@ -23,13 +23,20 @@ legend {
   padding: 0;
   margin-bottom: 2px;
 }
+/* Label, control and hint share rows across both columns, so a label that wraps cannot push its control out of line. */
 .two {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 0 10px;
 }
 .two > div {
   min-width: 0;
+  display: grid;
+  grid-row: span 3;
+  grid-template-rows: subgrid;
+}
+.two label {
+  align-self: end;
 }
 .two input[type='date'],
 select,
@@ -84,6 +91,9 @@ summary:focus-visible {
   font-size: 2rem;
   color: var(--accent);
 }
+#err:empty {
+  margin: 0; /* an empty alert must not push the results below the top of the form card */
+}
 #note {
   margin: 10px 0 0;
 }
@@ -92,9 +102,11 @@ summary:focus-visible {
   border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 8px;
+  overflow-x: auto;
 }
 #chart {
   width: 100%;
+  min-width: 560px; /* below this the axis labels scale under ~9px; the wrapper scrolls instead */
   height: auto;
   display: block;
 }
@@ -136,11 +148,17 @@ summary:focus-visible {
 .legend .k.int {
   border-top: 3px dashed var(--danger);
 }
+/* Edge shadows show while there is more table to scroll to; the card-coloured covers move with the content and hide them at each end. */
 .tablewrap {
   overflow-x: auto;
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  background: var(--card);
+  background:
+    linear-gradient(to right, var(--card) 40%, transparent) 0 0 / 36px 100% no-repeat local,
+    linear-gradient(to left, var(--card) 40%, transparent) 100% 0 / 36px 100% no-repeat local,
+    linear-gradient(to right, color-mix(in srgb, var(--fg) 30%, transparent), transparent) 0 0 / 14px 100% no-repeat scroll,
+    linear-gradient(to left, color-mix(in srgb, var(--fg) 30%, transparent), transparent) 100% 0 / 14px 100% no-repeat scroll,
+    var(--card);
 }
 #sched {
   font-variant-numeric: tabular-nums;

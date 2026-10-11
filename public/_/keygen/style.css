@@ -77,6 +77,7 @@ legend {
 .kb .acts {
   display: flex;
   gap: 6px;
+  margin-left: auto;
 }
 #out[aria-busy='true'] #blocks {
   opacity: 0.5;

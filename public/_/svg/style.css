@@ -2,7 +2,14 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 20px;
-  align-items: start;
+}
+/* The input box fills its column down to the bottom of the preview column. */
+.sv-grid section:first-child {
+  display: flex;
+  flex-direction: column;
+}
+#src {
+  flex: 1;
 }
 @media (max-width: 760px) {
   .sv-grid {
@@ -207,4 +214,12 @@ label.ck {
 #out {
   min-height: 140px;
   word-break: break-all;
+}
+/* The hint goes under the buttons so they share one row. */
+.sv-in .muted {
+  order: 1;
+  flex-basis: 100%;
+}
+#out + .row {
+  margin-top: 8px;
 }

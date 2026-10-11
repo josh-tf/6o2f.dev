@@ -17,7 +17,6 @@
 }
 .cols .row {
   min-height: 38px;
-  margin-bottom: 0;
 }
 .cols textarea {
   resize: vertical;
@@ -78,6 +77,8 @@ fieldset.opts {
   flex-wrap: wrap;
 }
 #file {
+  display: block;
+  margin-top: 8px;
   max-width: 100%;
   font-size: 0.85em;
 }

@@ -10,5 +10,7 @@
 <p id="status" class="muted" role="status"></p><p id="msg" class="err" role="alert"></p></form>
 <section><h2>Your files</h2><div class="card"><table><caption class="vh">Your uploaded files</caption><thead><tr><th scope="col">Name</th><th scope="col">Size</th><th scope="col">Expires</th><th scope="col">Downloads</th><th scope="col"><span class="vh">Actions</span></th></tr></thead><tbody id="list"></tbody></table></div></section>
 <details><summary>Use from the command line</summary>
-<pre>curl -T file.zip -H "Authorization: Bearer $TOKEN" "https://drop.6o2f.dev/api/files?name=file.zip&amp;ttl=1d"</pre></details>
+<pre>curl -T file.zip \
+  -H "Authorization: Bearer $TOKEN" \
+  "https://drop.6o2f.dev/api/files?name=file.zip&amp;ttl=1d"</pre></details>
 </main><script type="module" src="/_/drop/app.js"></script></body></html>

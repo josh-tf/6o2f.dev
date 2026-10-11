@@ -449,3 +449,9 @@ main > .tabs {
 .lead-note {
   margin: 0 0 10px;
 }
+/* narrow: the legend takes its own line above the Live/Replay control instead of being squeezed beside it */
+@media (max-width: 760px) {
+  .maze-legend {
+    flex-basis: 100%;
+  }
+}

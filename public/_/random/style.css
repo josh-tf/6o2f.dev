@@ -12,7 +12,10 @@
 }
 .gens .row > div {
   flex: 1;
-  min-width: 6em;
+  min-width: calc(6ch + 66px); /* the shared stepper's minimum width: narrower columns stack instead of overlapping */
+}
+.gens .row .num {
+  width: 100%;
 }
 .out {
   display: block;
@@ -21,6 +24,10 @@
   min-height: 1.55em;
   margin: 10px 0 0;
   overflow-wrap: anywhere;
+}
+.out:empty {
+  min-height: 0;
+  margin: 0;
 }
 .out small {
   display: block;

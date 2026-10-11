@@ -56,6 +56,10 @@ summary {
   .cols {
     grid-template-columns: 1fr;
   }
+  /* rows="20" suits side-by-side columns; stacked, it leaves a screen of empty box. */
+  .cols textarea {
+    height: 16em;
+  }
 }
 textarea,
 pre,

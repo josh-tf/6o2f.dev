@@ -72,3 +72,13 @@ details p {
 #fnote:empty {
   display: none;
 }
+/* Scroll cue: an edge shade that shows only while there is more to scroll that way. */
+.tw {
+  --cue-bg: var(--bg);
+  background:
+    linear-gradient(90deg, var(--cue-bg, var(--card)) 30%, transparent) 0 / 36px 100% no-repeat local,
+    linear-gradient(270deg, var(--cue-bg, var(--card)) 30%, transparent) 100% / 36px 100% no-repeat local,
+    linear-gradient(90deg, color-mix(in srgb, var(--fg) 28%, transparent), transparent) 0 / 14px 100% no-repeat scroll,
+    linear-gradient(270deg, color-mix(in srgb, var(--fg) 28%, transparent), transparent) 100% / 14px 100% no-repeat scroll,
+    var(--cue-bg, var(--card));
+}

@@ -78,3 +78,8 @@ th.k {
 td.v {
   word-break: break-all;
 }
+@media (max-width: 560px) {
+  #send {
+    width: 100%;
+  }
+}

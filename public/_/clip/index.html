@@ -13,6 +13,10 @@
 <p class="muted small" id="note" role="status">Refreshes every 5 seconds.</p></section>
 <section><details class="card"><summary>Use it from a shell</summary>
 <p class="muted">Create a token on the <a href="/" id="dashlink">dashboard</a>, then:</p>
-<pre>echo hi | curl --data-binary @- -H "Authorization: Bearer $T" "https://clip.6o2f.dev/api/clips?ttl=1h"
-curl -H "Authorization: Bearer $T" https://clip.6o2f.dev/api/clips/latest</pre></details></section>
+<pre>echo hi | curl --data-binary @- \
+  -H "Authorization: Bearer $T" \
+  "https://clip.6o2f.dev/api/clips?ttl=1h"
+
+curl https://clip.6o2f.dev/api/clips/latest \
+  -H "Authorization: Bearer $T"</pre></details></section>
 </main><script type="module" src="/_/clip/app.js"></script></body></html>

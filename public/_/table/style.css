@@ -162,3 +162,25 @@ label.chk {
 #grid th {
   font-size: inherit;
 } /* ui.css shrinks th text; header cells must match the body cells so columns line up */
+/* Scroll cue: an edge shade that shows only while there is more to scroll that way. */
+.gridwrap,
+textarea#in,
+textarea#out {
+  background:
+    linear-gradient(90deg, var(--cue-bg, var(--card)) 30%, transparent) 0 / 36px 100% no-repeat local,
+    linear-gradient(270deg, var(--cue-bg, var(--card)) 30%, transparent) 100% / 36px 100% no-repeat local,
+    linear-gradient(90deg, color-mix(in srgb, var(--fg) 28%, transparent), transparent) 0 / 14px 100% no-repeat scroll,
+    linear-gradient(270deg, color-mix(in srgb, var(--fg) 28%, transparent), transparent) 100% / 14px 100% no-repeat scroll,
+    var(--cue-bg, var(--card));
+}
+/* The grid's controls sit on the card colour already; see-through lets the scroll cue show between them. */
+#grid textarea,
+#grid select {
+  background-color: transparent;
+}
+/* A header cell keeps its text on one line instead of wrapping when the grid is squeezed. */
+@supports (field-sizing: content) {
+  #grid thead textarea {
+    min-width: max-content;
+  }
+}

@@ -1,6 +1,6 @@
 import { $, api, esc, mountBar } from '/_/ui.js';
 await mountBar('Link preview');
-const row = (k, v) => `<tr><th scope="row" class="k">${esc(k)}</th><td class="v">${esc(v)}</td></tr>`;
+const row = (k, v) => `<tr><th scope="row" class="k">${esc(k).replace(/[:_]/g, '$&<wbr>')}</th><td class="v">${esc(v)}</td></tr>`;
 const safe = (u) => (/^https?:\/\//i.test(u) ? u : '#');
 
 async function run() {

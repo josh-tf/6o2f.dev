@@ -263,6 +263,10 @@ mark {
     padding: 8px 12px;
     gap: 12px;
   }
+  .ft a.src + button,
+  .ft button + button {
+    margin-left: -4px;
+  }
   .fbody,
   .fbody[data-open='true'] {
     grid-template-columns: minmax(0, 1fr) 0;
@@ -352,6 +356,12 @@ details.settings[hidden] {
   display: flex;
   gap: 18px;
   flex-wrap: wrap;
+}
+/* Keyboard hints are noise on a touch screen. */
+@media (pointer: coarse) {
+  #fkeys {
+    display: none;
+  }
 }
 .star {
   min-width: 20px;

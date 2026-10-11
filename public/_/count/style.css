@@ -16,6 +16,7 @@
 .stats div {
   display: flex;
   flex-direction: column-reverse;
+  justify-content: flex-end; /* values line up along the top when a label wraps */
 }
 .stats dd {
   margin: 0;

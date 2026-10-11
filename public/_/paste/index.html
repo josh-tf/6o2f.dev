@@ -13,6 +13,9 @@
 <section><h2>My pastes</h2><div class="card"><table><caption class="vh">Your pastes</caption><thead><tr><th scope="col">Link</th><th scope="col">Preview</th><th scope="col">Size</th><th scope="col">Expires</th><th scope="col"><span class="vh">Actions</span></th></tr></thead><tbody id="list"></tbody></table><p id="empty" class="muted" hidden>No pastes yet. Create one above.</p></div></section>
 <details><summary>Use from the command line</summary>
 <p class="muted">Create with a token from the dashboard; reading needs no token.</p>
-<pre>curl -H "Authorization: Bearer $T" --data-binary @file.txt "https://paste.6o2f.dev/?ttl=1d"
+<pre>curl "https://paste.6o2f.dev/?ttl=1d" \
+  -H "Authorization: Bearer $T" \
+  --data-binary @file.txt
+
 curl https://paste.6o2f.dev/&lt;id&gt;</pre></details>
 </main><script type="module" src="/_/paste/app.js"></script></body></html>

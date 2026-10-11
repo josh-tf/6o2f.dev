@@ -46,7 +46,11 @@ legend {
   color: var(--muted);
   font-size: 0.85em;
   padding: 0;
-  margin: 14px 0 0;
+  margin: 24px 0 0;
+}
+fieldset .row {
+  gap: 0 20px;
+  align-items: flex-end;
 }
 .vh {
   position: absolute;

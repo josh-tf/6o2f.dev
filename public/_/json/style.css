@@ -31,7 +31,6 @@
 }
 .cols .head {
   min-height: 38px;
-  margin-bottom: 0;
   flex-wrap: nowrap;
 }
 .grow {

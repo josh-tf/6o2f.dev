@@ -102,6 +102,7 @@
 }
 .fn {
   overflow-wrap: anywhere;
+  min-width: 13ch; /* a short name like invoice.pdf stays on one line */
 }
 .v {
   font-weight: 700;

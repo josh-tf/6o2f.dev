@@ -113,6 +113,7 @@ label.inline {
   position: relative;
   margin: 0 auto;
   max-width: 100%;
+  min-width: max-content; /* fixed tracks wider than the preview scroll inside .pvwrap instead of spilling out of the frame */
 }
 .g {
   min-height: 300px;
@@ -190,7 +191,7 @@ label.chk input {
 .code {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 12px;
+  gap: 14px;
   margin-top: 10px;
 }
 @media (max-width: 760px) {

@@ -131,3 +131,21 @@ label.chk input {
   clip: rect(0 0 0 0);
   white-space: nowrap;
 }
+/* Scroll cue: an edge shade that shows only while there is more to scroll that way. */
+.tablewrap {
+  --cue-bg: var(--bg);
+}
+.tablewrap,
+#out {
+  background:
+    linear-gradient(90deg, var(--cue-bg, var(--card)) 30%, transparent) 0 / 36px 100% no-repeat local,
+    linear-gradient(270deg, var(--cue-bg, var(--card)) 30%, transparent) 100% / 36px 100% no-repeat local,
+    linear-gradient(90deg, color-mix(in srgb, var(--fg) 28%, transparent), transparent) 0 / 14px 100% no-repeat scroll,
+    linear-gradient(270deg, color-mix(in srgb, var(--fg) 28%, transparent), transparent) 100% / 14px 100% no-repeat scroll,
+    var(--cue-bg, var(--card));
+}
+@media (max-width: 560px) {
+  .fields > .grow:last-child {
+    flex-basis: 100%;
+  }
+}

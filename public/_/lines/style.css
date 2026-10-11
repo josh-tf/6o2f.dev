@@ -114,11 +114,15 @@
 .fields {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px 14px;
+  gap: 0 14px;
+  margin-top: 6px;
   align-items: flex-end;
 }
 .fields .f label {
-  margin: 6px 0 2px;
+  margin: 0 0 2px;
+}
+.fields .chk {
+  margin-top: 0;
 }
 .fields input[type='text'] {
   width: 9em;
@@ -151,7 +155,8 @@ label.chk {
   font-size: 0.85em;
   margin: 6px 0 0;
 }
-@media (max-width: 560px) {
+/* Also in the two-column layout, where the pipeline column is too narrow for title and controls on one row. */
+@media (max-width: 560px), (min-width: 821px) {
   .head .name {
     flex: 1 1 100%;
   }

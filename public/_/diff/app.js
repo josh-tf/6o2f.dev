@@ -54,4 +54,6 @@ $('#swap').addEventListener('click', () => {
   [$('#a').value, $('#b').value] = [$('#b').value, $('#a').value];
   run();
 });
+// Two panes are too narrow to read on a phone, so start in the unified view there.
+if (matchMedia('(max-width: 560px)').matches) document.querySelector('[name=view][value=unified]').checked = true;
 run();

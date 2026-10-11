@@ -1,6 +1,10 @@
 main {
   max-width: 1200px;
 }
+/* the shared header centres on a 960px column; match it to this page's wider body */
+header.bar {
+  padding-inline: max(20px, calc((100% - 1200px) / 2 + 20px));
+}
 .split {
   display: grid;
   grid-template-columns: 1fr 1fr;

@@ -61,6 +61,10 @@ legend {
   align-items: flex-end;
   gap: 12px 20px;
 }
+/* Same height as the select beside it, so the three labels start level. */
+#file {
+  padding: 1px;
+}
 .small {
   font-size: 0.85em;
 }
@@ -203,6 +207,11 @@ textarea#in.drag,
   min-height: 32px;
 }
 @media (max-width: 560px) {
+  /* The range text takes its own line, so the three buttons stay together. */
+  #pginfo {
+    order: -1;
+    flex-basis: 100%;
+  }
   .dump {
     font-size: 0.78em;
   }

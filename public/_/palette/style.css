@@ -179,3 +179,9 @@ kbd {
   padding: 0 5px;
   background: var(--card);
 }
+/* Five across at 960px is too narrow for an rgb()/hsl() value on one line. */
+@media (min-width: 761px) {
+  .pl-pal {
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  }
+}

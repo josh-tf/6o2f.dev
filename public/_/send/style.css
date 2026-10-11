@@ -19,6 +19,11 @@
 .row .sp {
   flex: 1;
 }
+.join {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
 label.inline {
   display: inline;
   margin: 0;

@@ -29,7 +29,7 @@ legend {
   font-size: 0.9em;
 }
 .summary {
-  margin: 16px 0 8px;
+  margin: 27px 0 8px;
 }
 .summary output {
   font-size: 1.2rem;
@@ -43,8 +43,8 @@ legend {
   white-space: nowrap;
   width: 1%;
 }
-#res td,
-#ch td {
+#res :is(td, th[scope='row']),
+#ch :is(td, th[scope='row']) {
   vertical-align: top;
 }
 #res td code,

@@ -115,6 +115,12 @@ details p {
   padding: 9px 12px;
   overflow-wrap: anywhere;
 }
+@media (max-width: 560px) {
+  /* Both copy buttons share the line under the command. */
+  .cmd {
+    flex-basis: 100%;
+  }
+}
 .cmd::before {
   content: '$ ';
   color: var(--muted);
