@@ -34,8 +34,18 @@ const kind = () => document.querySelector('[name=kind]:checked').value;
 const hx = (n) => '0x' + n.toString(16).padStart(4, '0');
 
 let msgT;
-async function copy(text, what) {
+async function copy(text, what, btn) {
   const msg = $('#msg');
+  // The status line is at the foot of a long page, so the button itself confirms too.
+  if (btn && !btn.dataset.t) {
+    const label = btn.textContent;
+    btn.dataset.t = '1';
+    btn.textContent = 'Copied';
+    setTimeout(() => {
+      btn.textContent = label;
+      delete btn.dataset.t;
+    }, 1500);
+  }
   try {
     await navigator.clipboard.writeText(text);
     msg.textContent = `Copied ${what}`;
@@ -173,7 +183,7 @@ function convert() {
 $('#conv').addEventListener('click', (e) => {
   const b = e.target.closest('button[data-c]');
   if (!b) return;
-  copy(conv.get(b.dataset.c)(), b.getAttribute('aria-label').replace('Copy ', ''));
+  copy(conv.get(b.dataset.c)(), b.getAttribute('aria-label').replace('Copy ', ''), b);
 });
 
 function select(a, b, scroll = true) {
@@ -286,7 +296,7 @@ $('#pgnext').addEventListener('click', () => {
   page++;
   draw();
 });
-$('#cdump').addEventListener('click', () => copy(dumpText(bytes, width()), 'hex dump'));
+$('#cdump').addEventListener('click', (e) => copy(dumpText(bytes, width()), 'hex dump', e.currentTarget));
 $('#width').addEventListener('change', () => {
   page = Math.floor(sel.a / PAGE());
   draw();

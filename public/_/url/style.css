@@ -47,6 +47,10 @@ td:last-child {
 .err:empty {
   display: none;
 }
+/* Sits right under the field it is about, without adding a paragraph's margin to the card. */
+.err {
+  margin: 8px 0 0;
+}
 @media (max-width: 560px) {
   .two {
     grid-template-columns: 1fr;

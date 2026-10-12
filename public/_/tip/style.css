@@ -158,3 +158,11 @@ tfoot th {
 #err:not(:empty) {
   margin-bottom: 10px;
 }
+/* A stepper is at least 6ch + 66px wide (ui.css); 110px columns let the last one poke out of the card. */
+.shares {
+  grid-template-columns: repeat(auto-fill, minmax(calc(6ch + 66px), 1fr));
+}
+/* Reset stands clear of the checkbox above it. */
+#f > .row {
+  margin-top: 14px;
+}

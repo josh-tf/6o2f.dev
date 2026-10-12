@@ -38,7 +38,7 @@ export function stacked(labels, series, aria) {
     H = 180,
     L = 34,
     B = 22,
-    T = 8,
+    T = 16, // room for the total label above a full-height bar
     w = W - L - 4,
     h = H - B - T;
   const tot = labels.map((_, i) => series.reduce((a, s) => a + s.vals[i], 0)),

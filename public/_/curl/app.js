@@ -55,7 +55,7 @@ function summary(r) {
     r.timeout && `timeout ${r.timeout}s`,
   ].filter(Boolean);
   rows.push(['Options', esc(opts.join(', '))]);
-  return `<table><caption class="sr">Parsed request</caption><tbody>${rows.map(([k, v]) => `<tr><th scope="row">${k}</th><td>${v}</td></tr>`).join('')}</tbody></table>`;
+  return `<table><caption class="sr">Parsed request</caption><colgroup><col class="k"><col></colgroup><tbody>${rows.map(([k, v]) => `<tr><th scope="row">${k}</th><td>${v}</td></tr>`).join('')}</tbody></table>`;
 }
 function render() {
   const [name, gen] = TARGETS[lang];
@@ -66,10 +66,10 @@ function render() {
     out.textContent = '';
     $('#err').textContent = `Couldn't generate ${name} code: ${e.message}`;
   }
-  $('#copy').disabled = !req;
+  $('#copy').disabled = $('#code').hidden = !req; // no empty code box before a command parses
 }
 function run() {
-  $('#err').textContent = '';
+  $('#err').textContent = $('#status').textContent = '';
   warn.hidden = true;
   if (!cmd.value.trim()) {
     req = null;

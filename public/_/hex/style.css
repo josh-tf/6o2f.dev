@@ -238,3 +238,25 @@ textarea#in.drag,
 #conv button {
   white-space: nowrap;
 }
+/* Wrapped 64-bit values: keep the type name and both values on the same first line. */
+#insp td {
+  vertical-align: top;
+}
+#conv button {
+  min-width: 5.5em; /* "Copied" fits without shifting the row */
+}
+#cdump {
+  min-width: 7.5em;
+}
+@media (max-width: 560px) {
+  /* One rule under each stacked row, not a short one under its Copy button. */
+  #conv td {
+    border: 0;
+  }
+  #conv tr {
+    border-bottom: 1px solid var(--line);
+  }
+  #conv tr:last-child {
+    border-bottom: 0;
+  }
+}

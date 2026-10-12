@@ -7,8 +7,10 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  margin: 0 0 8px;
+  margin: 0;
+  min-height: 38px; /* as tall as the selects beside it, so it centres on them */
   color: var(--fg);
+  font-size: 1em;
 }
 .cols {
   display: grid;
@@ -17,7 +19,14 @@
 }
 .cols .row {
   min-height: 38px;
-  margin-bottom: 0;
+  margin-bottom: 6px;
+}
+/* Both column headings sit on the same line whether or not the row has a button. */
+.cols .row label {
+  margin: 0;
+}
+.cols > #error {
+  grid-column: 1 / -1;
 }
 .cols textarea {
   resize: vertical;
@@ -31,6 +40,13 @@
 @media (max-width: 700px) {
   .cols {
     grid-template-columns: 1fr;
+  }
+  /* Stacked, the error sits right under the input it is about, not below an empty output box. */
+  .cols > #error {
+    order: 1;
+  }
+  .cols > div:nth-child(2) {
+    order: 2;
   }
 }
 fieldset.opts {
@@ -50,7 +66,7 @@ fieldset.opts {
   flex: 1;
 }
 #error {
-  margin: 4px 0 0;
+  margin: 0;
 }
 #error:empty,
 #status:empty {

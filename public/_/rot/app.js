@@ -61,7 +61,7 @@ function run() {
       ? rows
           .map(
             (r, i) =>
-              `<tr${i === best ? ' class="best"' : ''}><td>${r.shift}</td><td class="mono">${esc(r.text.length > 140 ? r.text.slice(0, 140) + '…' : r.text)}</td><td><button type="button" data-k="${r.shift}" aria-label="Use shift ${r.shift}">Use</button></td></tr>`,
+              `<tr${i === best ? ' class="best"' : ''}><td>${r.shift}</td><td class="mono">${esc(r.text.length > 80 ? r.text.slice(0, 80) + '…' : r.text)}</td><td><button type="button" data-k="${r.shift}" aria-label="Use shift ${r.shift}">Use</button></td></tr>`,
           )
           .join('')
       : '<tr><td colspan="3" class="muted">Type some text to see all shifts.</td></tr>';

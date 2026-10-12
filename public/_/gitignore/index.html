@@ -13,6 +13,7 @@
 <label for="out">.gitignore</label>
 <textarea id="out" rows="24" readonly spellcheck="false" autocomplete="off"></textarea>
 <div class="row acts"><button id="copy" type="button" class="primary">Copy</button><button id="dl" type="button">Download .gitignore</button><span id="stats" class="muted small"></span></div>
+<p id="msg" class="muted small" role="status"></p>
 <details><summary>Tips</summary><ul class="muted small">
 <li>Already committed a file? Ignoring it is not enough: run <code>git rm --cached &lt;file&gt;</code>.</li>
 <li>Lines starting with <code>!</code> re-include something an earlier pattern ignored.</li>
@@ -21,5 +22,4 @@
 </ul></details>
 </section>
 </div>
-<p id="msg" class="muted" role="status"></p>
 </main><script type="module" src="/_/gitignore/app.js"></script></body></html>

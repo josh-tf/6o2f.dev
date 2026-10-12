@@ -56,7 +56,7 @@ function update() {
     h = num('h');
   const bad = !ok(w) || !ok(h);
   $('#err').textContent = bad ? 'Enter a width and height greater than 0 (up to 1,000,000).' : '';
-  for (const s of ['#res', '.pv', 'main>section']) document.querySelectorAll(s).forEach((e) => (e.hidden = bad));
+  for (const s of ['#res', '.pv', 'main>section']) document.querySelectorAll(s).forEach((e) => e.classList.toggle('stale', bad)); // dimmed, not hidden: clearing a field to retype must not collapse the page
   if (bad) return;
   const [a, b] = simplify(w, h),
     nm = nearestName(w, h);
@@ -124,7 +124,7 @@ function update() {
   $('#tbl tbody').innerHTML = rows
     .map(
       ([rw, rh, name]) =>
-        `<tr${rw === w && rh === h ? ' class="cur"' : ''}><td>${rw}</td><td>${rh}</td><td>${esc(name)}</td><td><button type="button" data-use="${rw}x${rh}" aria-label="Use ${rw} by ${rh}">Use</button></td></tr>`,
+        `<tr${rw === w && rh === h ? ' class="now"' : ''}><td>${rw}</td><td>${rh}</td><td>${esc(name)}</td><td><button type="button" data-use="${rw}x${rh}" aria-label="Use ${rw} by ${rh}">Use</button></td></tr>`,
     )
     .join('');
 }

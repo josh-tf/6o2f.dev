@@ -82,3 +82,9 @@ summary {
     display: none;
   }
 }
+@media (max-width: 560px) {
+  .groups th {
+    white-space: normal;
+    width: 34%;
+  }
+}

@@ -5,7 +5,7 @@ const rows = (list) =>
   list
     .map(
       ([k, v]) =>
-        `<tr><th scope="row">${k}</th><td class="v">${esc(v)}</td><td class="c"><button type="button" data-v="${esc(v)}" aria-label="Copy ${k}">Copy</button></td></tr>`,
+        `<tr><th scope="row">${k}</th><td class="v">${esc(v)}</td><td class="c"><button type="button" data-v="${esc(v)}" aria-label="Copy ${k.replace(/<wbr>/g, '')}">Copy</button></td></tr>`,
     )
     .join('');
 const iso = (d) => d.toISOString();
@@ -53,7 +53,10 @@ function show() {
     ['Epoch (ms)', +d],
     ['ISO 8601', iso(d)],
     ['UTC', d.toUTCString()],
-    [`Local (${tz})`, d.toLocaleString(undefined, { dateStyle: 'full', timeStyle: 'long' })],
+    [
+      `Local (${tz.replaceAll('/', '/<wbr>')})`, // may wrap after a slash on a phone
+      d.toLocaleString(undefined, { dateStyle: 'full', timeStyle: 'long' }),
+    ],
     ['Relative', relative(d)],
   ]);
 }

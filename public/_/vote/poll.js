@@ -83,24 +83,29 @@ async function load() {
 }
 $('#ballot').addEventListener('submit', async (e) => {
   e.preventDefault();
-  $('#err').textContent = '';
+  // Ballot errors show beside the Vote button (#err above the form is for load errors), so nothing jumps and the message is where the eye is.
+  const say = (t) => ($('#verr').textContent = t);
+  say('');
   const choices = [...document.querySelectorAll('#choices input:checked')].map((x) => Number(x.value));
   if (!choices.length) {
-    $('#err').textContent = 'Pick an option first';
+    say('Pick an option first');
     return;
   }
   if (!token) {
-    $('#err').textContent = 'Wait for the "Verify you are human" check below to finish, then vote again.';
+    say('Wait for the "Verify you are human" check above to finish, then vote again.');
     return;
   }
+  const btn = $('#ballot button');
+  btn.disabled = true;
   try {
     await call(`/api/poll/${id}/vote`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ choices, token }) });
   } catch (x) {
-    $('#err').textContent = x.message;
+    say(x.message);
   }
   token = '';
   if (widget) window.turnstile.reset(widget);
   await load();
+  btn.disabled = false;
 });
 await load();
 setInterval(() => !document.hidden && poll?.open && load(), 10000);

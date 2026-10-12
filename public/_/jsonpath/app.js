@@ -48,7 +48,7 @@ function parseJson() {
       where = ` (line ${b.split('\n').length}, column ${+p[1] - b.lastIndexOf('\n')})`;
     }
     $('#jsonerr').textContent = `Invalid JSON: ${e.message.replace(/ in JSON at.*| \(line.*/, '')}${where}`;
-    $('#tree').innerHTML = '';
+    $('#tree').innerHTML = '<p class="muted">Fix the JSON to see its tree.</p>';
     return;
   }
   renderTree();
@@ -63,6 +63,7 @@ function runQuery() {
   $('#qerr').textContent = '';
   rows.innerHTML = '';
   results = [];
+  $('#acts').hidden = $('#results').hidden = true; // nothing to copy or list until a query matches
   if (!hasDoc) {
     status.textContent = '';
     return;
@@ -82,6 +83,7 @@ function runQuery() {
   status.textContent = results.length
     ? `${results.length.toLocaleString()} match${results.length === 1 ? '' : 'es'}${results.length > MAX_ROWS ? `, showing the first ${MAX_ROWS}` : ''}.`
     : 'No matches.';
+  $('#acts').hidden = $('#results').hidden = !results.length;
   rows.innerHTML = results
     .slice(0, MAX_ROWS)
     .map((r, i) => {

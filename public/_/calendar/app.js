@@ -113,8 +113,10 @@ function select(f, focus = true) {
 const setYear = (y) => {
   if (!Number.isInteger(y) || y < 1 || y > 9999) {
     $('#year').value = year;
+    $('#jerr').textContent = 'The year must be a whole number from 1 to 9999.';
     return;
   }
+  $('#jerr').textContent = '';
   year = y;
   sel = { y, m: sel.m, d: Math.min(sel.d, daysInMonth(y, sel.m)) };
   render();

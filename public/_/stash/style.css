@@ -73,3 +73,8 @@
 #addf label {
   margin-top: 0;
 }
+/* The delete confirmation stays on one line at phone width. */
+#sure {
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}

@@ -11,11 +11,11 @@
   <label class="chk"><input type="checkbox" id="dates" checked> Detect ISO dates</label>
 </fieldset>
 <div class="cols">
-  <div><div class="row head"><label for="in" class="grow">Sample JSON</label><button type="button" id="clear">Clear</button></div><textarea id="in" rows="22" spellcheck="false" autocomplete="off" autocapitalize="off"></textarea></div>
+  <div><div class="row head"><label for="in" class="grow">Sample JSON</label><button type="button" id="clear">Clear</button></div><textarea id="in" rows="22" spellcheck="false" autocomplete="off" autocapitalize="off"></textarea>
+<p id="status" role="status" class="muted"></p>
+<p id="error" role="alert" class="err"></p></div>
   <div><div class="row head"><label for="out" class="grow" id="outlabel">TypeScript</label><button type="button" id="copy" class="primary">Copy</button></div><textarea id="out" rows="22" readonly spellcheck="false"></textarea></div>
 </div>
-<p id="status" role="status" class="muted"></p>
-<p id="error" role="alert" class="err"></p>
 <details><summary>How types are worked out</summary>
 <ul class="muted">
 <li>Every value found at the same place is merged: all items of an array, and all objects under the same key. A key that isn't in every object is optional (<code>?</code>, <code>NotRequired</code>, a pointer with <code>omitempty</code>, or left out of <code>required</code>).</li>

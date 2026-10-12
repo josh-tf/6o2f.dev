@@ -64,6 +64,7 @@ async function scan() {
     $('#busy').textContent = `Scanned: grade ${r.grade}.`;
   } catch (e) {
     $('#busy').textContent = '';
+    $('#res').hidden = true; // the old result is for another URL
     $('#msg').textContent = `Could not scan: ${e.message}`;
   } finally {
     $('#go').disabled = false;

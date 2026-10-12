@@ -107,3 +107,11 @@ summary {
 textarea[aria-invalid='true'] {
   border-color: var(--danger);
 }
+.vline:empty,
+#err:empty {
+  display: none;
+}
+.token:empty::before {
+  content: 'No token yet.';
+  color: var(--muted);
+}

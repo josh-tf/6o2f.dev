@@ -68,3 +68,8 @@ fieldset {
 input[type='range'] {
   accent-color: var(--accent);
 }
+/* The hidden legend comes first, so ui.css cannot see these as the card's first label. */
+#pw > legend + label,
+#pp > legend + label {
+  margin-top: 0;
+}

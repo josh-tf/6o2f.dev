@@ -33,6 +33,7 @@ function draw() {
       ? 'That is unusually long for a user agent; servers often cap headers at 8 KB.'
       : '';
   $('#sum').textContent = summary(r);
+  $('#res').hidden = $('#cpjson').disabled = r.empty; // no header-only table, nothing to copy
   $('#rows').innerHTML = r.empty
     ? ''
     : [

@@ -67,10 +67,11 @@ async function poll() {
     if (id !== cur) return;
     $('#live').textContent = '';
     if (fresh.length) {
+      const first = !newest; // opening an endpoint loads its history: those are not "new"
       newest = fresh[0].seq;
       items = [...fresh, ...items].slice(0, 100);
       render();
-      $('#live').textContent = `${fresh.length} new request${fresh.length > 1 ? 's' : ''}.`;
+      if (!first) $('#live').textContent = `${fresh.length} new request${fresh.length > 1 ? 's' : ''}.`;
     }
   } catch (x) {
     if (id === cur) $('#live').textContent = `Connection problem (${x.message}). Retrying…`;

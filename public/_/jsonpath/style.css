@@ -163,3 +163,13 @@ input {
     'liga' 0,
     'calt' 0;
 }
+/* A copied path or a long key has no spaces to break at. */
+#status,
+#qerr,
+#jsonerr {
+  overflow-wrap: anywhere;
+}
+.tree .key {
+  text-align: left;
+  overflow-wrap: anywhere;
+}

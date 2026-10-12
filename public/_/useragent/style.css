@@ -7,7 +7,7 @@
   white-space: nowrap;
 }
 .err {
-  min-height: 1.2em;
+  min-height: 1.55em; /* one full line, so a one-line message does not move the page */
   margin: 4px 0 0;
   font-size: 0.85em;
 }
@@ -66,6 +66,7 @@ td.muted {
   border-left: 3px solid var(--accent);
   color: var(--muted);
   font-size: 0.9em;
+  overflow-wrap: anywhere;
 }
 .acts {
   margin-top: 12px;

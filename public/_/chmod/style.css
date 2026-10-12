@@ -214,3 +214,8 @@ kbd {
   padding: 0 5px;
   background: var(--bg);
 }
+/* The path field takes the row, so a long path stays readable. */
+.row > div:has(> #file) {
+  flex: 1 1 200px;
+  min-width: 0;
+}

@@ -21,6 +21,7 @@ async function list() {
   try {
     const rows = await api('/api/pastes');
     $('#empty').hidden = rows.length > 0;
+    $('#list').closest('table').hidden = !rows.length; // no bare header row above the empty message
     $('#list').innerHTML = rows
       .map(
         (p) =>

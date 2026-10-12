@@ -2,8 +2,9 @@ import { $, api, esc, mountBar } from '/_/ui.js';
 mountBar('Clipboard');
 $('#dashlink').href = `https://${location.hostname.split('.').slice(-2).join('.')}/`;
 const ago = (t) => {
-  const s = Math.max(0, ((t - Date.now()) / 1000) | 0);
-  return s >= 3600 ? `${Math.round(s / 3600)} h` : s >= 60 ? `${Math.round(s / 60)} min` : `${s} s`;
+  const s = Math.max(0, ((t - Date.now()) / 1000) | 0),
+    m = Math.round(s / 60); // decide on rounded minutes, so a fresh 1 hour clip reads "1 h", not "60 min"
+  return m >= 60 ? `${Math.round(m / 60)} h` : m >= 1 ? `${m} min` : `${s} s`;
 };
 const note = (t) => ($('#note').textContent = t);
 let html = '';
@@ -37,6 +38,8 @@ async function send() {
     $('#msg').textContent = 'Type or paste some text first.';
     return;
   }
+  const btn = $('#new button[type=submit]');
+  btn.disabled = true;
   try {
     await api('/api/clips', { method: 'POST', body: { text, ttl: $('#ttl').value } });
     $('#text').value = '';
@@ -44,6 +47,8 @@ async function send() {
     await list();
   } catch (x) {
     $('#msg').textContent = x.message;
+  } finally {
+    btn.disabled = false;
   }
 }
 $('#new').addEventListener('submit', (e) => {

@@ -285,3 +285,6 @@ kbd {
 .list a[aria-current] b {
   color: var(--fg) !important;
 }
+.list:empty {
+  display: none; /* no stray border above the "no match" line */
+}

@@ -168,3 +168,12 @@ label.inline {
     linear-gradient(270deg, color-mix(in srgb, var(--fg) 28%, transparent), transparent) 100% / 14px 100% no-repeat scroll,
     var(--cue-bg, var(--card));
 }
+/* The hidden "(outlier)" notes are absolutely positioned: anchor them to the scrolling list, or the ones scrolled out of
+   view stretch the page by thousands of pixels. */
+.vals {
+  position: relative;
+}
+/* A long label wraps before a long value has to break mid-number (break-word keeps the number's full width as the column minimum). */
+.tables td.v {
+  overflow-wrap: break-word;
+}

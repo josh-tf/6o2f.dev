@@ -113,3 +113,13 @@ output {
 input[type='range'] {
   accent-color: var(--accent);
 }
+/* The colour error sits with the controls and the offending field is outlined. */
+#err {
+  margin: 0;
+}
+#err:empty {
+  display: none;
+}
+.bl-ctl input[aria-invalid='true'] {
+  border-color: var(--danger);
+}

@@ -89,3 +89,10 @@ summary {
   cursor: pointer;
   min-height: 32px;
 }
+/* The comment field wraps to its own line rather than shrink to a sliver beside the RSA selects. */
+.opts > .grow {
+  min-width: 180px;
+}
+#err:empty {
+  display: none;
+}

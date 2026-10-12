@@ -89,3 +89,7 @@ fieldset.opts {
 #status:empty {
   display: none;
 }
+/* Both column labels sit on the same line, with or without buttons beside them. */
+.cols .row label {
+  margin: 0;
+}

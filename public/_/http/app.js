@@ -57,6 +57,7 @@ $('#f').addEventListener('submit', async (e) => {
   e.preventDefault();
   $('#msg').textContent = '';
   $('#send').disabled = true;
+  $('#send').textContent = 'Sending…';
   const req = { method: $('#method').value, url: $('#url').value.trim(), headers: rows().filter((r) => r.name || r.value), body: $('#body').value };
   let status = 'error';
   try {
@@ -71,8 +72,10 @@ $('#f').addEventListener('submit', async (e) => {
     $('#rb').textContent = r.body || '(empty body)';
   } catch (x) {
     $('#msg').textContent = x.message;
+    $('#res').hidden = true; // do not leave the previous request's response under this request's error
   }
   $('#send').disabled = false;
+  $('#send').textContent = 'Send';
   // Secret headers are not kept; request bodies are kept only when no secret header is present.
   const hasSecret = req.headers.some((h) => SECRET.test(h.name));
   const entry = { ...req, status, headers: req.headers.filter((h) => !SECRET.test(h.name)), body: hasSecret ? '' : req.body };

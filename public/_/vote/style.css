@@ -67,6 +67,11 @@ legend {
   gap: 12px;
   overflow-wrap: anywhere;
 }
+/* The count stays in one piece; only the label wraps. */
+.bhead .mono {
+  flex: none;
+  white-space: nowrap;
+}
 .track {
   height: 10px;
   border-radius: 99px;
@@ -113,12 +118,17 @@ legend {
   color: var(--fg);
   font-size: 1em;
   cursor: pointer;
+  overflow-wrap: anywhere;
+}
+.choice input {
+  flex: none;
 }
 .choice:has(input:checked) {
   border-color: var(--accent);
 }
 .choices {
   display: grid;
+  grid-template-columns: minmax(0, 1fr); /* a long unbroken option wraps instead of widening the ballot */
   gap: 8px;
   border: 0;
   padding: 0;
@@ -134,6 +144,10 @@ legend {
 @media (max-width: 560px) {
   .share {
     flex-wrap: wrap;
+  }
+  /* The link gets its own line, so it is readable instead of cut to a few characters. */
+  .share input {
+    flex-basis: 100%;
   }
 }
 .vh {

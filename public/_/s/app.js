@@ -22,7 +22,7 @@ async function load() {
       .map(
         (
           l,
-        ) => `<tr><th scope="row" style="font-weight:400"><a href="${esc(l.short)}" rel="noopener noreferrer">${esc(l.short.replace(/^https:\/\//, ''))}</a><br><span class="dest">${esc(l.url)}</span></th>
+        ) => `<tr><th scope="row" style="font-weight:400"><a href="${esc(l.short)}" rel="noopener noreferrer">${esc(l.short.replace(/^https:\/\//, ''))}</a><br><span class="dest" title="${esc(l.url)}">${esc(l.url)}</span></th>
 <td class="muted">${l.exp ? `<time datetime="${new Date(l.exp).toISOString()}">${esc(new Date(l.exp).toLocaleDateString())}</time>` : 'never'}</td>
 <td class="act"><button type="button" data-copy="${esc(l.short)}" aria-label="Copy ${esc(l.slug)}">Copy</button> <button type="button" class="danger" data-del="${esc(l.slug)}" aria-label="Delete ${esc(l.slug)}">Delete</button></td></tr>`,
       )
@@ -36,6 +36,7 @@ $('#f').addEventListener('submit', async (e) => {
   const f = e.target,
     go = $('#go');
   $('#msg').textContent = '';
+  $('#made').hidden = true;
   go.disabled = true;
   try {
     const r = await api('/api/links', { method: 'POST', body: { url: f.url.value.trim(), slug: f.slug.value.trim(), ttl: f.ttl.value } });

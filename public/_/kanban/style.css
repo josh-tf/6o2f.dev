@@ -346,3 +346,7 @@ input[type='date']:focus-within {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
+/* Centred with left:50%, the toast would otherwise shrink to half the viewport and wrap into a column on a phone. */
+.toast {
+  width: max-content;
+}

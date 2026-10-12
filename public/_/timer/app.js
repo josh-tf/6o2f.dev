@@ -74,7 +74,7 @@ function draw() {
   const shown = m === 'sw' ? fmt(el, true) : fmt(Math.max(0, dur(m) - el));
   $('#big').textContent = shown;
   document.title = run ? `${shown} - ${BASE}` : BASE;
-  $('#go').textContent = run ? 'Stop' : el ? 'Resume' : 'Start';
+  $('#go').textContent = run ? 'Stop' : m === 'cd' && el >= s.dur ? 'Start' : el ? 'Resume' : 'Start'; // a finished countdown starts over
   $('#lap').hidden = m !== 'sw';
   $('#lap').disabled = !run;
   $('#phase').textContent =

@@ -106,3 +106,7 @@ label.inl {
     grid-template-columns: 1fr;
   }
 }
+/* Limit, its stepper and the three presets stay on one line at 400px. */
+[data-lim] {
+  padding-inline: 9px;
+}

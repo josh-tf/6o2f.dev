@@ -23,7 +23,7 @@ async function load() {
         .map(
           (
             f,
-          ) => `<tr><td class="n"><a href="${esc(f.url)}" rel="noopener noreferrer">${esc(f.name)}</a></td><td>${size(f.size)}</td><td><time datetime="${new Date(f.expires_at).toISOString()}">${esc(new Date(f.expires_at).toLocaleString())}</time></td><td>${f.downloads}</td>
+          ) => `<tr><td class="n"><a href="${esc(f.url)}" rel="noopener noreferrer">${esc(f.name)}</a></td><td class="m" data-l="Size">${size(f.size)}</td><td class="m" data-l="Expires"><time datetime="${new Date(f.expires_at).toISOString()}">${esc(new Date(f.expires_at).toLocaleString())}</time></td><td class="m" data-l="Downloads">${f.downloads}</td>
     <td class="act"><button type="button" data-copy="${esc(f.url)}" aria-label="Copy link to ${esc(f.name)}">Copy link</button> <button type="button" class="danger" data-del="${esc(f.id)}" aria-label="Delete ${esc(f.name)}">Delete</button></td></tr>`,
         )
         .join('') || '<tr><td class="muted" colspan="5">No files yet. Drop one above.</td></tr>';

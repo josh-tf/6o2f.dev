@@ -51,8 +51,12 @@
 #summary table {
   table-layout: fixed;
 }
+/* The visually hidden caption is absolutely positioned, which makes it the first row of a fixed-layout table and halves the
+   columns; a <col> width takes priority over any row. */
+#summary col.k {
+  width: 5.5em;
+}
 #summary th[scope='row'] {
-  width: 6.5em;
   vertical-align: top;
 }
 #summary td {

@@ -20,4 +20,6 @@ test('parseDoh + diff', () => {
   assert.equal(parseDoh({ Status: 3 }).status, 'NXDOMAIN');
   assert.deepEqual(diff(a, { ...a, answers: [{ ...a.answers[0], ttl: 9 }] }), []);
   assert.equal(diff(a, parseDoh({ Status: 0, Answer: [{ name: 'x.com.', type: 1, TTL: 5, data: '2.2.2.2' }] })).length, 3);
+  const txt = (data: string) => parseDoh({ Status: 0, Answer: [{ name: 'x.com.', type: 16, TTL: 5, data }] });
+  assert.deepEqual(diff(txt('"v=spf1 " "~all"'), txt('v=spf1 ~all')), []); // Cloudflare quotes TXT, Google does not
 });

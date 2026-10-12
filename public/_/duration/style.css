@@ -74,3 +74,17 @@ summary::before {
 details[open] > summary::before {
   content: '▾';
 }
+/* The error line keeps its height, so the examples below do not jump while typing. */
+#err {
+  margin: 4px 0 0;
+  min-height: 1.55em;
+}
+#fmt tr:last-child > * {
+  border-bottom: 0;
+}
+#nominal {
+  margin: 10px 0 0;
+}
+td.cp button {
+  min-width: 5.5em; /* "Copied" fits without shifting the row */
+}

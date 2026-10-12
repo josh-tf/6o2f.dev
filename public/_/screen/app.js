@@ -206,9 +206,10 @@ async function copy(text, what) {
     } catch {}
     t.remove();
   }
-  $('#msg').textContent = ok ? `Copied ${what}` : 'Copy blocked by the browser. Select the text and press Ctrl+C.';
+  // shown beside the buttons: the page is long and a message at its end would be off screen
+  $('#live').textContent = ok ? `Copied ${what}` : 'Copy blocked by the browser.';
   clearTimeout(msgT);
-  msgT = setTimeout(() => ($('#msg').textContent = ''), 2500);
+  msgT = setTimeout(() => ($('#live').textContent = ''), 2500);
 }
 const plain = () => groups.map((g) => ({ title: g.title, rows: g.rows.map(([k, v]) => [k, v]) }));
 $('#cpjson').addEventListener('click', () => copy(toJSON(plain(), features), 'JSON report'));

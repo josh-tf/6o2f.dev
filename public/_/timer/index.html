@@ -3,7 +3,7 @@
 <body><header class="bar"></header><main>
 <h1>Timer</h1><p class="sub">Stopwatch, countdown and pomodoro. Keeps time in background tabs and across reloads.</p>
 <div class="row" role="group" aria-label="Mode" id="modes"><button type="button" data-m="sw">Stopwatch</button><button type="button" data-m="cd">Countdown</button><button type="button" data-m="pomo">Pomodoro 25/5</button></div>
-<fieldset id="set" class="row" hidden><legend>Countdown length</legend><label for="hh">hours</label><input id="hh" type="number" min="0" max="99" step="1" inputmode="numeric" value="0"><label for="mm">minutes</label><input id="mm" type="number" min="0" max="59" step="1" inputmode="numeric" value="5"><label for="ss">seconds</label><input id="ss" type="number" min="0" max="59" step="1" inputmode="numeric" value="0"></fieldset>
+<fieldset id="set" class="row" hidden><legend>Countdown length</legend><div><label for="hh">hours</label><input id="hh" type="number" min="0" max="99" step="1" inputmode="numeric" value="0"></div><div><label for="mm">minutes</label><input id="mm" type="number" min="0" max="59" step="1" inputmode="numeric" value="5"></div><div><label for="ss">seconds</label><input id="ss" type="number" min="0" max="59" step="1" inputmode="numeric" value="0"></div></fieldset>
 <div id="big" role="timer" aria-live="off">00:00.00</div>
 <p id="phase" class="muted" role="status"></p>
 <div class="row ctl"><button type="button" id="go" class="primary">Start</button><button type="button" id="lap">Lap</button><button type="button" id="reset">Reset</button></div>

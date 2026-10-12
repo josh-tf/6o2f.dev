@@ -94,3 +94,6 @@ details summary {
   cursor: pointer;
   font-weight: 600;
 }
+#err:empty {
+  display: none;
+}

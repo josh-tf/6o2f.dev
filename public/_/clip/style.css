@@ -10,8 +10,15 @@
   padding: 8px 0;
   border-bottom: 1px solid var(--line);
 }
+#list li:first-child {
+  padding-top: 0;
+}
 #list li:last-child {
   border: 0;
+  padding-bottom: 0;
+}
+#empty {
+  margin: 0;
 }
 #list .p {
   flex: 1;

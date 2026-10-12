@@ -16,7 +16,19 @@ legend {
   color: var(--muted);
   font-size: 0.85em;
   padding: 0;
-  margin: 10px 0 4px;
+  margin: 0 0 4px;
+}
+.opts fieldset {
+  margin-top: 10px;
+}
+.big:has(output:empty) {
+  display: none;
+}
+#rerr:empty,
+#werr:empty,
+#nerr:empty,
+#rnote:empty {
+  display: none;
 }
 .card input:not([type='checkbox']) {
   width: 100%;

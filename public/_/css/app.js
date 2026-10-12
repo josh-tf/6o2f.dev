@@ -73,21 +73,26 @@ async function run() {
     $('#gzIn').value = 'n/a';
   }
 }
+const shown = async () => {
+  await run();
+  // nothing to copy, reuse or measure without output
+  $('#copy').disabled = $('#swap').disabled = $('#sizes').hidden = !out.value;
+};
 let t;
 input.addEventListener('input', () => {
   clearTimeout(t);
-  t = setTimeout(run, input.value.length > 200000 ? 300 : 80);
+  t = setTimeout(shown, input.value.length > 200000 ? 300 : 80);
 });
-for (const id of ['mode', 'indent', 'nocomments', 'lastsemi', 'sort']) $('#' + id).addEventListener('change', run);
+for (const id of ['mode', 'indent', 'nocomments', 'lastsemi', 'sort']) $('#' + id).addEventListener('change', shown);
 $('#clear').addEventListener('click', () => {
   input.value = '';
-  run();
+  shown();
   input.focus();
 });
 $('#swap').addEventListener('click', () => {
   if (!out.value) return;
   input.value = out.value;
-  run();
+  shown();
   input.focus();
 });
 $('#goto').addEventListener('click', () => {
@@ -105,4 +110,4 @@ $('#copy').addEventListener('click', async (e) => {
   }
   setTimeout(() => (b.textContent = 'Copy'), 1500);
 });
-run();
+shown();

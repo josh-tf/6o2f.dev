@@ -130,3 +130,9 @@ summary {
     linear-gradient(270deg, color-mix(in srgb, var(--fg) 28%, transparent), transparent) 100% / 14px 100% no-repeat scroll,
     var(--cue-bg, var(--card));
 }
+/* Long texts scroll inside their box instead of stretching the page. */
+.hl,
+#repout {
+  max-height: 360px;
+  overflow: auto;
+}

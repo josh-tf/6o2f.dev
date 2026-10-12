@@ -11,18 +11,25 @@ let out = {},
   spkiDer = null; // out: id -> { text, file, type }
 const sshComment = () => $('#comment').value.trim().replace(/\s+/g, ' ');
 
-async function copy(text, what) {
+/** Feedback on the button itself: the status line can be a screen away from it. */
+function flash(b, ok) {
+  const label = b.dataset.label ?? (b.dataset.label = b.textContent);
+  b.textContent = ok ? 'Copied' : 'Press Ctrl+C';
+  setTimeout(() => (b.textContent = label), 1200);
+}
+async function copy(text, what, btn) {
+  let ok = true;
   try {
     await navigator.clipboard.writeText(text);
-    say(`Copied ${what}.`);
   } catch {
     const t = Object.assign(document.createElement('textarea'), { value: text });
     document.body.append(t);
     t.select();
-    const ok = document.execCommand?.('copy');
+    ok = !!document.execCommand?.('copy');
     t.remove();
-    say(ok ? `Copied ${what}.` : 'Copy blocked by the browser. Select the text and press Ctrl+C.');
   }
+  say(ok ? `Copied ${what}.` : 'Copy blocked by the browser. Select the text and press Ctrl+C.');
+  if (btn) flash(btn, ok);
 }
 function download(text, file, type) {
   const a = Object.assign(document.createElement('a'), { download: file, href: URL.createObjectURL(new Blob([text], { type })) });
@@ -134,7 +141,7 @@ $('#blocks').addEventListener('click', (e) => {
   const id = b.dataset.copy || b.dataset.dl,
     o = out[id];
   if (!o) return;
-  if (b.dataset.copy) copy(o.text, BLOCKS.find((x) => x[0] === id)[1]);
+  if (b.dataset.copy) copy(o.text, BLOCKS.find((x) => x[0] === id)[1], b);
   else download(o.text, o.file, o.type);
 });
 

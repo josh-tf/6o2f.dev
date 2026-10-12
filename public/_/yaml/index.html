@@ -11,7 +11,8 @@
 <div class="cols">
   <div><div class="row"><label for="in" id="inl" class="grow">YAML</label></div><textarea id="in" rows="18" spellcheck="false" autocomplete="off" autocapitalize="off"></textarea></div>
   <div><div class="row"><label for="out" id="outl" class="grow">JSON</label><button type="button" id="copy" class="primary">Copy</button></div><textarea id="out" rows="18" readonly spellcheck="false" autocomplete="off"></textarea></div>
+  <p id="error" role="alert" class="err"></p>
 </div>
-<p id="status" role="status" class="muted"></p><p id="error" role="alert" class="err"></p>
+<p id="status" role="status" class="muted"></p>
 <details><summary>Notes</summary><p class="muted">Multiple YAML documents separated by <code>---</code> become a JSON array. Comments and anchors are not kept. Dates like <code>2024-01-31</code> turn into ISO timestamps; quote them to keep them as text.</p></details>
 </main><script src="/_/yaml/vendor/js-yaml.min.js"></script><script type="module" src="/_/yaml/app.js"></script></body></html>

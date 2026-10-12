@@ -185,3 +185,9 @@ kbd {
     grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
   }
 }
+#baseErr {
+  margin: 6px 0 0;
+}
+#baseErr:empty {
+  margin: 0; /* no gap under the colour field until there is an error */
+}

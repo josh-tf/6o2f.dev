@@ -20,8 +20,10 @@
 }
 .explain.err {
   font-size: 1rem;
-  margin-top: 4px;
   min-height: 0;
+}
+.explain:empty {
+  display: none;
 }
 .explain.err:empty {
   display: none;
@@ -70,4 +72,9 @@ details p {
 #list td:first-child {
   color: var(--muted);
   width: 3ch;
+}
+/* The single "never runs" cell is first and last child at once: let it wrap and take the full width. */
+#list td[colspan] {
+  white-space: normal;
+  width: auto;
 }

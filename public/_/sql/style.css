@@ -71,3 +71,7 @@ input {
     'liga' 0,
     'calt' 0;
 }
+.cols textarea.wrap {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}

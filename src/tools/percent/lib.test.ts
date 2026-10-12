@@ -12,6 +12,8 @@ test('rounding', () => {
   assert.equal(round(1e-7, 2), 0);
   assert.equal(round(123456.789, 1), 123456.8);
   assert.equal(round(1e20, 2), 1e20);
+  assert.equal(round(98765432109876, 10), 98765432109876);
+  assert.equal(fmt(12345678.123456, 10), '12,345,678.123456');
   assert.equal(fmt(1234567.891, 2), '1,234,567.89');
 });
 test('X% of Y and X is what % of Y', () => {

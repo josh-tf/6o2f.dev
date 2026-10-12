@@ -160,7 +160,9 @@ function run() {
     msg.hidden = !bad;
     msg.textContent = bad ? r.error.message : '';
   });
-  $('#err').textContent = r.error ? `Step ${r.error.step + 1} (${OPS[steps[r.error.step].op].label}): ${r.error.message} Later steps were skipped.` : '';
+  $('#err').textContent = r.error
+    ? `Step ${r.error.step + 1} (${OPS[steps[r.error.step].op].label}): ${r.error.message.replace(/[.!?]?$/, '.')} Later steps were skipped.`
+    : '';
   const chars = $('#out').value.length;
   $('#stats').textContent =
     text === ''

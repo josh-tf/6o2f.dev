@@ -92,3 +92,12 @@ kbd {
 #q {
   accent-color: var(--accent);
 }
+/* Label-over-field columns: bottoms level, and the slider as tall as the select beside it, so the labels line up too. */
+.first > .row {
+  align-items: flex-end;
+}
+#q {
+  display: block;
+  height: 36px;
+  padding: 0;
+}

@@ -47,7 +47,7 @@ function enhanceNumber(input) {
   const wrap = document.createElement('span');
   wrap.className = 'num';
   if (input.style.width.endsWith('%')) wrap.style.width = input.style.width;
-  else if (w > 0) wrap.style.width = `${w}px`; // keep the field's original size
+  else if (w > 0 || input.style.width) wrap.style.width = w > 0 ? `${w}px` : input.style.width; // keep the field's original size (a field inside [hidden] measures 0)
   const step = (dir) => {
     if (input.disabled || input.readOnly) return;
     if (input.step === 'any') {

@@ -539,11 +539,11 @@ table {
   margin-top: 0;
 }
 /* A first row of label-over-field columns: lift the whole row by the label margin, so its columns stay level. */
-.card > :first-child:has(> div > label:first-child) {
+.card > :first-child:has(> div > label:first-child:not(.vh, .sr)) {
   margin-top: -10px;
 }
 /* Same when the card itself is that row. */
-.card:has(> :is(legend + div, div:first-child) > label:first-child) {
+.card:has(> :is(legend + div, div:first-child) > label:first-child:not(.vh, .sr)) {
   padding-top: 6px;
 }
 .card > :last-child {

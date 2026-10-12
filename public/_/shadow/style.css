@@ -119,3 +119,27 @@ fieldset > legend {
     transition: none;
   }
 }
+/* Every field is a label over a 38px control, so the labels and controls of a row line up (the colour field sat 4px high),
+   and the row is tight enough for Remove to stay on it at desktop width. */
+.layer {
+  gap: 8px 6px;
+}
+.layer > div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.layer .swbtn {
+  height: 38px;
+}
+.layer .cfin {
+  width: 6.4em;
+  height: 38px;
+}
+.layer .chk {
+  min-height: 38px;
+  margin: 0;
+}
+.layer .pickwrap {
+  display: flex; /* inline-block left a line-height gap under the swatch */
+}

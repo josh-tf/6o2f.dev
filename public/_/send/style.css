@@ -141,3 +141,16 @@ dialog::backdrop {
 #notice:empty {
   display: none;
 }
+/* Errors (bad code, refused transfer) stay in view wherever the page is scrolled to. */
+#notice {
+  position: sticky;
+  top: 8px;
+  z-index: 1;
+  background: var(--card);
+  border: 1px solid var(--danger);
+  border-radius: var(--radius);
+  padding: 8px 12px;
+}
+.xfers {
+  margin-top: 10px;
+}

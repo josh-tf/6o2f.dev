@@ -12,7 +12,7 @@
 <table id="res"><caption class="vh">Parsed fields</caption>
 <thead><tr><th scope="col">Field</th><th scope="col">Value</th><th scope="col" class="hide-s">What it means</th></tr></thead><tbody id="rows"></tbody></table>
 <ul id="notes" class="notes"></ul>
-<div class="row acts"><button type="button" id="cpjson">Copy as JSON</button><button type="button" id="mine">Use my user agent</button></div>
+<div class="row acts"><button type="button" id="cpjson">Copy as JSON</button><button type="button" id="mine">Use my user agent</button><span id="msg" class="muted" role="status"></span></div>
 </section>
 
 <section aria-labelledby="yh"><h2 id="yh">Your browser's client hints</h2>
@@ -22,5 +22,4 @@
 </section>
 <details class="help"><summary>How reliable is a user agent?</summary>
 <p class="muted">Not very. Anyone can send any string, every browser pretends to be "Mozilla" and "Safari", and Chromium now freezes the OS and minor version (the "reduced" UA). Use it for statistics and bot triage, never for security. For features, test the feature itself. Bot names here come from a hand-made table of about 80 crawlers and HTTP clients; real crawlers should be verified by reverse DNS.</p></details>
-<p id="msg" class="muted" role="status"></p>
 </main><script type="module" src="/_/useragent/app.js"></script></body></html>

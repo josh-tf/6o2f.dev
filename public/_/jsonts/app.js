@@ -23,6 +23,10 @@ const input = $('#in'),
 const LABEL = { ts: 'TypeScript', schema: 'JSON Schema', python: 'Python', go: 'Go' };
 input.value = JSON.stringify(SAMPLE, null, 2);
 function run() {
+  render();
+  $('#copy').disabled = !out.value;
+}
+function render() {
   const lang = $('#lang').value;
   document.querySelectorAll('[data-for]').forEach((e) => (e.hidden = !e.dataset.for.split(' ').includes(lang)));
   $('#outlabel').textContent = LABEL[lang];

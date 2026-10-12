@@ -17,11 +17,20 @@ let at = 0;
 input.value = SAMPLE;
 const IND = { 2: '  ', 4: '    ', tab: '\t' };
 function run() {
+  try {
+    convert();
+  } finally {
+    // Nothing to copy or reuse while the output is empty (no input, or a parse error).
+    $('#copy').disabled = $('#swap').disabled = !out.value;
+  }
+}
+function convert() {
   error.hidden = true;
   const src = input.value,
     dialect = $('#dialect').value,
     minifying = $('#mode').value === 'minify';
   for (const id of ['indent', 'kcase', 'comma']) $('#' + id).disabled = minifying;
+  out.classList.toggle('wrap', minifying); // minified SQL is one long line: wrap it instead of hiding it behind a sideways scroll
   if (!src.trim()) {
     out.value = '';
     status.textContent = 'Paste SQL above to format or minify it.';

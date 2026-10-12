@@ -7,6 +7,11 @@
   white-space: nowrap;
 }
 .dest {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
   color: var(--muted);
   word-break: break-all;
   font-size: 0.9em;
@@ -28,4 +33,10 @@ td.act {
   td.act button {
     margin-block: 2px;
   }
+}
+td.act button.danger {
+  min-width: 6.2em; /* 'Confirm?' must not shift the row */
+}
+#list tr:last-child > * {
+  border-bottom: 0;
 }

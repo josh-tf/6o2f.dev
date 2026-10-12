@@ -62,3 +62,7 @@ fieldset.opts legend {
   font-size: 0.85em;
   padding: 0 4px;
 }
+/* Wrapped checkbox rows are already 38px tall; a 10px row gap on top left them looking detached. */
+fieldset.opts {
+  row-gap: 0;
+}

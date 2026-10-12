@@ -8,7 +8,7 @@
   width: 100%;
 }
 .grow {
-  flex: 1;
+  flex: 1 1 200px; /* the Copy button drops below on a phone when its label grows */
   min-width: 0;
   margin: 0;
 }

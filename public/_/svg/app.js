@@ -106,6 +106,7 @@ function show() {
   $('#empty').hidden = !!svg;
   if (svg) img.src = dataUri(svg);
   else img.removeAttribute('src');
+  $('#copy').disabled = $('#dl').disabled = !svg; // nothing to copy or download until an SVG parses
   output();
 }
 function output() {

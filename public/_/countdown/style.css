@@ -196,3 +196,10 @@ input[type='date']:focus-within {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
+/* Hints sit close under the field they describe; an empty hint takes no room. */
+#f p.small {
+  margin: 6px 0 0;
+}
+#f p:empty {
+  display: none;
+}

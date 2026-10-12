@@ -6,6 +6,7 @@ const safe = (u) => (/^https?:\/\//i.test(u) ? u : '#');
 async function run() {
   $('#msg').textContent = '';
   $('#go').disabled = true;
+  $('#go').textContent = 'Fetching…';
   try {
     const r = await api('/api/og', { method: 'POST', body: { url: $('#url').value.trim() } });
     const m = (...ks) => {
@@ -55,6 +56,7 @@ async function run() {
     $('#out').hidden = true;
   }
   $('#go').disabled = false;
+  $('#go').textContent = 'Fetch';
 }
 $('#f').addEventListener('submit', (e) => {
   e.preventDefault();

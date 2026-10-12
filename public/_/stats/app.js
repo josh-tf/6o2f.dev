@@ -27,12 +27,10 @@ function update() {
         .map((s) => `"${s.slice(0, 20)}"`)
         .join(', ')}${skipped.length > 5 ? ', …' : ''}.`,
     );
-  $('#note').textContent = notes.join(' ');
-  $('#err').textContent = nums.length
-    ? ''
-    : $('#data').value.trim()
-      ? 'No numbers found. Separate values with commas, spaces or new lines (use a dot for decimals).'
-      : 'Paste or type some numbers to begin.';
+  // An empty box is a hint, not an error.
+  $('#note').textContent = $('#data').value.trim() ? notes.join(' ') : 'Paste or type some numbers to begin.';
+  $('#err').textContent =
+    nums.length || !$('#data').value.trim() ? '' : 'No numbers found. Separate values with commas, spaces or new lines (use a dot for decimals).';
   $('#out').hidden = !nums.length;
   if (!nums.length) {
     d = null;
@@ -99,9 +97,12 @@ function hist() {
   h.forEach((b, i) => {
     g += `<rect x="${(L + i * bw + 1).toFixed(1)}" y="${y(b.count).toFixed(1)}" width="${Math.max(1, bw - 2).toFixed(1)}" height="${(H - B - y(b.count)).toFixed(1)}"><title>${fmt(b.lo)} to ${fmt(b.hi)}: ${b.count}</title></rect>`;
   });
-  const every = Math.ceil((h.length + 1) / 7);
+  // X labels: as many as fit without touching (11px mono is about 6.6 units a character), at most 7.
+  const edge = (i) => fmt(+(i === h.length ? h[i - 1].hi : h[i].lo).toPrecision(4));
+  const widest = Math.max(...h.map((_, i) => edge(i).length), edge(h.length).length);
+  const every = Math.ceil((h.length + 1) / Math.max(2, Math.min(7, Math.floor((W - L - R) / (widest * 6.6 + 14)))));
   for (let i = 0; i <= h.length; i += every)
-    g += `<text x="${L + i * bw}" y="${H - 12}" text-anchor="${i === 0 ? 'start' : i === h.length ? 'end' : 'middle'}">${fmt(+(i === h.length ? h[i - 1].hi : h[i].lo).toPrecision(4))}</text>`;
+    g += `<text x="${L + i * bw}" y="${H - 12}" text-anchor="${i === 0 ? 'start' : i === h.length ? 'end' : 'middle'}">${edge(i)}</text>`;
   $('#hist').innerHTML = g;
   const peak = h.reduce((a, b) => (b.count > a.count ? b : a));
   $('#hist').setAttribute(

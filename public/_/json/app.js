@@ -11,6 +11,10 @@ let at = 0;
 input.value = SAMPLE;
 const fmt = (n) => n.toLocaleString() + ' B';
 function run() {
+  render();
+  $('#copy').disabled = $('#swap').disabled = !out.value;
+}
+function render() {
   const r = parse(input.value);
   error.hidden = warn.hidden = true;
   if (!input.value.trim()) {

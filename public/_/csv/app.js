@@ -30,7 +30,7 @@ function preview(rows, header) {
       tr.append(c);
     }
   });
-  $('#prev').closest('.scroll').hidden = !rows.length;
+  $('#prev').closest('section').hidden = !rows.length; // no heading over nothing when the input is empty or invalid
   $('#more').textContent = rows.length > 50 ? `Showing 50 of ${rows.length} rows.` : '';
 }
 function render() {

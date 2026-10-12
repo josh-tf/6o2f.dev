@@ -134,3 +134,7 @@ fieldset.card {
 #msg:empty {
   display: none;
 }
+/* The Item card starts with a hidden legend, so the shared first-child rule misses its first label. */
+fieldset.card > legend + .row label {
+  margin-top: 0;
+}

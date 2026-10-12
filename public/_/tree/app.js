@@ -24,6 +24,10 @@ const mode = () => document.querySelector('[name=mode]:checked').value;
 const plural = (n, w) => `${n} ${w}${n === 1 ? '' : 's'}`;
 
 function run() {
+  convert();
+  $('#copy').disabled = !$('#out').value; // nothing to copy from an empty box or a failed read
+}
+function convert() {
   const m = mode(),
     text = $('#in').value;
   $('#err').textContent = '';

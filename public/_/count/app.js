@@ -22,7 +22,7 @@ function run() {
   const lim = Math.floor(+$('#lim').value),
     left = lim - c.chars;
   $('#rem').textContent = !(lim >= 1) ? 'Enter a limit of 1 or more.' : left >= 0 ? `${n(left)} left of ${n(lim)}` : `${n(-left)} over the limit of ${n(lim)}`;
-  $('#rem').classList.toggle('over', left < 0);
+  $('#rem').classList.toggle('over', !(lim >= 1) || left < 0);
   $('#bar').style.width = lim >= 1 ? Math.min(100, (c.chars / lim) * 100) + '%' : '0';
   $('#bar').classList.toggle('over', left < 0);
   const top = topWords(t, $('#stop').checked);

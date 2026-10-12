@@ -20,6 +20,7 @@ function render(skip) {
   $('#res').textContent =
     x === null ? (v.trim() ? `"${v.trim().slice(0, 40)}" is not a number` : 'Enter a value') : `${show(x)} ${sym(cat, from)} = ${val(to)} ${sym(cat, to)}`;
   $('#res').classList.toggle('err', x === null && !!v.trim());
+  $('#cp').disabled = x === null;
   $('#warn').hidden = !(cat === 'temperature' && x !== null && convert(cat, from, 'k', x) < -1e-9);
   if (skip !== 'v') $('#v').value = v;
   for (const u in CATS[cat]) {

@@ -58,3 +58,21 @@ svg.spark {
 #msg:empty {
   display: none;
 }
+@media (max-width: 560px) {
+  /* Status and Delete share the first line; the name and URL get the full width below instead of a squeezed middle column. */
+  .mon {
+    grid-template-columns: 1fr auto;
+  }
+  .mon .badge {
+    justify-self: start;
+  }
+  .mon > div:not(.stats) {
+    grid-area: 2 / 1 / auto / -1;
+  }
+  #f > div {
+    flex: 1 1 100%;
+  }
+  #f input {
+    width: 100%;
+  }
+}

@@ -49,7 +49,7 @@ function table(head, rows, cap) {
   t.tHead.replaceChildren();
   t.tBodies[0].replaceChildren();
   $('#gcap').textContent = cap;
-  if (!head) return;
+  if (!head) return void Object.assign(t.tBodies[0].insertRow().insertCell(), { className: 'muted', textContent: 'No groups to show.' });
   const add = (sec, cells, tag) => {
     const tr = sec.insertRow();
     for (const v of cells) {

@@ -7,12 +7,13 @@
 <section class="first">
 <h2>Secret</h2>
 <label for="secret">Base32 secret</label>
-<input id="secret" class="wide" autocomplete="off" spellcheck="false" autocapitalize="characters" value="JBSWY3DPEHPK3PXP" aria-describedby="secret-help">
+<input id="secret" class="wide" autocomplete="off" spellcheck="false" autocapitalize="characters" value="JBSWY3DPEHPK3PXP" aria-describedby="err secret-help">
+<p id="err" class="err" role="alert"></p>
 <p id="secret-help" class="muted small">The sample secret is public, so its codes protect nothing. Spaces, hyphens and lowercase are fine.</p>
 <div class="row"><button id="rand" type="button">Generate random secret</button>
 <label class="chk"><input id="remember" type="checkbox">Remember in this browser</label></div>
 <p id="warn" class="warn small" role="note">The secret never leaves this page. By default it is kept in memory only and is gone when you close or reload the tab. If you tick "Remember", it is saved unencrypted in this browser's local storage, so do not tick it on a shared computer.</p>
-<div class="row"><div><label for="label">Account</label><input id="label" autocomplete="off" spellcheck="false" autocapitalize="off" value="alice@example.com"></div>
+<div class="row pair"><div><label for="label">Account</label><input id="label" autocomplete="off" spellcheck="false" autocapitalize="off" value="alice@example.com"></div>
 <div><label for="issuer">Issuer</label><input id="issuer" autocomplete="off" spellcheck="false" value="Example"></div></div>
 </section>
 <section>
@@ -41,9 +42,9 @@
 <span id="meta" class="muted small" role="status"></span></div>
 <button id="copy" type="button" class="primary">Copy</button>
 </div>
-<p id="err" class="err" role="alert"></p>
 <div id="nextbox"><span class="muted small">Next code</span> <output id="next" class="mono">------</output></div>
 <button id="inc" type="button" hidden>Use this code and advance counter</button>
+<p id="msg" class="muted" role="status"></p>
 </section>
 <section>
 <h2>Provisioning</h2>
@@ -54,6 +55,5 @@
 </section>
 </div>
 </div>
-<p id="msg" class="muted" role="status"></p>
 <details><summary>About these codes</summary><p class="muted small">A code is HMAC(secret, counter) cut down to 6 to 8 digits. TOTP uses counter = floor(unix time / period), so the code changes every period and your device clock must be accurate. HOTP uses an explicit counter that you advance by hand. Most services use SHA-1, 6 digits, 30 seconds, and many authenticator apps ignore other settings.</p></details>
 </main><script type="module" src="/_/totp/app.js"></script></body></html>

@@ -7,13 +7,13 @@ header.bar {
 }
 .split {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); /* minmax(0, …): a long code line scrolls inside its pre instead of widening the page */
   gap: 16px;
   align-items: start;
 }
 @media (max-width: 760px) {
   .split {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 #src {

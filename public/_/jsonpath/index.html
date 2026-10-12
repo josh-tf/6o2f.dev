@@ -13,8 +13,8 @@
     <div class="row ex"><label for="examples" class="inl">Examples</label><select id="examples"></select></div>
     <p id="qerr" class="err" role="alert"></p>
     <p id="status" role="status" class="muted"></p>
-    <div class="row"><button type="button" id="copyvals">Copy values</button><button type="button" id="copypaths">Copy paths</button></div>
-    <div class="results"><table><caption class="sr">Matches</caption><thead><tr><th scope="col">#</th><th scope="col">Path</th><th scope="col">Value</th></tr></thead><tbody id="rows"></tbody></table></div>
+    <div class="row" id="acts"><button type="button" id="copyvals">Copy values</button><button type="button" id="copypaths">Copy paths</button></div>
+    <div class="results" id="results"><table><caption class="sr">Matches</caption><thead><tr><th scope="col">#</th><th scope="col">Path</th><th scope="col">Value</th></tr></thead><tbody id="rows"></tbody></table></div>
     <p id="qhelp" class="muted small"><kbd>$</kbd> root · <kbd>.name</kbd> / <kbd>['name']</kbd> child · <kbd>..</kbd> descendants · <kbd>*</kbd> all · <kbd>[0]</kbd> <kbd>[-1]</kbd> <kbd>[1:5:2]</kbd> <kbd>[0,2]</kbd> · <kbd>[?(@.price &lt; 10 &amp;&amp; @.tags[*] == "x")]</kbd> · <kbd>=~ /re/i</kbd> · <kbd>length() count() match() search()</kbd></p>
   </section>
 </div>

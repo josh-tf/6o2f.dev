@@ -35,11 +35,9 @@ function run() {
     ok = !r.error && Number.isFinite(r.seconds) && Math.abs(r.seconds) < 1e15;
   $('#err').textContent = r.error || (ok ? '' : 'That duration is too large to convert.');
   $('#in').setAttribute('aria-invalid', String(!ok));
-  if (!ok) {
-    $('#fmt').tBodies[0].innerHTML = $('#tot').tBodies[0].innerHTML = '';
-    $('#nominal').hidden = true;
-    return;
-  }
+  // No result: hide the result cards rather than show an empty one and a header-only table.
+  $('#fmt').closest('section').hidden = $('#tot').closest('section').hidden = !ok;
+  if (!ok) return;
   const s = r.seconds,
     lg = $('#largest').value;
   $('#fmt').tBodies[0].innerHTML = [
@@ -68,8 +66,17 @@ document.addEventListener('click', (e) => {
     $('#in').focus();
     return;
   }
-  const c = e.target.closest('[data-c]')?.dataset.c;
-  if (c) copy(c);
+  const b = e.target.closest('[data-c]');
+  if (!b) return;
+  copy(b.dataset.c);
+  // The status line is at the foot of a long page, so the button itself confirms too.
+  if (b.dataset.t) return;
+  b.dataset.t = '1';
+  b.textContent = 'Copied';
+  setTimeout(() => {
+    b.textContent = 'Copy';
+    delete b.dataset.t;
+  }, 1500);
 });
 $('#in').value = 'P1DT2H3M4.5S';
 run();

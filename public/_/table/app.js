@@ -39,6 +39,7 @@ function fromInput() {
       : 'Paste a table above, or start typing in the grid.';
   } catch (e) {
     $('#perr').textContent = e.message;
+    $('#pstat').textContent = ''; // the last good read no longer describes the box; the grid below keeps that table
     $('#in').setAttribute('aria-invalid', 'true');
     return;
   }

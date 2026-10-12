@@ -9,6 +9,11 @@ curl -H "Authorization: Bearer $T" https://stash.6o2f.dev/api/kv                
 curl -H "Authorization: Bearer $T" https://stash.6o2f.dev/api/kv/${k}      # read
 curl -X PUT --data-binary 'hello' -H "Authorization: Bearer $T" https://stash.6o2f.dev/api/kv/${k}   # write
 curl -X DELETE -H "Authorization: Bearer $T" https://stash.6o2f.dev/api/kv/${k}   # delete`;
+// Status line beside Save; failures are shown as errors, not as muted notes.
+const say = (t, bad = false) => {
+  $('#msg').textContent = t;
+  $('#msg').className = bad ? 'err' : 'muted';
+};
 const sure = (on) => {
   $('#sure').hidden = !on;
   $('#del').hidden = on;
@@ -36,12 +41,12 @@ async function load() {
 async function open(k) {
   cur = k;
   sure(false);
-  $('#msg').textContent = '';
+  say('');
   $('#ed').hidden = false;
   $('#kname').textContent = k;
   $('#curl').textContent = curl(k);
   $('#val').value = await api(`/api/kv/${encodeURIComponent(k)}`).catch((x) => {
-    $('#msg').textContent = x.message;
+    say(x.message, true);
     return '';
   });
   size();
@@ -66,18 +71,23 @@ $('#addf').addEventListener('submit', (e) => {
   $('#ed').hidden = false;
   $('#kname').textContent = k;
   $('#val').value = '';
-  $('#msg').textContent = 'New key: save to create it.';
+  say('New key: save to create it.');
   $('#curl').textContent = curl(k);
   $('#val').focus();
   size();
+  load(); // drops the highlight from the key that was open
 });
 $('#save').addEventListener('click', async () => {
+  if ($('#save').disabled) return; // Ctrl+S during a save
+  $('#save').disabled = true;
   try {
     await api(`/api/kv/${encodeURIComponent(cur)}`, { method: 'PUT', body: $('#val').value, headers: { 'content-type': 'text/plain' } });
-    $('#msg').textContent = 'Saved.';
+    say('Saved.');
     await load();
   } catch (x) {
-    $('#msg').textContent = x.message;
+    say(x.message, true);
+  } finally {
+    $('#save').disabled = false;
   }
 });
 $('#del').addEventListener('click', () => sure(true));
@@ -90,7 +100,7 @@ $('#yes').addEventListener('click', async () => {
     await api(`/api/kv/${encodeURIComponent(cur)}`, { method: 'DELETE' });
   } catch (x) {
     sure(false);
-    $('#msg').textContent = x.message;
+    say(x.message, true);
     return;
   }
   cur = '';

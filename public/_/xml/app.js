@@ -34,9 +34,10 @@ function showError(msg, line, col, src) {
   status.textContent = '';
   at = line ? offsetOf(src, line, col) : 0;
   $('#errmsg').textContent = msg;
-  const text = src.split('\n')[line - 1];
+  const text = src.split('\n')[line - 1],
+    from = Math.max(0, col - 61); // on a long line, show the 120 characters around the error rather than the start of the line
   $('#excerpt').textContent =
-    line && text !== undefined ? `${String(line).padStart(4)} | ${text.slice(0, 200)}\n${' '.repeat(7 + Math.min(col - 1, 200))}^` : '';
+    line && text !== undefined ? `${String(line).padStart(4)} | ${text.slice(from, from + 120)}\n${' '.repeat(7 + col - 1 - from)}^` : '';
   $('#excerpt').hidden = !$('#excerpt').textContent;
   $('#goto').hidden = !line;
   error.hidden = false;
@@ -55,6 +56,10 @@ function stats(doc) {
   return `${n.toLocaleString()} element${n === 1 ? '' : 's'}, ${depth} level${depth === 1 ? '' : 's'} deep`;
 }
 function run() {
+  work();
+  $('#copy').disabled = $('#swap').disabled = !out.value; // nothing to copy or reuse after an error or with no input
+}
+function work() {
   const mode = $('#mode').value,
     src = input.value,
     indent = IND[$('#indent').value],

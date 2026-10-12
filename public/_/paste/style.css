@@ -12,6 +12,9 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+#empty {
+  margin: 0;
+}
 #made {
   margin: 12px 0 0;
 }
@@ -22,8 +25,45 @@ td.act {
   text-align: right;
   white-space: nowrap;
 }
+/* Phone: five columns do not fit, so each paste becomes a small block: link and size, preview, expiry, actions. */
 @media (max-width: 560px) {
+  thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+  tbody tr {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 4px 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  tbody tr:first-child {
+    padding-top: 0;
+  }
+  tbody tr:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+  }
+  tbody th,
+  tbody td {
+    border: 0;
+    padding: 0;
+  }
+  tbody td:nth-child(n + 2):not(:nth-child(3)) {
+    grid-column: 1 / -1;
+  }
+  tbody td:nth-child(3) {
+    grid-area: 1 / 2;
+  }
   .pv {
-    max-width: 14ch;
+    max-width: none;
+  }
+  td.act {
+    text-align: left;
+    margin-top: 4px;
   }
 }

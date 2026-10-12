@@ -3,8 +3,17 @@ import { LANGS, escape, unescape } from './lib.js';
 mountBar('Escape');
 
 let msgT;
-async function copy(text, what) {
+async function copy(text, what, btn) {
   const msg = $('#msg');
+  // The status line is at the foot of a long page, so the button itself confirms too.
+  if (btn && !btn.dataset.t) {
+    btn.dataset.t = '1';
+    btn.textContent = 'Copied';
+    setTimeout(() => {
+      btn.textContent = 'Copy';
+      delete btn.dataset.t;
+    }, 1500);
+  }
   try {
     await navigator.clipboard.writeText(text);
     msg.textContent = `Copied ${what}`;
@@ -43,7 +52,7 @@ function escAll() {
 }
 $('#all').addEventListener('click', (e) => {
   const b = e.target.closest('button[data-l]');
-  if (b) copy(outs.get(b.dataset.l) ?? '', b.getAttribute('aria-label').replace('Copy ', ''));
+  if (b) copy(outs.get(b.dataset.l) ?? '', b.getAttribute('aria-label').replace('Copy ', ''), b);
 });
 
 $('#lang').innerHTML = LANGS.map(([id, name]) => `<option value="${id}">${esc(name)}</option>`).join('');
@@ -61,7 +70,7 @@ function unAll() {
     $('#un').setAttribute('aria-invalid', 'true');
   }
 }
-$('#ucopy').addEventListener('click', () => copy($('#uout').textContent, 'result'));
+$('#ucopy').addEventListener('click', () => copy($('#uout').textContent, 'result', $('#ucopy')));
 
 $('#in').value = 'She said "it\'s done" \\o/\nPath:\tC:\\new\\temp — 50% off ✓ 😀';
 $('#un').value = String.raw`'Café \u{1F375}\n\tIt\'s \x41 ✓'`;

@@ -83,3 +83,16 @@ td.v {
     width: 100%;
   }
 }
+#msg {
+  margin: 8px 0 0;
+}
+#msg:empty,
+.hist:empty {
+  display: none;
+}
+#none {
+  margin: 0;
+}
+#send {
+  min-width: 6.5em; /* "Sending…" fits without resizing the row */
+}

@@ -12,18 +12,25 @@ let token = '',
   seq = 0,
   keyCache = { id: '', keys: null };
 
-async function copy(text, what) {
+/** Feedback on the button itself: the status line can be a screen away from it. */
+function flash(b, ok) {
+  const label = b.dataset.label ?? (b.dataset.label = b.textContent);
+  b.textContent = ok ? 'Copied' : 'Press Ctrl+C';
+  setTimeout(() => (b.textContent = label), 1200);
+}
+async function copy(text, what, btn) {
+  let ok = true;
   try {
     await navigator.clipboard.writeText(text);
-    say(`Copied ${what}.`);
   } catch {
     const t = Object.assign(document.createElement('textarea'), { value: text });
     document.body.append(t);
     t.select();
-    const ok = document.execCommand?.('copy');
+    ok = !!document.execCommand?.('copy');
     t.remove();
-    say(ok ? `Copied ${what}.` : 'Copy blocked by the browser. Select the text and press Ctrl+C.');
   }
+  say(ok ? `Copied ${what}.` : 'Copy blocked by the browser. Select the text and press Ctrl+C.');
+  if (btn) flash(btn, ok);
 }
 const pretty = (o) => JSON.stringify(o, null, 2);
 function readJson(id, what, errId) {
@@ -43,11 +50,12 @@ function editPayload(fn) {
   const p = readJson('#payload', 'Payload', '#perr');
   if (!p) {
     say('Fix the payload JSON first.');
-    return;
+    return false;
   }
   fn(p);
   $('#payload').value = pretty(p);
   update();
+  return true;
 }
 function fillClaimInputs(p) {
   for (const k of ['iss', 'sub']) if (document.activeElement !== $(`#${k}`)) $(`#${k}`).value = typeof p[k] === 'string' ? p[k] : '';
@@ -87,7 +95,7 @@ async function update() {
         return `<li>${k}: <time datetime="${d.toISOString()}">${esc(d.toISOString().replace('T', ' ').slice(0, 19))} UTC</time> (${esc(rel(p[k] - t))})</li>`;
       })
       .join('');
-  }
+  } else $('#times').innerHTML = ''; // no dates from a payload that no longer parses
   if (h && h.alg !== alg) {
     $('#herr').textContent = ALGS[h.alg] ? '' : `Header alg "${h.alg ?? ''}" is not one of HS256, HS384, HS512, RS256, ES256.`;
     if (ALGS[h.alg]) {
@@ -103,8 +111,9 @@ async function update() {
     $('#verify').textContent = '';
     $('#verify').className = 'vline';
     $('#err').textContent = m;
+    $('#pubbox').hidden = true; // it belonged to the key that no longer signs
   };
-  if (!h || !p || h.alg !== alg) return fail(h && p ? '' : 'Fix the JSON above to get a token.');
+  if (!h || !p || h.alg !== alg) return fail(h && p ? '' : 'Fix the header or payload JSON to get a token.');
   try {
     const keys = await getKeys(alg);
     const t = await signJwt(alg, h, p, keys);
@@ -177,6 +186,7 @@ $('#alg').addEventListener('change', async () => {
 });
 $('#pem').addEventListener('input', () => {
   pemByAlg[$('#alg').value] = $('#pem').value;
+  $('#genst').textContent = '';
 });
 $('#gen').addEventListener('click', genKey);
 for (const id of ['iss', 'sub', 'aud'])
@@ -196,19 +206,19 @@ for (const id of ['iss', 'sub', 'aud'])
 document.querySelector('.btns').addEventListener('click', (e) => {
   const b = e.target.closest('button');
   if (!b) return;
-  editPayload((p) => {
+  const done = editPayload((p) => {
     if (b.dataset.exp) p.exp = now() + +b.dataset.exp;
     else if (b.dataset.set === 'jti') p.jti = randomId();
     else if (b.dataset.set) p[b.dataset.set] = now();
     else for (const k of b.dataset.del.split(' ')) delete p[k];
   });
-  say(`Updated the payload (${b.textContent}).`);
+  if (done) say(`Updated the payload (${b.textContent}).`);
 });
 for (const id of ['#header', '#payload', '#secret', '#pem']) $(id).addEventListener('input', update);
 $('#b64').addEventListener('change', update);
-$('#copy').addEventListener('click', () => token && copy(token, 'token'));
+$('#copy').addEventListener('click', (e) => token && copy(token, 'token', e.currentTarget));
 $('#pubbox').addEventListener('click', (e) => {
-  if (e.target.dataset.copy) copy($('#pub').value, 'public key');
+  if (e.target.dataset.copy) copy($('#pub').value, 'public key', e.target);
 });
 
 // Example: an access token for an API, issued now, valid for an hour.

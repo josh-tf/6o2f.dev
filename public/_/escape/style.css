@@ -49,6 +49,7 @@ label.chk {
   padding: 2px 0;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
+  max-height: 9.5em; /* a long input must not make twelve page-high rows */
 }
 #all td:last-child {
   text-align: right;
@@ -103,6 +104,9 @@ summary {
     grid-template-columns: 1fr auto;
     border-bottom: 1px solid var(--line);
   }
+  #all tr:last-child {
+    border-bottom: 0;
+  }
   #all th[scope='row'] {
     border: 0;
     padding-bottom: 0;
@@ -118,4 +122,14 @@ summary {
     grid-row: 1;
     grid-column: 2;
   }
+}
+#all button,
+#ucopy {
+  min-width: 5.5em; /* "Copied" fits without shifting the row */
+}
+#uerr {
+  margin: 6px 0 0;
+}
+#uerr:empty {
+  display: none;
 }

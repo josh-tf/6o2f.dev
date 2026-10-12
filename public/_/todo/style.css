@@ -71,3 +71,6 @@ button[aria-pressed='true'] {
 #list li button.i {
   padding: 2px 8px;
 }
+#empty {
+  margin: 0 0 16px;
+}

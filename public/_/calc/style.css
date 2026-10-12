@@ -77,3 +77,9 @@ kbd {
   padding: 0 5px;
   background: var(--card);
 }
+@media (max-width: 560px) {
+  /* keeps "= 1.23456789012e17" on one line beside the buttons */
+  #r {
+    font-size: 1.2rem;
+  }
+}

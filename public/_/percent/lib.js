@@ -5,7 +5,7 @@ export function round(x, dp = 2) {
   const clean = Number(x.toPrecision(15)),
     s = Math.sign(clean),
     a = Math.abs(clean);
-  if (a >= 1e15) return clean;
+  if (a * 10 ** dp >= 2 ** 53) return clean; // no digits left to round at this size (and the e-notation below would break)
   const [m, e = '0'] = String(a).split('e'),
     r = Math.round(Number(`${m}e${Number(e) + dp}`));
   return s * Number(`${r}e-${dp}`) || 0;

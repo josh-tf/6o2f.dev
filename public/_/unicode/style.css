@@ -23,6 +23,10 @@ td.m {
 tr.hit td {
   background: color-mix(in srgb, var(--accent) 18%, transparent);
 }
+/* Flagged rows are marked at the left edge too: on a phone the Flags column starts off-screen. */
+tr.warn td.ch {
+  box-shadow: inset 3px 0 var(--danger);
+}
 tr.warn td.fl {
   color: var(--danger);
 }

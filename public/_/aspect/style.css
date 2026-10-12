@@ -239,7 +239,7 @@ label.chk input {
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
 }
-#tbl tr.cur td {
+#tbl tr.now td {
   color: var(--accent);
   font-weight: 700;
 }
@@ -248,4 +248,10 @@ label.chk input {
 }
 #tbl td:last-child {
   text-align: right;
+}
+.stale {
+  opacity: 0.4;
+}
+#tbl td:nth-child(3) {
+  white-space: normal;
 }

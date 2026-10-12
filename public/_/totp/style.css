@@ -130,3 +130,41 @@ summary {
   cursor: pointer;
   min-height: 32px;
 }
+/* Account and issuer share a row and fill it, like the secret box above. */
+.pair > div {
+  flex: 1 1 160px;
+}
+.pair input {
+  width: 100%;
+}
+/* Why the secret is not usable, right under the secret. */
+#err,
+#import-err {
+  margin: 6px 0 0;
+}
+#err:empty,
+#import-err:empty {
+  display: none;
+}
+/* Copy and other confirmations sit under the code; the line keeps its height so nothing moves when one appears. */
+#msg {
+  min-height: 1.55em;
+  margin: 10px 0 0;
+}
+/* On a phone the code comes first: it is what the page is for, and the settings are a screen long. */
+@media (max-width: 760px) {
+  .cols > div:last-child {
+    order: -1;
+  }
+  .cols > div:first-child > section.first {
+    margin-top: 0;
+  }
+}
+/* The QR box keeps its height while the secret is invalid, so nothing jumps as a secret is typed. */
+.qrwrap {
+  min-height: 202px;
+}
+/* The counter is hidden on load, so ui.js cannot measure it for its stepper; give the stepper the intended width. */
+#f-counter .num {
+  width: 130px;
+}

@@ -354,14 +354,15 @@ function drawTools() {
     rows = CTL.tools.filter((t) => !q || `${t.name} ${t.title}`.toLowerCase().includes(q));
   const off = CTL.tools.filter((t) => t.state !== 'on');
   $('#tsum').textContent = off.length ? `${off.length} not on: ${off.map((t) => `${t.title} (${t.state})`).join(', ')}` : 'All tools are on.';
-  $('#ttab tbody').innerHTML = rows
-    .map(
-      (
-        t,
-      ) => `<tr data-tool="${esc(t.name)}"${t.state !== 'on' ? ' class="notOn"' : ''}><th scope="row">${esc(t.title)} <span class="mono muted small">${esc(t.name)}</span></th><td>${t.public ? 'public' : 'sign-in'}</td>
+  $('#ttab tbody').innerHTML =
+    rows
+      .map(
+        (
+          t,
+        ) => `<tr data-tool="${esc(t.name)}"${t.state !== 'on' ? ' class="notOn"' : ''}><th scope="row">${esc(t.title)} <span class="mono muted small">${esc(t.name)}</span></th><td>${t.public ? 'public' : 'sign-in'}</td>
     <td><div class="seg" role="radiogroup" aria-label="${esc(t.title)} state">${STATES.map(([v, l]) => `<button type="button" role="radio" data-state="${v}" aria-checked="${t.state === v}" tabindex="${t.state === v ? 0 : -1}">${l}</button>`).join('')}</div></td></tr>`,
-    )
-    .join('');
+      )
+      .join('') || `<tr><td colspan="3" class="muted">No tool matches “${esc($('#tq').value.trim())}”.</td></tr>`;
 }
 $('#tq').addEventListener('input', drawTools);
 async function setState(tr, btn) {

@@ -30,12 +30,16 @@ $('#f').addEventListener('submit', async (e) => {
   e.preventDefault();
   $('#msg').textContent = '';
   if (!$('#url').value.trim()) return;
+  const go = $('#f button');
+  go.disabled = true;
   try {
     await api('/api/monitors', { method: 'POST', body: { name: $('#name').value, url: $('#url').value.trim() } });
     $('#name').value = '';
     await load();
   } catch (x) {
     $('#msg').textContent = x.message;
+  } finally {
+    go.disabled = false;
   }
 });
 $('#list').addEventListener('click', async (e) => {

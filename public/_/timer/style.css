@@ -59,3 +59,12 @@ td {
 [hidden] {
   display: none !important;
 }
+/* Each unit is a label over its field, so all three fit one row on a phone. */
+#set label {
+  margin: 0 0 4px;
+}
+/* The status line keeps its height when empty: the buttons do not move when "Time is up." appears. */
+#phase {
+  min-height: 1.55em;
+  margin: 0 0 12px;
+}

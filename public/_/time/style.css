@@ -45,3 +45,15 @@ td button {
     width: 7em;
   }
 }
+/* "Use now" is as tall as the larger-type input beside it. */
+.row:has(> #in) {
+  align-items: stretch;
+}
+/* What the box was read as, or why it could not be, sits directly under the box. */
+#msg,
+#err {
+  margin: 6px 0 0;
+}
+#out {
+  margin-top: 14px;
+}

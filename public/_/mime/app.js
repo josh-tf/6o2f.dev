@@ -66,7 +66,13 @@ async function copy(text) {
 }
 document.addEventListener('click', (e) => {
   const b = e.target.closest('[data-copy]');
-  if (b) copy(b.dataset.copy);
+  if (!b) return;
+  copy(b.dataset.copy).then(() => {
+    // the status line is at the bottom of the page; confirm on the button too
+    const label = b.dataset.label ?? (b.dataset.label = b.textContent);
+    b.textContent = 'Copied';
+    setTimeout(() => (b.textContent = label), 1500);
+  });
 });
 
 /* File check */

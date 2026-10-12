@@ -49,3 +49,10 @@ caption {
     grid-template-columns: 1fr;
   }
 }
+#res td.c button {
+  min-width: 5.5em; /* "Copied" fits without resizing the button */
+}
+/* With a file loaded the text box is hidden and this line leads the card. */
+#file {
+  margin: 0;
+}

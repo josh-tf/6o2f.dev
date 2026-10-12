@@ -67,7 +67,7 @@ function addCalc() {
   $('#a-out').innerHTML = err
     ? ''
     : `<time datetime="${isoDateTime(r)}">${esc(long(r))}</time><span class="muted">${isoDateTime(r)} · ${isoWeekString(r)}</span>`;
-  $('#a-copy').disabled = !!err;
+  $('#a-copy').closest('.res').hidden = !!err; // no lone Copy button beside an error
   $('#a-copy').dataset.c = err ? '' : isoDateTime(r);
 }
 

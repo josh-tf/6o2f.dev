@@ -13,9 +13,9 @@
 <div class="cols">
   <div><div class="row head"><label for="in" class="grow" id="inlabel">XML</label><button type="button" id="sample">Sample</button><button type="button" id="clear">Clear</button></div><textarea id="in" rows="20" spellcheck="false" autocomplete="off" autocapitalize="off"></textarea></div>
   <div><div class="row head"><label for="out" class="grow" id="outlabel">Output</label><button type="button" id="swap">Use as input</button><button type="button" id="copy" class="primary">Copy</button></div><textarea id="out" rows="20" readonly spellcheck="false"></textarea></div>
+  <div id="error" role="alert" hidden><p class="err"><span id="errmsg"></span> <button type="button" id="goto">Go to error</button></p><pre id="excerpt"></pre></div>
 </div>
 <p id="status" role="status" class="muted"></p>
-<div id="error" role="alert" hidden><p class="err"><span id="errmsg"></span> <button type="button" id="goto">Go to error</button></p><pre id="excerpt"></pre></div>
 <ul id="warn" class="muted" aria-label="Conversion warnings" hidden></ul>
 <details><summary>How XML maps to JSON</summary>
 <ul class="muted">

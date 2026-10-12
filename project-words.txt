@@ -937,3 +937,5 @@ zgrab
 remoteip
 sitekey
 AAAAAAFUS
+rawp
+verr

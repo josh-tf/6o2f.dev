@@ -69,7 +69,9 @@ export function parseDoh(j: any): Result {
   };
 }
 
-const norm = (r: Result) => r.answers.map((a) => `${a.type} ${a.data.toLowerCase().replace(/\.$/, '')}`).sort();
+// Cloudflare returns TXT data in presentation form ("a" "b"), Google as the bare joined string: compare them unquoted.
+const unquote = (a: Answer) => (a.type === 'TXT' ? a.data.replace(/"\s+"/g, '').replace(/^"|"$/g, '') : a.data);
+const norm = (r: Result) => r.answers.map((a) => `${a.type} ${unquote(a).toLowerCase().replace(/\.$/, '')}`).sort();
 /** Differences between two resolvers' results (TTLs ignored); empty when they agree. */
 export function diff(a: Result, b: Result): string[] {
   const out: string[] = [];

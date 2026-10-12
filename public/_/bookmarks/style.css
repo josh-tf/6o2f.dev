@@ -146,3 +146,16 @@ kbd {
   border: 1px dashed var(--line);
   border-radius: 8px;
 }
+@media (max-width: 560px) {
+  /* Tag and Sort share one row at full width instead of two short stacked selects. */
+  .filters > div:not(.grow) {
+    flex: 1 1 120px;
+    min-width: 0;
+  }
+  .filters select {
+    width: 100%;
+  }
+  .filters .grow {
+    flex-basis: 100%;
+  }
+}

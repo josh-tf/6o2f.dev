@@ -193,6 +193,7 @@ function dupeHint() {
   $('#dupe').textContent = d ? `Already saved as “${d.title}” (added ${dateFmt.format(d.added)}).` : '';
 }
 $('#url').addEventListener('input', dupeHint);
+$('#add').addEventListener('input', () => ($('#adderr').textContent = '')); // a stale "Not added" must not sit beside a corrected URL
 $('#add').addEventListener('submit', (e) => {
   e.preventDefault();
   $('#adderr').textContent = '';

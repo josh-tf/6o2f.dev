@@ -84,7 +84,7 @@ async function decode() {
     $('#in').setAttribute('aria-invalid', 'true');
     $('#out').innerHTML = '';
     $('#chainbox').hidden = true;
-    $('#st').textContent = '';
+    $('#st').textContent = 'Nothing decoded: fix the input above.'; // not a bare heading over nothing
   };
   let blocks;
   try {

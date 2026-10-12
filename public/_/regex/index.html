@@ -10,10 +10,10 @@
 </fieldset>
 <label for="txt">Test text</label><textarea id="txt" rows="7" spellcheck="false" autocapitalize="off" autocomplete="off"></textarea>
 <p id="status" role="status" class="muted"></p><p id="err" class="err" role="alert"></p>
-<section><h2>Matches</h2><pre id="hl" class="hl" aria-live="polite"></pre></section>
+<section><h2>Matches</h2><pre id="hl" class="hl" aria-live="polite" tabindex="0"></pre></section>
 <section><h2>Capture groups</h2><div class="scroll" tabindex="0" role="region" aria-label="Capture groups table"><table id="groups"><caption class="vh" id="gcap"></caption><thead></thead><tbody></tbody></table></div></section>
 <section><h2>Replace</h2><label for="rep">Replacement ($1, $&amp;, $&lt;name&gt; work)</label><input id="rep" style="width:100%" spellcheck="false" autocomplete="off" autocapitalize="off">
-<output id="repout" for="pat txt rep"></output></section>
+<output id="repout" for="pat txt rep" tabindex="0"></output></section>
 <section><details><summary>Cheat sheet</summary><table class="cheat"><caption class="vh">Regular expression syntax</caption>
 <tr><th scope="row"><code>.</code></th><td>any character (not newline unless <code>s</code>)</td><th scope="row"><code>\d \w \s</code></th><td>digit, word char, whitespace (capital = opposite)</td></tr>
 <tr><th scope="row"><code>^ $</code></th><td>start / end of input (line with <code>m</code>)</td><th scope="row"><code>\b</code></th><td>word boundary</td></tr>

@@ -32,6 +32,7 @@ function render() {
     const h = hex6($('#' + id).value);
     if (h) good[id] = h;
     else bad.push(id);
+    $('#' + id).setAttribute('aria-invalid', String(!h)); // marks which field the message is about
   }
   $('#err').textContent = bad.length
     ? `Not a color: "${$('#' + bad[0]).value}". Try #0b7a35, rgb(11 122 53) or a name like teal. Showing the last valid one.`
@@ -70,6 +71,7 @@ async function copy(text, what) {
   try {
     await navigator.clipboard.writeText(text);
     say(`Copied ${what}.`);
+    return true;
   } catch {
     const t = $(what === 'SVG' ? '#code' : '#css');
     if (what === 'link') {
@@ -118,7 +120,13 @@ for (const k of ['shape', 'color'])
 document.addEventListener('keydown', (e) => {
   if (e.key.toLowerCase() === 'r' && !e.ctrlKey && !e.metaKey && !e.altKey && !e.target.closest('input,textarea,select,[contenteditable]')) randomize();
 });
-$('#share').addEventListener('click', () => copy(location.href, 'link'));
+$('#share').addEventListener('click', async (e) => {
+  // the status line sits in the Export section, far below this button, so the button confirms as well
+  const b = e.currentTarget;
+  if (!(await copy(location.href, 'link'))) return;
+  b.textContent = 'Copied';
+  setTimeout(() => (b.textContent = 'Copy link'), 1200);
+});
 $('#cpSvg').addEventListener('click', () => copy(svg, 'SVG'));
 $('#cpCss').addEventListener('click', () => copy($('#css').value, 'CSS'));
 $('#dlSvg').addEventListener('click', () => save(new Blob([svg], { type: 'image/svg+xml' }), `blob-${st.seed}.svg`));

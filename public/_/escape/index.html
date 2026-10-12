@@ -13,9 +13,9 @@
 <div class="row"><div><label for="lang">Language</label><select id="lang"></select></div></div>
 <label for="un">Escaped string <span class="muted">(surrounding quotes are optional)</span></label>
 <textarea id="un" rows="4" spellcheck="false" autocapitalize="off" autocomplete="off" aria-describedby="uerr"></textarea>
+<p id="uerr" class="err" role="alert"></p>
 <div class="row between"><label for="uout" class="m0">Result</label><button type="button" id="ucopy">Copy</button></div>
 <pre class="out"><output id="uout" for="un lang"></output></pre>
-<p id="uerr" class="err" role="alert"></p>
 <ul id="uwarn" class="warn" aria-label="Warnings"></ul>
 <details class="help"><summary>What each target escapes</summary>
 <ul class="muted">

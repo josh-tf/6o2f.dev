@@ -167,3 +167,18 @@ pre {
 button {
   min-height: 36px;
 }
+/* An empty error line takes no room; the status line under it keeps one even gap. */
+.err:empty {
+  display: none;
+}
+.card p[role='status'],
+.card p:has(> output) {
+  margin: 10px 0 0;
+}
+#probe,
+#conv {
+  width: 100%;
+}
+#inres {
+  word-break: normal;
+}

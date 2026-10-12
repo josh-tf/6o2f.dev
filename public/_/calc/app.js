@@ -36,7 +36,8 @@ function draw() {
       .map((h, i) => `<li><button type="button" data-i="${i}" title="Reuse this expression"><span>${esc(h.e)}</span><b>= ${esc(h.r)}</b></button></li>`)
       .join('') || '<li class="muted" style="padding:8px 6px">Nothing yet.</li>';
 }
-$('#x').addEventListener('input', run);
+const busy = () => ($('#cp').disabled = $('#f button[type=submit]').disabled = out === null); // nothing to copy or keep on empty input or an error
+$('#x').addEventListener('input', () => (run(), busy()));
 $('#f').addEventListener('submit', (e) => {
   e.preventDefault();
   if (out === null) return;
@@ -82,3 +83,4 @@ $('#cp').addEventListener('click', async (e) => {
 });
 draw();
 run();
+busy();

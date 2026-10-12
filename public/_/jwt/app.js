@@ -15,7 +15,7 @@ async function sig() {
     s = $('#sig'),
     hs = /^HS(256|384|512)$/.test(alg),
     my = ++seq;
-  $('#sigset').disabled = !hs;
+  $('#sigset').hidden = !hs; // no secret box for algorithms that cannot be checked here
   const say = (cls, text) => {
     if (my === seq) {
       s.className = cls;

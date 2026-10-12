@@ -4,6 +4,7 @@ import { bodyLimit } from 'hono/body-limit';
 import { fail, gate, page, type AppEnv } from '../../auth.ts';
 import { checkUrl, safeFetch } from '../../net.ts';
 import type { Tool } from '../types.ts';
+import { decode } from '../rss/parse.ts'; // HTMLRewriter hands back attribute values and text with entities still encoded
 
 const app = new Hono<AppEnv>();
 app.onError((e, c) => (e instanceof HTTPException ? c.json({ error: e.message }, e.status) : (console.error(e), c.json({ error: 'Internal error' }, 500))));
@@ -56,16 +57,18 @@ app.post('/api/og', gate, bodyLimit({ maxSize: 4096, onError: (c) => c.json({ er
     .on('meta', {
       element: (e) => {
         const key = (e.getAttribute('property') || e.getAttribute('name') || e.getAttribute('itemprop') || '').trim().toLowerCase();
-        const val = e.getAttribute('content');
-        if (!key || val == null || out.meta.length >= 200) return;
+        const raw = e.getAttribute('content');
+        if (!key || raw == null || out.meta.length >= 200) return;
+        const val = decode(raw);
         out.meta.push([key, URLISH.test(key) && !key.startsWith('twitter:site') ? abs(val, final) : val]);
       },
     })
     .on('link', {
       element: (e) => {
         const rel = (e.getAttribute('rel') ?? '').toLowerCase().split(/\s+/),
-          href = e.getAttribute('href');
-        if (!href) return;
+          rawHref = e.getAttribute('href');
+        if (!rawHref) return;
+        const href = decode(rawHref);
         if (rel.includes('canonical')) out.canonical ||= abs(href, final);
         else if (rel.includes('icon') || rel.includes('apple-touch-icon'))
           out.icons.push({ rel: rel.join(' '), href: abs(href, final), sizes: e.getAttribute('sizes') ?? '' });
@@ -73,7 +76,7 @@ app.post('/api/og', gate, bodyLimit({ maxSize: 4096, onError: (c) => c.json({ er
     })
     .transform(new Response(r.text, { headers: { 'content-type': 'text/html' } }))
     .text();
-  out.title = out.title.trim().replace(/\s+/g, ' ').slice(0, 300);
+  out.title = decode(out.title).trim().replace(/\s+/g, ' ').slice(0, 300);
   const m = (k: string) => out.meta.find(([n]) => n === k)?.[1] ?? '';
   out.description = m('description');
   out.themeColor = m('theme-color');

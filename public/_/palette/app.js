@@ -68,7 +68,11 @@ $('#kind').addEventListener('change', fromBase);
 for (const r of document.querySelectorAll('[name=space]')) r.addEventListener('change', fromBase);
 $('#fmt').addEventListener('change', output);
 $('#name').addEventListener('input', output);
-$('#copy').addEventListener('click', () => copy($('#out').value, `${$('#fmt').selectedOptions[0].text}`));
+$('#copy').addEventListener('click', async (e) => {
+  await copy($('#out').value, `${$('#fmt').selectedOptions[0].text}`);
+  e.target.textContent = 'Copied'; // the status line is far above the export box
+  setTimeout(() => (e.target.textContent = 'Copy'), 1500);
+});
 $('#pal').addEventListener('click', (e) => {
   const c = e.target.closest('[data-c]')?.dataset.c;
   if (c) copy(c, c);

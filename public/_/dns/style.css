@@ -57,12 +57,15 @@ td.d {
 }
 .cols {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr)); /* two columns on a desktop: three leave no room for the data */
   gap: 12px;
 }
 .card h3 {
   font-size: 0.95rem;
   margin: 0 0 8px;
+}
+ul.diff li {
+  overflow-wrap: anywhere;
 }
 ul.diff {
   margin: 0 0 12px;

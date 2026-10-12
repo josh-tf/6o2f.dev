@@ -101,6 +101,7 @@ function words() {
 function back() {
   const s = $('#w').value;
   $('#wout').textContent = '';
+  delete $('#wout').dataset.v;
   $('#werr').textContent = '';
   $('#w').removeAttribute('aria-invalid');
   if (!s.trim()) return;
@@ -116,6 +117,11 @@ function back() {
   }
 }
 
+const sync = () => {
+  $('#rcopy').disabled = !$('#rout').textContent;
+  $('#wcopy').disabled = !$('#wout').dataset.v;
+};
+document.addEventListener('input', sync);
 $('#r').addEventListener('input', roman);
 for (const id of ['#n', '#cur', '#brit']) $(id).addEventListener('input', words);
 $('#w').addEventListener('input', back);
@@ -128,3 +134,4 @@ $('#wcopy').addEventListener('click', () => $('#wout').dataset.v && copy($('#wou
 roman();
 words();
 back();
+sync();

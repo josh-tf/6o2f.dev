@@ -28,6 +28,7 @@ function gen() {
     $('#ent').innerHTML = '<span class="err">Pick at least one character set.</span>';
   }
   $('#list').hidden = true;
+  $('#copy').disabled = $('#ten').disabled = !$('#res').textContent; // nothing to copy or repeat without a character set
 }
 async function copy(text, el, msg) {
   try {

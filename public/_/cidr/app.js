@@ -8,13 +8,17 @@ function drawBlock() {
   const i = info($('#cidr').value);
   $('#cerr').textContent = i.error ?? '';
   $('#cidr').setAttribute('aria-invalid', String(!!i.error));
+  $('.two').hidden = !!i.error; // no empty Binary/Flags shells beside an error
+  $('#cpcidr').disabled = $('#cpsubs').disabled = !!i.error;
   if (i.error) {
     // don't leave the previous block's results on screen next to the error
     cur = null;
     for (const id of ['#irows', '#bin', '#flags', '#subs']) $(id).innerHTML = '';
     $('#hostnote').hidden = true;
-    $('#ssum').textContent = '';
-    $('#inres').textContent = '';
+    $('#serr').textContent = '';
+    $('#ssum').textContent = 'Enter a valid block above to split it.';
+    $('#inres').className = 'muted';
+    $('#inres').textContent = 'Enter a valid block above to check an address.';
     return;
   }
   cur = i;
@@ -62,6 +66,7 @@ function drawSplit() {
   if (!cur) return;
   const s = split(cur.cidr, $('#np').value, LIST);
   $('#serr').textContent = s.error ?? '';
+  $('#cpsubs').disabled = !!s.error;
   if (s.error) {
     $('#subs').innerHTML = '';
     $('#ssum').textContent = '';
@@ -85,8 +90,8 @@ function drawIn() {
   o.textContent = r.error ? r.error : r.inside ? `Yes, inside ${cur.cidr}` : `No, outside ${cur.cidr}${r.reason ? ` (${r.reason})` : ''}`;
 }
 function drawConv() {
-  const r = convert($('#conv').value);
-  $('#cverr').textContent = r.error ?? '';
+  const r = $('#conv').value.trim() ? convert($('#conv').value) : { error: ' ' }; // empty field: no result, no complaint
+  $('#cverr').textContent = (r.error ?? '').trim();
   $('#cvrows').innerHTML = r.error
     ? ''
     : [['Address', r.ip], ...(r.full ? [['Expanded', r.full]] : []), ['Decimal', r.dec], ['Hex', r.hex]]
@@ -100,7 +105,7 @@ function drawAgg() {
     ? `${r.before} entr${r.before === 1 ? 'y' : 'ies'} merged into ${r.cidrs.length} block${r.cidrs.length === 1 ? '' : 's'}.`
     : 'Paste some blocks to merge.';
   $('#aout').textContent = r.cidrs.join('\n');
-  $('#aout').hidden = !r.cidrs.length;
+  $('#aout').hidden = $('#cpagg').disabled = !r.cidrs.length;
 }
 function drawRange() {
   const a = $('#rs').value,
@@ -109,11 +114,11 @@ function drawRange() {
   $('#rerr').textContent = r.error ?? '';
   $('#rsum').textContent = r.error ? '' : `${count(r.size)} address${r.size === 1n ? '' : 'es'} in ${r.cidrs.length} block${r.cidrs.length === 1 ? '' : 's'}.`;
   $('#rout').textContent = r.error ? '' : r.cidrs.join('\n');
-  $('#rout').hidden = !!r.error;
+  $('#rout').hidden = $('#cprange').disabled = !!r.error;
 }
 
 let msgT;
-async function copy(text, what) {
+async function copy(text, what, btn = document.activeElement) {
   let ok = false;
   try {
     await navigator.clipboard.writeText(text);
@@ -128,6 +133,15 @@ async function copy(text, what) {
     t.remove();
   }
   $('#msg').textContent = ok ? `Copied ${what}` : 'Copy blocked by the browser. Select the text and press Ctrl+C.';
+  // The status line is at the foot of a long page, so the pressed button confirms too.
+  if (ok && btn?.matches('button') && !btn.dataset.l) {
+    btn.dataset.l = btn.textContent;
+    btn.textContent = 'Copied';
+    setTimeout(() => {
+      btn.textContent = btn.dataset.l;
+      delete btn.dataset.l;
+    }, 1200);
+  }
   clearTimeout(msgT);
   msgT = setTimeout(() => ($('#msg').textContent = ''), 2500);
 }

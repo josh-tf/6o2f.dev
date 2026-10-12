@@ -8,10 +8,10 @@ async function run() {
     const r = await api(`/api/rdap?q=${encodeURIComponent(q)}`).catch(async (x) => {
       // The registry refused our server (usually a rate limit on its shared IP): ask it from this browser instead.
       if (!x.data?.direct) throw x;
-      const raw = await fetch(x.data.direct, { referrerPolicy: 'no-referrer' })
-        .then((d) => (d.ok ? d.json() : Promise.reject()))
-        .catch(() => Promise.reject(x));
-      return api('/api/rdap', { method: 'POST', body: { q, source: new URL(x.data.direct).hostname, raw } });
+      const d = await fetch(x.data.direct, { referrerPolicy: 'no-referrer', signal: AbortSignal.timeout(8000) }).catch(() => null);
+      const raw = d?.ok ? await d.json().catch(() => null) : null;
+      if (!raw) throw x;
+      return api('/api/rdap', { method: 'POST', body: { q, source: new URL(d.url).hostname, raw } }); // d.url: after rdap.org's redirect
     });
     $('#title').textContent = `${r.kind === 'asn' ? 'AS' : ''}${r.value} (from ${r.source})`;
     $('#rows').innerHTML =

@@ -11,6 +11,7 @@ function show() {
 }
 function gen() {
   const n = Math.min(1000, Math.max(1, Math.trunc($('#n').valueAsNumber) || 1));
+  $('#n').value = n; // show the count actually used when the typed one was out of range
   ids = make($('#kind').value, n);
   show();
 }

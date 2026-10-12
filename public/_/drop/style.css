@@ -34,3 +34,54 @@ td.n a {
     transition: none;
   }
 }
+td.m {
+  white-space: nowrap;
+}
+button[data-del] {
+  min-width: 6.5em; /* "Confirm?" must not shift the row */
+}
+#zone p:empty {
+  display: none;
+}
+/* Phone: one block per file (name, then a line of details, then the buttons) instead of five squeezed columns. */
+@media (max-width: 560px) {
+  thead {
+    display: none;
+  }
+  tr {
+    display: block;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  tr:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+  }
+  tr:first-child {
+    padding-top: 0;
+  }
+  td {
+    display: inline;
+    border: 0;
+    padding: 0;
+  }
+  td.n {
+    display: block;
+  }
+  td.m {
+    white-space: normal;
+    color: var(--muted);
+    font-size: 0.9em;
+  }
+  td.m::before {
+    content: attr(data-l) ' ';
+  }
+  td.m:not(:nth-child(4))::after {
+    content: ' · ';
+  }
+  td.act {
+    display: block;
+    text-align: left;
+    margin-top: 8px;
+  }
+}

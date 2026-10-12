@@ -30,3 +30,9 @@ td.v {
 #raw {
   max-height: 480px;
 }
+.rawp {
+  margin: 12px 0 0;
+}
+#raw {
+  margin-top: 10px;
+}

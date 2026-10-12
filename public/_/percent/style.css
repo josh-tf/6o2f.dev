@@ -40,6 +40,7 @@
 .res output {
   flex: 1;
   min-width: 0;
+  overflow-wrap: anywhere;
   font-size: 1.25rem;
 }
 .res output.err {

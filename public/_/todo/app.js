@@ -46,6 +46,7 @@ function draw(focus) {
     )
     .join('');
   $('#empty').hidden = shown.length > 0;
+  $('#list').hidden = !shown.length; // an empty card would show as a thin sliver above the empty message
   $('#empty').textContent = !items.length ? 'No tasks yet. Add one above.' : filter === 'done' ? 'Nothing completed yet.' : 'All done. Nice.';
   $('#count').textContent = `${c.active} active, ${c.done} done`;
   $('#clear').disabled = !c.done;
@@ -143,8 +144,10 @@ $('#file').addEventListener('change', async (e) => {
   try {
     const add = parseImport(await e.target.files[0].text());
     set([...items.filter((i) => !add.some((a) => a.id === i.id)), ...add]);
+    $('#msg').className = 'muted';
     $('#msg').textContent = `Imported ${add.length} task${add.length === 1 ? '' : 's'}.`;
   } catch (x) {
+    $('#msg').className = 'err';
     $('#msg').textContent = `Import failed: ${x.message}`;
   }
   e.target.value = '';

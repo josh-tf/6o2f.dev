@@ -184,3 +184,12 @@ textarea#out {
     min-width: max-content;
   }
 }
+/* Columns keep their content width (up to the 32ch cap) and the card scrolls; fitted to the card, a wide table squeezed a
+   long cell into a nine-line sliver. */
+#grid {
+  width: max-content;
+}
+/* Room for the word "Default" beside the arrow in a narrow column. */
+#grid select {
+  min-width: 7.5em;
+}

@@ -729,3 +729,19 @@ table:not(.open):not(.filtering) tr.more {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+/* In-use fixes: the shared "first row of label-over-field columns" rule matches this form (its chips are div > label)
+   and pulls it up 10px, so the radios hugged the card's top edge. */
+#defform {
+  margin-top: 0;
+}
+/* ui.css gives every section a 28px top margin; inside a user's details that was a hole under the divider. */
+.detgrid section {
+  margin-top: 0;
+}
+/* Tool names such as "launcher" fit without an ellipsis. */
+.det .brow {
+  grid-template-columns: minmax(5.5em, 1fr) 2fr 8.5em;
+}
+#add .row {
+  margin-top: 12px;
+}

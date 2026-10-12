@@ -67,3 +67,31 @@
   min-width: 0;
   word-break: break-word;
 }
+/* A long name wraps as left-aligned text instead of a centred stack. */
+#list button[data-s] {
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+/* "Confirm?" / "Confirm clear?" must not resize the button and shift its neighbours. */
+#list button[data-d] {
+  min-width: 6.5em;
+}
+#clear {
+  min-width: 10.5em;
+}
+#msg:empty,
+#live:empty {
+  display: none;
+}
+#new + #msg + table {
+  margin-top: 8px;
+}
+@media (max-width: 560px) {
+  /* Leave the width to the endpoint name. */
+  #list td.muted {
+    font-size: 0.8em;
+  }
+  #list :is(td, th) {
+    padding-inline: 4px;
+  }
+}

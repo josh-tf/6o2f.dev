@@ -26,6 +26,13 @@
 #add input {
   width: 260px;
 }
+/* Messages go on their own line under the field, so they never squeeze it or sit off the button's baseline. */
+#add > span {
+  flex-basis: 100%;
+}
+#add > span:empty {
+  display: none;
+}
 #list {
   list-style: none;
   margin: 16px 0 0;
@@ -132,4 +139,8 @@
 }
 .top time {
   white-space: nowrap;
+}
+/* The date field is a little taller than a select; one height keeps the labels above them level. */
+.plan :is(input, select, button) {
+  height: 40px;
 }

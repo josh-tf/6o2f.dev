@@ -67,17 +67,20 @@ label.inl {
   font: 0.85em/1.5 var(--mono);
 }
 .d.split {
-  grid-template-columns: 3em minmax(0, 1fr) 3em minmax(0, 1fr);
+  grid-template-columns: minmax(3em, max-content) minmax(0, 1fr) minmax(3em, max-content) minmax(0, 1fr);
 }
 .d.unified {
-  grid-template-columns: 3em 3em 1.5em minmax(0, 1fr);
+  grid-template-columns: minmax(3em, max-content) minmax(3em, max-content) 1.5em minmax(0, 1fr);
 }
 .d > * {
   padding: 0 6px;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }
+/* Line numbers never wrap: the number columns grow for 3 and 4 digit numbers instead. */
 .d .n {
+  white-space: nowrap;
+  overflow-wrap: normal;
   color: var(--muted);
   text-align: right;
   user-select: none;
@@ -125,10 +128,10 @@ label.inl {
 }
 @media (max-width: 560px) {
   .d.split {
-    grid-template-columns: 2.2em minmax(0, 1fr) 2.2em minmax(0, 1fr);
+    grid-template-columns: minmax(2.2em, max-content) minmax(0, 1fr) minmax(2.2em, max-content) minmax(0, 1fr);
   }
   .d.unified {
-    grid-template-columns: 2.2em 2.2em 1.2em minmax(0, 1fr);
+    grid-template-columns: minmax(2.2em, max-content) minmax(2.2em, max-content) 1.2em minmax(0, 1fr);
   }
   .d > * {
     padding: 0 3px;

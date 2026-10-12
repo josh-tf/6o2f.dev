@@ -29,6 +29,7 @@ function run() {
   list.replaceChildren();
   $('#err').textContent = '';
   expr.removeAttribute('aria-invalid');
+  $('#runs').hidden = true; // the runs table only makes sense for a valid expression
   if (!expr.value.trim()) {
     out.textContent = 'Type a cron expression or pick a preset.';
     out.classList.add('muted');
@@ -38,6 +39,7 @@ function run() {
   try {
     const c = parse(expr.value);
     out.textContent = explain(c) + '.';
+    $('#runs').hidden = false;
     const utc = tz() === 'utc';
     const runs = nextRuns(c, new Date(), 10, utc);
     const f = new Intl.DateTimeFormat(undefined, {

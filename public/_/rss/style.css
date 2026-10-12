@@ -72,6 +72,11 @@
   margin: 2px 0 0;
   color: var(--muted);
   overflow-wrap: anywhere;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
 }
 #items .read p {
   display: none;

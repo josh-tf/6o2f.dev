@@ -155,6 +155,8 @@ $('#new').addEventListener('submit', async (e) => {
     $('#msg').textContent = 'Give 2 to 10 options';
     return;
   }
+  const btn = $('#new button[type=submit]');
+  btn.disabled = true;
   try {
     const { id } = await api('/api/polls', {
       method: 'POST',
@@ -166,6 +168,7 @@ $('#new').addEventListener('submit', async (e) => {
   } catch (x) {
     $('#msg').textContent = x.message;
   }
+  btn.disabled = false;
 });
 load();
 // Refresh counts, but never rebuild the list under the keyboard focus (it would drop focus to <body>).

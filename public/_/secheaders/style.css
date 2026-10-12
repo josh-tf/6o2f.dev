@@ -132,3 +132,10 @@ details summary {
 .rawbox summary {
   margin-bottom: 6px;
 }
+#msg:empty,
+#busy:empty {
+  display: none;
+}
+#f > p {
+  margin: 10px 0 0;
+}

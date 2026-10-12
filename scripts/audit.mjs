@@ -37,9 +37,29 @@ const TOKEN = '6o2f_devtoken0000000000000000';
 const browser = await chromium.launch({ executablePath: exe });
 const results = [];
 
+// Tags that must be closed and are not: the browser repairs these silently and the layout ends up nested wrongly
+// (a result section inside the form's button column, for one).
+function unbalanced(file) {
+  if (!fs.existsSync(file)) return [];
+  const html = fs.readFileSync(file, 'utf8').replace(/<!--[\s\S]*?-->|<(script|style)\b[\s\S]*?<\/\1>/gi, '');
+  const skip =
+    /^(area|base|br|col|embed|hr|img|input|link|meta|source|track|wbr|p|li|td|th|tr|tbody|thead|tfoot|option|dt|dd|html|head|body|caption|path|circle|rect|line|polyline|polygon|ellipse|use|stop)$/;
+  const stack = [],
+    out = [];
+  for (const [, close, raw, rest] of html.matchAll(/<(\/?)([a-zA-Z][\w-]*)((?:"[^"]*"|'[^']*'|[^>"'])*)>/g)) {
+    const t = raw.toLowerCase();
+    if (skip.test(t) || rest.endsWith('/')) continue;
+    if (!close) stack.push(t);
+    else if (!stack.includes(t)) out.push(`stray </${t}>`);
+    else for (let o; (o = stack.pop()) !== t;) out.push(`<${o}> is not closed before </${t}>`);
+  }
+  return [...out, ...stack.map((t) => `<${t}> is never closed`)];
+}
+
 for (const name of names) {
   const issues = [],
     add = (level, id, msg) => issues.push({ level, id, msg: String(msg).slice(0, 220) });
+  for (const m of unbalanced(path.join(import.meta.dirname, '../public/_', name, 'index.html'))) add('error', 'html', m);
   for (const [w, h, scheme] of [
     [1100, 800, 'dark'],
     [1100, 800, 'light'],
@@ -179,6 +199,19 @@ for (const name of names) {
     if (shots && w === 400) {
       fs.mkdirSync(shots, { recursive: true });
       await page.screenshot({ path: path.join(shots, `${name}-m.png`), fullPage: true });
+    }
+    // "Used" state: press the page's main action (a lookup, a convert, a create) and check the page with its result showing.
+    // ponytail: one click on the first visible primary/submit button; tools with richer flows still need a human look at the -used shots.
+    if (scheme === 'dark') {
+      const main = page.locator('main button.primary:visible, main form button[type=submit]:visible').first();
+      if (await main.count()) {
+        await main.click({ timeout: 3000 }).catch(() => {});
+        await page.waitForLoadState('networkidle', { timeout: 12000 }).catch(() => {});
+        await page.waitForTimeout(400);
+        const hs = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+        if (w === 400 && hs > 2) add('error', 'hscroll-used', `[${tag}] after using the tool the page scrolls sideways by ${hs}px`);
+        if (shots) await page.screenshot({ path: path.join(shots, `${name}${w === 400 ? '-m' : ''}-used.png`), fullPage: true });
+      }
     }
     await ctx.close();
   }
