@@ -10,7 +10,7 @@ export async function api(path, opts = {}) {
   if (r.status === 401) location.href = `https://${location.hostname.split('.').slice(-2).join('.')}/auth/login?next=${encodeURIComponent(location.href)}`;
   if (r.status === 204) return null;
   const data = (r.headers.get('content-type') || '').includes('json') ? await r.json() : await r.text();
-  if (!r.ok) throw new Error(data?.error || r.statusText);
+  if (!r.ok) throw Object.assign(new Error(data?.error || r.statusText), { data });
   return data;
 }
 

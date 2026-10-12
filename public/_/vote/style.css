@@ -144,3 +144,9 @@ legend {
   clip: rect(0 0 0 0);
   white-space: nowrap;
 }
+/* Turnstile sits above the Vote button; its iframe brings its own light/dark theme. The height is reserved so the button does not jump. */
+.ts {
+  margin: 14px 0 0;
+  min-height: 65px;
+  max-width: 420px;
+}

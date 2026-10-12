@@ -4,7 +4,15 @@ async function run() {
   $('#msg').textContent = '';
   $('#go').disabled = true;
   try {
-    const r = await api(`/api/rdap?q=${encodeURIComponent($('#q').value)}`);
+    const q = $('#q').value;
+    const r = await api(`/api/rdap?q=${encodeURIComponent(q)}`).catch(async (x) => {
+      // The registry refused our server (usually a rate limit on its shared IP): ask it from this browser instead.
+      if (!x.data?.direct) throw x;
+      const raw = await fetch(x.data.direct, { referrerPolicy: 'no-referrer' })
+        .then((d) => (d.ok ? d.json() : Promise.reject()))
+        .catch(() => Promise.reject(x));
+      return api('/api/rdap', { method: 'POST', body: { q, source: new URL(x.data.direct).hostname, raw } });
+    });
     $('#title').textContent = `${r.kind === 'asn' ? 'AS' : ''}${r.value} (from ${r.source})`;
     $('#rows').innerHTML =
       r.summary.map((x) => `<tr><th scope="row" class="k">${esc(x.label)}</th><td class="v">${esc(x.value)}</td></tr>`).join('') ||

@@ -3,7 +3,27 @@ import { renderBars, votesText } from '/_/vote/bars.js';
 
 const id = location.pathname.split('/').pop();
 const fmt = new Intl.DateTimeFormat(undefined, { dateStyle: 'medium', timeStyle: 'short' });
-let poll;
+let poll, widget, token;
+
+// Turnstile: one widget in the ballot, rendered once. Tokens are single-use, so it is reset after every vote attempt.
+function mountCheck() {
+  if (widget !== undefined || !poll.sitekey) return;
+  widget = null;
+  window.onTurnstileLoad = () => {
+    widget = window.turnstile.render('#ts', {
+      sitekey: poll.sitekey,
+      action: 'vote',
+      theme: 'auto', // follows prefers-color-scheme, like ui.css
+      size: 'flexible',
+      callback: (t) => (token = t),
+      'expired-callback': () => (token = ''),
+      'error-callback': () => (token = ''),
+    });
+  };
+  const s = document.createElement('script');
+  s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onTurnstileLoad';
+  document.head.append(s);
+}
 
 async function call(path, init) {
   const r = await fetch(path, init);
@@ -23,6 +43,7 @@ function show() {
     : `This poll closed on ${fmt.format(poll.closesAt)}.`;
   const ballot = !poll.open ? false : !poll.voted;
   $('#ballot').hidden = !ballot;
+  if (ballot) mountCheck();
   if (poll.open && poll.voted) info += ' You have voted. Thank you.';
   if (ballot && !$('#choices input')) {
     $('#legend').textContent = poll.multi ? 'Choose one or more' : 'Choose one';
@@ -68,11 +89,17 @@ $('#ballot').addEventListener('submit', async (e) => {
     $('#err').textContent = 'Pick an option first';
     return;
   }
+  if (!token) {
+    $('#err').textContent = 'Wait for the "Verify you are human" check below to finish, then vote again.';
+    return;
+  }
   try {
-    await call(`/api/poll/${id}/vote`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ choices }) });
+    await call(`/api/poll/${id}/vote`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ choices, token }) });
   } catch (x) {
     $('#err').textContent = x.message;
   }
+  token = '';
+  if (widget) window.turnstile.reset(widget);
   await load();
 });
 await load();

@@ -3,4 +3,5 @@
 interface Env {
   DISCORD_CLIENT_SECRET: string;
   SESSION_SECRET: string;
+  TURNSTILE_SECRET: string;
 }

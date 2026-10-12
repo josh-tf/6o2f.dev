@@ -2,10 +2,13 @@ import { Hono } from 'hono';
 import { bodyLimit } from 'hono/body-limit';
 import { getCookie, setCookie } from 'hono/cookie';
 import { fail, gate, page, type AppEnv } from '../../auth.ts';
+import { HTML_CSP } from '../../csp.ts';
+import { verifyTurnstile } from '../../turnstile.ts';
 import type { Tool } from '../types.ts';
 import { MAX_POLLS, canSeeResults, isOpen, makeLimiter, newId, tally, validateChoices, validateCreate, voterHash } from './logic.ts';
 
-// Management (/ and /api/polls*) is behind the gate. Voting (/p/<id>, /api/poll/<id>*) is public by design: one vote per voter hash + cookie.
+// Management (/ and /api/polls*) is behind the gate. Voting (/p/<id>, /api/poll/<id>*) is public by design: one vote per voter hash + cookie,
+// and each vote needs a Turnstile token (src/turnstile.ts).
 const app = new Hono<AppEnv>();
 app.get('/', gate, (c) => page(c, 'vote'));
 app.use('/api/polls', gate);
@@ -84,7 +87,13 @@ app.get(`/p/:id${ID}`, async (c) => {
   const res = await c.env.ASSETS.fetch(new Request(new URL('/_/vote/poll', c.req.url)));
   return new Response(res.body, {
     status: res.status,
-    headers: { 'content-type': 'text/html; charset=utf-8', 'x-robots-tag': 'noindex', 'cache-control': 'no-store' },
+    headers: {
+      'content-type': 'text/html; charset=utf-8',
+      'x-robots-tag': 'noindex',
+      'cache-control': 'no-store',
+      // Only this page loads Turnstile (script + challenge iframe).
+      'content-security-policy': `${HTML_CSP.replace("script-src 'self'", "script-src 'self' https://challenges.cloudflare.com")}; frame-src https://challenges.cloudflare.com`,
+    },
   });
 });
 app.get(`/api/poll/:id${ID}`, async (c) => {
@@ -98,9 +107,11 @@ app.get(`/api/poll/:id${ID}`, async (c) => {
       .bind(id, await voterOf(c, id))
       .first());
   const { id: _i, createdAt: _c, showResults: _s, ...pub } = view(p, now);
-  return c.json({ id, ...pub, voted, results: canSeeResults(p, now) ? await results(c.env.DB, p) : null }, 200, { 'x-robots-tag': 'noindex' });
+  return c.json({ id, ...pub, voted, sitekey: c.env.TURNSTILE_SITEKEY, results: canSeeResults(p, now) ? await results(c.env.DB, p) : null }, 200, {
+    'x-robots-tag': 'noindex',
+  });
 });
-app.post(`/api/poll/:id${ID}/vote`, bodyLimit({ maxSize: 1024, onError: (c) => c.json({ error: 'Request body too large' }, 413) }), async (c) => {
+app.post(`/api/poll/:id${ID}/vote`, bodyLimit({ maxSize: 4096, onError: (c) => c.json({ error: 'Request body too large' }, 413) }), async (c) => {
   const id = c.req.param('id'),
     now = Date.now();
   const p = await c.env.DB.prepare('SELECT * FROM vote_polls WHERE id = ?').bind(id).first<Poll>();
@@ -110,8 +121,10 @@ app.post(`/api/poll/:id${ID}/vote`, bodyLimit({ maxSize: 1024, onError: (c) => c
   if (!limited(c.req.header('cf-connecting-ip') ?? voter, now)) return fail(429, 'Too many attempts. Wait a minute.');
   if (getCookie(c, cookieName(id))) return fail(409, 'You have already voted');
   const options = JSON.parse(p.options) as string[];
-  const choices = validateChoices((await c.req.json<{ choices?: unknown }>().catch(() => ({ choices: undefined }))).choices, options.length, !!p.multi);
+  const body = await c.req.json<{ choices?: unknown; token?: unknown }>().catch(() => ({ choices: undefined, token: undefined }));
+  const choices = validateChoices(body.choices, options.length, !!p.multi);
   if (typeof choices === 'string') return fail(400, choices);
+  await verifyTurnstile(c, body.token, 'vote');
   const r = await c.env.DB.prepare('INSERT INTO vote_votes (poll_id, voter, choices, created_at) VALUES (?, ?, ?, ?) ON CONFLICT DO NOTHING')
     .bind(id, voter, JSON.stringify(choices), now)
     .run();

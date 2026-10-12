@@ -49,8 +49,10 @@
     "DEV": "",
     "ADMIN_IDS": "219517248388202498",
     "DISCORD_CLIENT_ID": "1555044010152689765",
+    // Turnstile widget "6o2f.dev" (public sitekey; the secret is TURNSTILE_SECRET). See src/turnstile.ts.
+    "TURNSTILE_SITEKEY": "0x4AAAAAAFUSBuUmyN0uM-S_",
   },
-  // Secrets: DISCORD_CLIENT_SECRET, SESSION_SECRET (also salts the analytics visitor hashes, src/stats.ts).
+  // Secrets: DISCORD_CLIENT_SECRET, TURNSTILE_SECRET, SESSION_SECRET (also salts the analytics visitor hashes, src/stats.ts).
   // Optional: DISCORD_BOT_TOKEN (admin: names for users added by id), AI_MODEL (ai tool: overrides the default model).
   // Static files: shared UI in public/_/, client-only tools in public/_t/. Everything else hits the Worker.
   "assets": { "directory": "./public", "binding": "ASSETS", "run_worker_first": ["/*", "!/_/*"] },

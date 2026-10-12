@@ -2,3 +2,6 @@ DISCORD_CLIENT_SECRET=
 SESSION_SECRET=
 # Enables the x-host header and dev-only stubs (AI) locally. Never set in production.
 DEV=1
+# Turnstile test keys (always pass; https://developers.cloudflare.com/turnstile/troubleshooting/testing/). Production uses the real widget.
+TURNSTILE_SITEKEY=1x00000000000000000000AA
+TURNSTILE_SECRET=1x0000000000000000000000000000000AA

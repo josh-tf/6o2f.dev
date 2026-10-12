@@ -1,5 +1,6 @@
 // One Worker for all of 6o2f.dev: the apex is the dashboard + Discord login, <name>.6o2f.dev routes to src/tools/<name>.
 import { Hono, type Context } from 'hono';
+import { HTML_CSP } from './csp.ts';
 import { bodyLimit } from 'hono/body-limit';
 import { HTTPException } from 'hono/http-exception';
 import { ADMIN_TOOLS, auth, canUse, authenticate, avatarUrl, fail, gate, logout, sha256hex, type AppEnv } from './auth.ts';
@@ -144,9 +145,7 @@ root.use('*', async (c, next) => {
     h.set(
       'content-security-policy',
       // Keep the HTML CSP identical to the /_/* one in public/_headers (static files skip this middleware).
-      (h.get('content-type') ?? '').startsWith('text/html')
-        ? "default-src 'self'; script-src 'self' 'sha256-YynjG5lDd9Ulbw7xL2D8gfwkg3qBmx2fWH1xigAR1nM=' https://static.cloudflareinsights.com; connect-src 'self' wss://*.6o2f.dev https://cloudflareinsights.com; img-src 'self' data: https://cdn.discordapp.com; font-src 'self' data:; style-src 'self' 'unsafe-inline'; frame-ancestors 'none'; base-uri 'none'; form-action 'self' https://discord.com"
-        : "default-src 'none'; frame-ancestors 'none'; base-uri 'none'",
+      (h.get('content-type') ?? '').startsWith('text/html') ? HTML_CSP : "default-src 'none'; frame-ancestors 'none'; base-uri 'none'",
     );
 });
 // Same-origin identity + sign-out for the shared top bar on every host (cross-origin fetches are blocked by CSP).
