@@ -7,11 +7,11 @@
   <a href="https://6o2f.dev"><img alt="Open 6o2f.dev" src="https://img.shields.io/badge/open%20site-6o2f.dev-7dff9b?style=for-the-badge&labelColor=0e1510"></a>
 </p>
 
-A hundred small developer tools, one per subdomain (`json.6o2f.dev`, `cidr.6o2f.dev`, ...), served by a single Cloudflare Worker. Most tools run entirely in the browser; the ones that store data or fetch other sites need a Discord sign-in and an admin's approval.
+Developer tools, one per subdomain (`json.6o2f.dev`, `cidr.6o2f.dev`, ...), served by a single Cloudflare Worker. Most tools run entirely in the browser; the ones that store data or fetch other sites need a Discord sign-in and an admin's approval.
 
 ## How it fits together
 
-- **One Worker** (`src/index.ts`, Hono) routes by hostname: the apex serves the launcher and sign-in (and a plain-text menu to `curl 6o2f.dev`), `<name>.6o2f.dev` goes to `src/tools/<name>/index.ts`. The contract every tool follows is in [CONTRACT.md](CONTRACT.md).
+- **One Worker** (`src/index.ts`, Hono) routes by hostname: the apex serves the launcher and sign-in (and a plain-text menu to `curl 6o2f.dev`), `<name>.6o2f.dev` goes to `src/tools/<name>/index.ts`. Guidance for adding or changing a tool is in [CONTRACT.md](CONTRACT.md).
 - **Pages** live in `public/_/<name>/` (HTML, plain ES modules, CSS) and share `public/_/ui.css` and `ui.js`. There is no build step except the mail app (`web-mail/`, Vite + React).
 - **Storage:** D1 (`migrations/`, mail in `migrations-mail/`), KV (pastes, short links, clipboard, bot flags), R2 (drop files, mail), Durable Objects (webhook inboxes, device-to-device send), Workers AI.
 - **Admin panel** (`admin.6o2f.dev`): users and access, published content, tool on/off, analytics, audit log.
@@ -45,4 +45,4 @@ pnpm db:migrate:remote   # apply new D1 migrations first
 pnpm run deploy          # builds the mail app, then wrangler deploy
 ```
 
-Secrets (set with `wrangler secret put`): `DISCORD_CLIENT_SECRET`, `SESSION_SECRET`. Optional: `DISCORD_BOT_TOKEN`, `AI_MODEL`. Cron triggers: a daily sweep (expired drops, mail, stats retention) and uptime checks every 5 minutes.
+Secrets (set with `wrangler secret put`): `DISCORD_CLIENT_SECRET`, `SESSION_SECRET`, `TURNSTILE_SECRET` (public poll votes, `src/turnstile.ts`). Optional: `DISCORD_BOT_TOKEN`, `AI_MODEL`. Cron triggers: a daily sweep (expired drops, mail, stats retention) and uptime checks every 5 minutes.
