@@ -12,14 +12,16 @@ test('CSRF: only the request origin itself is trusted, not sibling tool hosts', 
   assert.ok(!sameOrigin(undefined, url, undefined));
 });
 
-test('admin-only tools: admins only, never granted, even with every tool', () => {
+test('admin tool stays restricted; labyrinth can be granted', () => {
   const all = { isAdmin: false, tools: '*' },
     some = { isAdmin: false, tools: 'paste,labyrinth,admin' };
-  for (const t of ['admin', 'labyrinth']) {
+  for (const t of ['admin']) {
     assert.equal(canUse(all, t), false, t);
     assert.equal(canUse(some, t), false, t);
     assert.equal(canUse({ isAdmin: true, tools: '' }, t), true, t);
   }
+  assert.equal(canUse(all, 'labyrinth'), true);
+  assert.equal(canUse(some, 'labyrinth'), true);
   assert.equal(canUse(all, 'paste'), true);
   assert.equal(canUse(some, 'paste'), true);
   assert.equal(canUse({ isAdmin: false, tools: 'drop' }, 'paste'), false);

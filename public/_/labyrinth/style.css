@@ -455,3 +455,29 @@ main > .tabs {
     flex-basis: 100%;
   }
 }
+/* The mini-stat grid is not a card, so it needs the same gap after the chart card as the cards get. */
+#p-stats > .labgrid {
+  margin-top: 14px;
+}
+
+.maze-controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+.maze-controls button {
+  min-width: 38px;
+  min-height: 34px;
+}
+.maze-controls span {
+  margin-left: 6px;
+}
+#maze-canvas {
+  touch-action: none;
+  cursor: grab;
+}
+#maze-canvas:active {
+  cursor: grabbing;
+}

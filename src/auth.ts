@@ -77,7 +77,7 @@ export const toolOf = (c: Context<AppEnv>) => {
   return host.endsWith(`.${c.env.DOMAIN}`) ? host.slice(0, -c.env.DOMAIN.length - 1) : '';
 };
 /** Tools only admins can open or see in the launcher; they can't be granted, switched off or put in maintenance. */
-export const ADMIN_TOOLS = new Set(['admin', 'labyrinth']);
+export const ADMIN_TOOLS = new Set(['admin']);
 export const canUse = (u: Pick<User, 'isAdmin' | 'tools'>, tool: string) =>
   !tool || u.isAdmin || (!ADMIN_TOOLS.has(tool) && (u.tools === '*' || u.tools.split(',').includes(tool)));
 

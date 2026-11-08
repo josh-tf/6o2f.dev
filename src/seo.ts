@@ -2,6 +2,10 @@
 // The page title is `${title} | 6o2f.dev`, so keep title <= 50 chars; description 110-160 chars (see seo.test.ts).
 // Locked tools are noindex and need no entry.
 export const SEO: Record<string, [title: string, description: string]> = {
+  labyrinth: [
+    'Live Bot Labyrinth Map',
+    'Watch automated crawlers move through a live map of the 6o2f.dev labyrinth. The public view hides crawler identities and request details.',
+  ],
   b64: [
     'Base64 Encode and Decode Online',
     'Encode text to Base64 or decode Base64 back to UTF-8. Accepts standard and URL-safe input, with or without padding. Free, runs in your browser.',

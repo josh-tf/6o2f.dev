@@ -1,12 +1,85 @@
 import { Hono } from 'hono';
-import { adminOnly, fail, gate, page, type AppEnv } from '../../auth.ts';
+import { adminOnly, authenticate, fail, page, type AppEnv } from '../../auth.ts';
 import type { Tool } from '../types.ts';
 import { crawlerFamily, flagged, mazeCost, mazeDoc, mazePage, unflag, type Fmt } from '../../guard.ts';
 
 // The bot guard's dashboard (src/guard.ts does the trapping): stats, a live map of the labyrinth and a per-bot replay.
 const app = new Hono<AppEnv>();
-app.use('*', gate, adminOnly);
 app.get('/', (c) => page(c, 'labyrinth'));
+app.get('/api/viewer', async (c) => {
+  const user = await authenticate(c);
+  c.header('Cache-Control', 'private, no-store');
+  return c.json({ full: !!user, admin: !!user?.isAdmin });
+});
+
+// Public map data deliberately excludes IPs, user agents, hosts, and request paths.
+app.get('/api/public/maze', async (c) => {
+  const after = Math.max(0, Number(c.req.query('after')) || 0);
+  const query = after
+    ? 'SELECT l.id, l.at, l.ip, l.path, l.kind, i.country, i.ua FROM bot_log l LEFT JOIN bot_ips i ON i.ip = l.ip WHERE l.id > ? ORDER BY l.id LIMIT 1000'
+    : 'SELECT l.id, l.at, l.ip, l.path, l.kind, i.country, i.ua FROM bot_log l LEFT JOIN bot_ips i ON i.ip = l.ip WHERE l.at >= ? ORDER BY l.id DESC LIMIT 1000';
+  const { results } = await c.env.DB.prepare(query)
+    .bind(after || Date.now() - 86400_000)
+    .all<{
+      id: number;
+      at: number;
+      ip: string;
+      path: string;
+      kind: string;
+      country: string | null;
+      ua: string | null;
+    }>();
+  const key = await crypto.subtle.importKey('raw', new TextEncoder().encode(c.env.SESSION_SECRET), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+  const cache = new Map<string, string>();
+  const alias = async (value: string) => {
+    let hash = cache.get(value);
+    if (!hash) {
+      hash = [...new Uint8Array(await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(value)))]
+        .slice(0, 8)
+        .map((b) => b.toString(16).padStart(2, '0'))
+        .join('');
+      cache.set(value, hash);
+    }
+    return hash;
+  };
+  const events = await Promise.all(
+    results.map(async (r) => {
+      const maze = r.path.startsWith('/__maze/');
+      const p = maze ? mazePage(r.path) : null;
+      return {
+        id: r.id,
+        at: r.at,
+        ip: `Crawler ${await alias(`${new Date(r.at).toISOString().slice(0, 10)}:${r.ip}`)}`,
+        path: maze ? r.path : `/entrance/${await alias(r.path)}`,
+        kind: r.kind,
+        country: r.country,
+        title: maze ? p!.title : 'Entrance',
+        links: maze ? p!.links.map((l) => l.id) : [],
+        family: crawlerFamily(r.ua).type,
+      };
+    }),
+  );
+  c.header('Cache-Control', 'public, max-age=5');
+  return c.json(after ? events : events.reverse());
+});
+app.use('/api/bots/*', async (c, next) => {
+  const user = await authenticate(c);
+  if (!user) fail(401, 'Not signed in');
+  c.set('user', user!);
+  await next();
+});
+app.use('/api/bots', async (c, next) => {
+  const user = await authenticate(c);
+  if (!user) fail(401, 'Not signed in');
+  c.set('user', user!);
+  await next();
+});
+app.use('/api/guard/*', async (c, next) => {
+  const user = await authenticate(c);
+  if (!user) fail(401, 'Not signed in');
+  c.set('user', user!);
+  await adminOnly(c, next);
+});
 
 /** Bots tab: summary, bot IPs with what they did (last 7 days), honeypot paths, the latest events. */
 app.get('/api/bots', async (c) => {
@@ -89,12 +162,14 @@ app.get('/api/bots/maze', async (c) => {
   const after = Number(c.req.query('after')) || 0,
     since = after ? 0 : Date.now() - 86400_000;
   const { results } = await c.env.DB.prepare(
-    'SELECT l.id, l.at, l.ip, l.host, l.path, l.kind, i.country, i.ua, i.maze total, i.bytes, i.held_ms held FROM bot_log l LEFT JOIN bot_ips i ON i.ip = l.ip WHERE l.id > ? AND l.at >= ? ORDER BY l.id LIMIT 3000',
+    after
+      ? 'SELECT l.id, l.at, l.ip, l.host, l.path, l.kind, i.country, i.ua, i.maze total, i.bytes, i.held_ms held FROM bot_log l LEFT JOIN bot_ips i ON i.ip = l.ip WHERE l.id > ? ORDER BY l.id LIMIT 3000'
+      : 'SELECT l.id, l.at, l.ip, l.host, l.path, l.kind, i.country, i.ua, i.maze total, i.bytes, i.held_ms held FROM bot_log l LEFT JOIN bot_ips i ON i.ip = l.ip WHERE l.at >= ? ORDER BY l.id DESC LIMIT 3000',
   )
-    .bind(after, since)
+    .bind(after || since)
     .all<{ path: string; ua: string | null }>();
   return c.json(
-    results.map((r) => {
+    (after ? results : results.reverse()).map((r) => {
       const p = mazePage(r.path);
       return { ...r, title: p.title, links: p.links.map((l) => l.id), family: crawlerFamily(r.ua).name };
     }),
@@ -167,6 +242,7 @@ export const tool: Tool = {
   title: 'Labyrinth',
   blurb: 'Bots stuck in the maze',
   icon: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 3v10h4M15 21v-8h-4M11 7h6v6"/>',
-  note: 'Admins only.',
+  note: 'Public live map; sign in for full bot details.',
+  public: true,
   app,
 };

@@ -16,7 +16,7 @@ Developer tools, one per subdomain (`json.6o2f.dev`, `cidr.6o2f.dev`, ...), serv
 - **Storage:** D1 (`migrations/`, mail in `migrations-mail/`), KV (pastes, short links, clipboard, bot flags), R2 (drop files, mail), Durable Objects (webhook inboxes, device-to-device send), Workers AI.
 - **Admin panel** (`admin.6o2f.dev`): users and access, published content, tool on/off, analytics, audit log.
 - **Bot guard** (`src/guard.ts`): honeypot paths and a hidden robots-disallowed link flag an IP for 24 hours; flagged IPs get an endless, slow generated labyrinth in the form they asked for (HTML pages, JSON records, or bait `.env` and `.git/config` files), and repeat crawlers are held longer.
-- **Labyrinth** (`labyrinth.6o2f.dev`, admins only): a live map of bots moving through the labyrinth, a per-bot replay of exactly what each was served, crawler leaderboard and cost stats (bandwidth, time held, words read).
+- **Labyrinth** (`labyrinth.6o2f.dev`): a public live map with crawler identities and request details masked. Signed-in users can inspect full trails, leaderboard and cost stats; admins can also unflag bots.
 
 ## Develop
 
