@@ -1,6 +1,13 @@
 import { $, api, esc, mountBar } from '/_/ui.js';
 import { ago, bars, mountTabs, num, spark, stacked, topN, when } from '/_/admin/charts.js';
+const viewer = await api('/api/viewer');
 await mountBar('Labyrinth');
+if (!viewer.full) {
+  $('.tabs').hidden = true;
+  $('#t-stats').hidden = true;
+  $('#t-bots').hidden = true;
+  $('#maze-hint').textContent = 'Crawler identities and request details are hidden in the public view.';
+}
 
 const size = (b) =>
   b < 1024 ? `${b} B` : b < 1048576 ? `${(b / 1024).toFixed(1)} KB` : b < 1073741824 ? `${(b / 1048576).toFixed(1)} MB` : `${(b / 1073741824).toFixed(2)} GB`;
@@ -33,6 +40,7 @@ const where = (host, path) => `<span class="mono">${esc(short(host))}${esc(path 
 const dayLabel = (d) => new Date(`${d}T00:00:00Z`).toLocaleDateString('en-GB', { weekday: 'short', timeZone: 'UTC' });
 let BOTS = null;
 async function loadBots() {
+  if (!viewer.full) return;
   $('#bmsg').textContent = '';
   try {
     BOTS = await api('/api/bots');
@@ -133,7 +141,7 @@ function drawFeed() {
       <span class="fi"><b class="mono">${esc(r.ip)}</b> <span class="muted small">${esc(r.country ?? '')}</span><span class="ua muted small" title="${esc(r.ua ?? '')}">${esc(r.ua || '(no user agent)')}</span></span>
       <span class="fd">${parts}<span class="muted small">first <span class="mono">${esc(r.first_path ?? '')}</span> ${on}</span></span>
       <span class="fs">${live ? `<span class="badge warn">flagged</span>` : '<span class="muted small">expired</span>'}</span>
-      <span class="fa"><button type="button" data-watch="${esc(r.ip)}">Watch</button><button type="button" data-acts aria-expanded="false">Trail</button>${live ? '<button type="button" data-unflag>Unflag</button>' : ''}</span></div></li>`;
+      <span class="fa"><button type="button" data-watch="${esc(r.ip)}">Watch</button><button type="button" data-acts aria-expanded="false">Trail</button>${live && viewer.admin ? '<button type="button" data-unflag>Unflag</button>' : ''}</span></div></li>`;
         })
         .join('')
     : '<li class="empty">No bots caught yet. They usually turn up within a day.</li>';
@@ -148,7 +156,9 @@ $('#bfeed').addEventListener('click', async (e) => {
       await api(`/api/guard/${encodeURIComponent(ip)}`, { method: 'DELETE' });
       await loadBots();
     } catch (x) {
-      $('#bmsg').textContent = x.message;
+      // #bmsg sits on the Stats tab; say it on the row that was clicked
+      li.querySelector('.err')?.remove();
+      li.append(Object.assign(document.createElement('p'), { className: 'err small', textContent: `Could not unflag: ${x.message}` }));
     }
     return;
   }
@@ -244,6 +254,18 @@ function mzStep(e, animate) {
   }
   if (b.node && b.node !== n) MZ.trails.push({ a: b.node, b: n, hue: b.hue, at: animate ? now : -1e9 });
   if (MZ.trails.length > 600) MZ.trails.splice(0, MZ.trails.length - 600);
+  if (MZ.nodes.size > 4500) {
+    for (const [path, old] of MZ.nodes) {
+      MZ.nodes.delete(path);
+      for (const link of old.links) if (MZ.parent.get(link) === path) MZ.parent.delete(link);
+      if (MZ.nodes.size <= 4000) break;
+    }
+    MZ.box = null;
+    for (const node of MZ.nodes.values()) {
+      const b = MZ.box ?? { x0: node.x, x1: node.x, y0: node.y, y1: node.y };
+      MZ.box = { x0: Math.min(b.x0, node.x), x1: Math.max(b.x1, node.x), y0: Math.min(b.y0, node.y), y1: Math.max(b.y1, node.y) };
+    }
+  }
   Object.assign(b, { fx: b.x, fy: b.y, t0: now, dur: animate && !still.matches ? 750 : 0, node: n, steps: b.steps + 1, deepest: Math.max(b.deepest, n.depth) });
   Object.assign(b, {
     at: e.at,
@@ -259,12 +281,18 @@ function mzStep(e, animate) {
   if (!animate) return;
   const what =
     e.kind === 'trap'
-      ? `tripped ${where(e.host, e.path)}`
+      ? viewer.full
+        ? `tripped ${where(e.host, e.path)}`
+        : 'tripped a honeypot'
       : e.kind === 'flagged'
-        ? `asked for ${where(e.host, e.path)}, got the maze`
+        ? viewer.full
+          ? `asked for ${where(e.host, e.path)}, got the maze`
+          : 'returned to the maze'
         : n.parent
           ? `followed a link to “${esc(e.title)}” <span class="muted">depth ${n.depth}</span>`
-          : `found the hidden link on ${esc(short(e.host))}: “${esc(e.title)}”`;
+          : viewer.full
+            ? `found the hidden link on ${esc(short(e.host))}: “${esc(e.title)}”`
+            : 'found a hidden link';
   const li = document.createElement('li');
   li.innerHTML = `<span class="fw">${new Date(e.at).toLocaleTimeString()}</span><i style="background:hsl(${b.hue} 75% 55%)"></i><span><button type="button" class="link-btn" data-watch="${esc(e.ip)}">${esc(e.ip)}</button> ${flagOf(e.country)} ${what}</span>`;
   const f = $('#maze-feed');
@@ -289,10 +317,15 @@ $('#maze-mode').addEventListener('click', (e) => {
 async function mzPoll() {
   try {
     for (let more = true; more;) {
-      const ev = await api(`/api/bots/maze?after=${MZ.after}`);
+      const ev = await api(`${viewer.full ? '/api/bots/maze' : '/api/public/maze'}?after=${MZ.after}`);
       MZ.all.push(...ev);
+      if (MZ.all.length > 6000) {
+        const drop = MZ.all.length - 6000;
+        MZ.all.splice(0, drop);
+        MZ.i = Math.max(0, MZ.i - drop);
+      }
       if (ev.length) MZ.after = ev.at(-1).id;
-      more = ev.length === 3000;
+      more = ev.length === (viewer.full ? 3000 : 1000);
     }
     $('#maze-msg').textContent = '';
   } catch (x) {
@@ -303,7 +336,9 @@ let mzRaf = 0,
   mzTimer = 0,
   mzList = 0,
   mzLast = 0,
-  cam = null;
+  mzPaint = 0,
+  cam = null,
+  manualCam = false;
 async function loadMaze() {
   readColors();
   if (!MZ.after) {
@@ -341,7 +376,8 @@ function mzFrame() {
     dpr = devicePixelRatio || 1,
     W = cv.clientWidth,
     H = cv.clientHeight;
-  if (!W) return; // another tab is showing: steps and the clock keep going, nothing to draw
+  if (!W || document.hidden || t - mzPaint < 32) return; // pause hidden maps and paint at most 30 frames/s
+  mzPaint = t;
   if (cv.width !== Math.round(W * dpr) || cv.height !== Math.round(H * dpr)) Object.assign(cv, { width: Math.round(W * dpr), height: Math.round(H * dpr) });
   const g = cv.getContext('2d'),
     C = mzColors;
@@ -354,7 +390,8 @@ function mzFrame() {
     y0 = Math.min(b.y0, -130),
     y1 = Math.max(b.y1, 130);
   const want = { x: (x0 + x1) / 2, y: (y0 + y1) / 2, s: Math.min(2.2, (W - 60) / (x1 - x0), (H - 60) / (y1 - y0)) };
-  cam = cam && !still.matches ? { x: cam.x + (want.x - cam.x) * 0.05, y: cam.y + (want.y - cam.y) * 0.05, s: cam.s + (want.s - cam.s) * 0.05 } : want;
+  if (!manualCam)
+    cam = cam && !still.matches ? { x: cam.x + (want.x - cam.x) * 0.05, y: cam.y + (want.y - cam.y) * 0.05, s: cam.s + (want.s - cam.s) * 0.05 } : want;
   const sx = (x) => W / 2 + (x - cam.x) * cam.s,
     sy = (y) => H / 2 + (y - cam.y) * cam.s,
     z = Math.max(0.6, Math.min(1.6, cam.s));
@@ -373,7 +410,11 @@ function mzFrame() {
   g.strokeStyle = C.line;
   g.beginPath();
   for (const n of MZ.nodes.values())
-    if (n.parent) {
+    if (
+      n.parent &&
+      Math.max(Math.abs(sx(n.x) - W / 2), Math.abs(sx(n.parent.x) - W / 2)) < W / 2 + 20 &&
+      Math.max(Math.abs(sy(n.y) - H / 2), Math.abs(sy(n.parent.y) - H / 2)) < H / 2 + 20
+    ) {
       g.moveTo(sx(n.parent.x), sy(n.parent.y));
       g.lineTo(sx(n.x), sy(n.y));
     }
@@ -392,8 +433,9 @@ function mzFrame() {
   // pages
   for (const n of MZ.nodes.values()) {
     const x = sx(n.x),
-      y = sy(n.y),
-      r = (n.kind === 'trap' ? 4.5 : 2.2 + Math.min(3, Math.log2(n.visits + 1) * 0.8)) * z,
+      y = sy(n.y);
+    if (x < -30 || x > W + 30 || y < -30 || y > H + 30) continue;
+    const r = (n.kind === 'trap' ? 4.5 : 2.2 + Math.min(3, Math.log2(n.visits + 1) * 0.8)) * z,
       grow = Math.max(0, Math.min(1, (t - n.born) / 400));
     g.fillStyle = C[n.kind] ?? C.maze;
     g.beginPath();
@@ -423,7 +465,11 @@ function mzFrame() {
   }
   // bots
   const recent = [];
-  for (const bot of MZ.bots.values()) {
+  for (const [key, bot] of MZ.bots) {
+    if (MZ.clock - bot.at > 86400_000) {
+      MZ.bots.delete(key);
+      continue;
+    }
     const idle = MZ.clock - bot.at;
     if (idle > 600_000) continue; // gone quiet for 10 min of maze time: left (or out of logged requests)
     recent.push(bot);
@@ -437,7 +483,7 @@ function mzFrame() {
       col = `hsl(${bot.hue} 80% 58% / ${fade})`;
     Object.assign(bot, { sx: x, sy: y, drawn: t });
     g.shadowColor = col;
-    g.shadowBlur = 12;
+    g.shadowBlur = recent.length < 80 ? 8 : 0;
     g.fillStyle = col;
     g.beginPath();
     g.arc(x, y, 5 * z, 0, Math.PI * 2);
@@ -451,10 +497,12 @@ function mzFrame() {
       g.arc(x, y, 9 * z, t / 180, t / 180 + Math.PI * 1.2);
       g.stroke();
     }
-    g.font = `10px ${C.mono}`;
-    g.fillStyle = C.muted;
-    g.textAlign = 'left';
-    g.fillText(`${flagOf(bot.country)} ${bot.ip}`, x + 8 * z, y + 12 * z);
+    if (cam.s > 0.7 && x >= 0 && x <= W && y >= 0 && y <= H) {
+      g.font = `10px ${C.mono}`;
+      g.fillStyle = C.muted;
+      g.textAlign = 'left';
+      g.fillText(`${flagOf(bot.country)} ${bot.ip}`, x + 8 * z, y + 12 * z);
+    }
   }
   // status
   g.font = `12px ${C.mono}`;
@@ -465,8 +513,10 @@ function mzFrame() {
   g.fillText(head, 14, 22);
   g.fillStyle = C.muted;
   g.fillText(`${num(MZ.nodes.size)} pages mapped · ${recent.length} bot${recent.length === 1 ? '' : 's'} inside`, 14, 40);
-  const all = [...MZ.bots.values()];
-  g.fillText(`${size(all.reduce((a, b) => a + b.bytes, 0))} of junk fed · ${dur(all.reduce((a, b) => a + b.held, 0))} of their time`, 14, 58);
+  if (viewer.full) {
+    const all = [...MZ.bots.values()];
+    g.fillText(`${size(all.reduce((a, b) => a + b.bytes, 0))} of junk fed · ${dur(all.reduce((a, b) => a + b.held, 0))} of their time`, 14, 58);
+  }
   if (!MZ.nodes.size) {
     g.textAlign = 'center';
     g.fillText(MZ.all.length ? 'Waiting for the next step…' : 'No bots in the last 24 hours.', W / 2, H / 2);
@@ -476,6 +526,71 @@ function mzFrame() {
     mzBots(recent);
   }
 }
+function zoomAt(factor, x, y) {
+  if (!cam) return;
+  const cv = $('#maze-canvas');
+  const wx = cam.x + (x - cv.clientWidth / 2) / cam.s;
+  const wy = cam.y + (y - cv.clientHeight / 2) / cam.s;
+  const next = Math.max(0.08, Math.min(8, cam.s * factor));
+  cam.x = wx - (x - cv.clientWidth / 2) / next;
+  cam.y = wy - (y - cv.clientHeight / 2) / next;
+  cam.s = next;
+  manualCam = true;
+}
+$('#maze-zoom-in').addEventListener('click', () => zoomAt(1.5, $('#maze-canvas').clientWidth / 2, $('#maze-canvas').clientHeight / 2));
+$('#maze-zoom-out').addEventListener('click', () => zoomAt(1 / 1.5, $('#maze-canvas').clientWidth / 2, $('#maze-canvas').clientHeight / 2));
+$('#maze-fit').addEventListener('click', () => {
+  manualCam = false;
+  cam = null;
+});
+const pointers = new Map();
+let drag = false,
+  pinch = 0;
+$('#maze-canvas').addEventListener(
+  'wheel',
+  (e) => {
+    e.preventDefault();
+    const r = e.currentTarget.getBoundingClientRect();
+    zoomAt(Math.exp(-e.deltaY * 0.002), e.clientX - r.left, e.clientY - r.top);
+  },
+  { passive: false },
+);
+$('#maze-canvas').addEventListener('pointerdown', (e) => {
+  e.currentTarget.setPointerCapture(e.pointerId);
+  pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+  drag = false;
+  pinch = 0;
+});
+$('#maze-canvas').addEventListener('pointermove', (e) => {
+  const prev = pointers.get(e.pointerId);
+  if (!prev || !cam) return;
+  const dx = e.clientX - prev.x,
+    dy = e.clientY - prev.y;
+  if (Math.abs(dx) + Math.abs(dy) > 1) drag = true;
+  if (pointers.size === 2) {
+    const other = [...pointers.entries()].find(([id]) => id !== e.pointerId)?.[1];
+    if (other) {
+      const distance = Math.hypot(e.clientX - other.x, e.clientY - other.y);
+      if (pinch)
+        zoomAt(
+          distance / pinch,
+          (e.clientX + other.x) / 2 - e.currentTarget.getBoundingClientRect().left,
+          (e.clientY + other.y) / 2 - e.currentTarget.getBoundingClientRect().top,
+        );
+      pinch = distance;
+    }
+  } else {
+    cam.x -= dx / cam.s;
+    cam.y -= dy / cam.s;
+    manualCam = true;
+  }
+  pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+});
+for (const type of ['pointerup', 'pointercancel'])
+  $('#maze-canvas').addEventListener(type, (e) => {
+    pointers.delete(e.pointerId);
+    pinch = 0;
+  });
 // Clicking a bot on the map opens its inspector.
 $('#maze-canvas').addEventListener('click', (e) => {
   const r = e.currentTarget.getBoundingClientRect(),
@@ -485,17 +600,18 @@ $('#maze-canvas').addEventListener('click', (e) => {
   const hit = [...MZ.bots.values()]
     .filter((b) => now - b.drawn < 500 && Math.hypot(b.sx - x, b.sy - y) < 18)
     .sort((a, b) => Math.hypot(a.sx - x, a.sy - y) - Math.hypot(b.sx - x, b.sy - y))[0];
-  if (hit) openInspector(hit.ip);
+  if (!drag && hit && viewer.full) openInspector(hit.ip);
 });
 /** The side list of bots currently inside, refreshed once a second. */
 function mzBots(list) {
   $('#maze-count').textContent = list.length;
   list.sort((a, b) => b.at - a.at);
+  list = list.slice(0, 40);
   $('#maze-bots').innerHTML = list.length
     ? list
         .map(
           (b) =>
-            `<li><i style="background:hsl(${b.hue} 75% 55%)"></i><span><button type="button" class="link-btn" data-watch="${esc(b.ip)}">${esc(b.ip)}</button> ${flagOf(b.country)} <b>${esc(b.family ?? '')}</b> <span class="kind k-${esc(b.kind)}">${BK[b.kind] ?? esc(b.kind)}</span> ${num(b.steps)} step${b.steps === 1 ? '' : 's'} here, depth ${b.deepest}${b.total ? `, ${num(b.total)} labyrinth pages all told` : ''}${b.bytes ? ` · ${size(b.bytes)} downloaded, held ${dur(b.held)}` : ''}<br><span class="muted small" title="${esc(b.ua ?? '')}">${esc((b.ua || '(no user agent)').slice(0, 90))}</span></span></li>`,
+            `<li><i style="background:hsl(${b.hue} 75% 55%)"></i><span><button type="button" class="link-btn" data-watch="${esc(b.ip)}">${esc(b.ip)}</button> ${flagOf(b.country)} <b>${esc(b.family ?? '')}</b> <span class="kind k-${esc(b.kind)}">${BK[b.kind] ?? esc(b.kind)}</span> ${num(b.steps)} step${b.steps === 1 ? '' : 's'} here, depth ${b.deepest}${b.total ? `, ${num(b.total)} labyrinth pages all told` : ''}${b.bytes ? ` · ${size(b.bytes)} downloaded, held ${dur(b.held)}` : ''}<br>${viewer.full ? `<span class="muted small" title="${esc(b.ua ?? '')}">${esc((b.ua || '(no user agent)').slice(0, 90))}</span>` : ''}</span></li>`,
         )
         .join('')
     : '<li class="muted">Nobody inside right now.</li>';
@@ -508,7 +624,7 @@ const GAP = 300_000, // idle gaps longer than this are collapsed on the strip an
 const dur = (ms) => (ms < 90_000 ? `${Math.round(ms / 1000)} s` : ms < 5_400_000 ? `${Math.round(ms / 60_000)} min` : `${(ms / 3_600_000).toFixed(1)} h`);
 document.addEventListener('click', (e) => {
   const b = e.target.closest('[data-watch]');
-  if (b) openInspector(b.dataset.watch);
+  if (b && viewer.full) openInspector(b.dataset.watch);
 });
 async function openInspector(ip) {
   inspStop();
@@ -701,6 +817,6 @@ $('#insp').addEventListener('close', inspStop);
 
 // Data for all three tabs loads once; the map keeps polling, the stats refresh with their button.
 const HASH = { map: '#map', stats: '#stats', bots: '#bots' };
-mountTabs(HASH)(Object.keys(HASH).find((k) => HASH[k] === location.hash) ?? 'map');
+mountTabs(HASH)(viewer.full ? (Object.keys(HASH).find((k) => HASH[k] === location.hash) ?? 'map') : 'map');
 loadMaze();
 loadBots();
