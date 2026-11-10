@@ -17,9 +17,9 @@
   // Daily retention sweeps (mail, drop) and the 5-minute uptime checks.
   "triggers": { "crons": ["17 3 * * *", "*/5 * * * *"] },
   "d1_databases": [
-    { "binding": "DB", "database_name": "6o2f", "database_id": "863cdc76-1e6c-4f53-8900-adbf4df7b742", "migrations_dir": "migrations" },
-    // Existing mail database (moved from the 6o2f-mail Worker unchanged). Its migrations: pnpm exec wrangler d1 migrations apply MAILDB
-    { "binding": "MAILDB", "database_name": "6o2f-mail", "database_id": "41d33084-fd96-49e8-88c5-724a37e2dc46", "migrations_dir": "migrations-mail" },
+    { "binding": "DB", "database_name": "6o2f-tools-db", "database_id": "e507c2a4-51c5-4099-892c-c171cdd596db", "migrations_dir": "migrations" },
+    // Existing mail database (was the 6o2f-mail database, moved 2026-11-10). Its migrations: pnpm exec wrangler d1 migrations apply MAILDB
+    { "binding": "MAILDB", "database_name": "6o2f-tools-mail", "database_id": "77902f8e-33b8-4edd-810a-1d433c5ac82e", "migrations_dir": "migrations-mail" },
   ],
   "kv_namespaces": [
     { "binding": "PASTE", "id": "bd9bd894c20e449eb9de0336a6e104c0" },
@@ -29,9 +29,9 @@
     { "binding": "GUARD", "id": "59ba648019ab49a696c92206b596157a" },
   ],
   "r2_buckets": [
-    { "binding": "DROP", "bucket_name": "6o2f-drop" },
+    { "binding": "DROP", "bucket_name": "6o2f-tools-drop" },
     // Raw .eml per message; MAILDB holds only the listing fields.
-    { "binding": "MAIL", "bucket_name": "6o2f-mail" },
+    { "binding": "MAIL", "bucket_name": "6o2f-tools-mail" },
   ],
   "durable_objects": {
     "bindings": [
